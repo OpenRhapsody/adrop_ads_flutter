@@ -18,10 +18,13 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
         frame: CGRect,
         viewIdentifier viewId: Int64,
         binaryMessenger messenger: FlutterBinaryMessenger,
-        call: CallCreateBanner,
+        call: CallCreateBanner
     ) {
-        banner = AdropBanner(unitId: call.unitId, adSize: call.adSize)
-        methodChannel = FlutterMethodChannel(name: AdropChannel.methodBannerChannelOf(id: viewId), binaryMessenger: messenger)
+        // TODO test-onlu
+        banner = AdropBanner(unitId: "01HCY55BZFNVX396GRZ8BYQNHD", adSize: AdropBannerSize.H80)
+        
+//        banner = AdropBanner(unitId: call.unitId, adSize: call.adSize)
+        methodChannel = FlutterMethodChannel(name: AdropChannel.methodBannerChannelOf(id: viewId.description), binaryMessenger: messenger)
 
         super.init()
         banner.delegate = self
