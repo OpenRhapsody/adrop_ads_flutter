@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+import 'package:adrop_ads_flutter/banner/adrop_banner.dart';
+import 'package:adrop_ads_flutter/banner/adrop_banner_container.dart';
+import 'package:adrop_ads_flutter/banner/adrop_banner_size.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,38 +18,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _adropAdsFlutterPlugin = AdropAdsFlutter();
+  late final AdropBannerController _bannerController;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initialize();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      // platformVersion = await _adropAdsFlutterPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+  Future<void> initialize() async {
+    await AdropAdsFlutter.initialize(true);
+  }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    // setState(() {
-    //   _platformVersion = platformVersion;
-    // });
+  void _onAdropBannerCreated(AdropBannerController controller) {
+    _bannerController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -56,8 +47,30 @@ class _MyAppState extends State<MyApp> {
         body: SafeArea(
           child: Column(
             children: [
-              TextButton(onPressed: () {}, child: const Text('Request Ad')),
+              TextButton(
+                  onPressed: () {
+                    _bannerController.load();
+                  },
+                  child: const Text('Request Ad')),
               const Spacer(),
+              SizedBox(
+                width: screenWidth,
+                height: 80,
+                child: AdropBanner(
+                  onAdropBannerCreated: _onAdropBannerCreated,
+                  unitId: '01HCY55BZFNVX396GRZ8BYQNHD',
+                  adSize: AdropBannerSize.h80,
+                  onAdClicked: () {
+                    print("onAdClicked");
+                  },
+                  onAdReceived: () {
+                    print("onAdReceived");
+                  },
+                  onAdFailedToReceive: (code) {
+                    print("onAdFailedToReceive: $code");
+                  },
+                ),
+              ),
             ],
           ),
         ),
