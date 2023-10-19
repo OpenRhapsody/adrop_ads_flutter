@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart';
+import 'package:adrop_ads_flutter/bridge/adrop_channel.dart';
+import 'package:adrop_ads_flutter/bridge/adrop_method.dart';
 import 'package:flutter/services.dart';
 
 import 'adrop_ads_flutter_platform_interface.dart';
 
+const _methodChannel = MethodChannel(AdropChannel.methodChannel);
+
 /// An implementation of [AdropAdsFlutterPlatform] that uses method channels.
 class MethodChannelAdropAdsFlutter extends AdropAdsFlutterPlatform {
-  /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('adrop_ads_flutter');
-
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<void> initialize(bool production) async {
+    await _methodChannel.invokeMethod(AdropMethod.initialize);
   }
 }

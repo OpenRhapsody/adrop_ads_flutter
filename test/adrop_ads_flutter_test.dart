@@ -9,7 +9,9 @@ class MockAdropAdsFlutterPlatform
     implements AdropAdsFlutterPlatform {
 
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<void> initialize(bool production) {
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -24,6 +26,6 @@ void main() {
     MockAdropAdsFlutterPlatform fakePlatform = MockAdropAdsFlutterPlatform();
     AdropAdsFlutterPlatform.instance = fakePlatform;
 
-    expect(await adropAdsFlutterPlugin.getPlatformVersion(), '42');
+    // expect(await adropAdsFlutterPlugin.getPlatformVersion(), '42');
   });
 }

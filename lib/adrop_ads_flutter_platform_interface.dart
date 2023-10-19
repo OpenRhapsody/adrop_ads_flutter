@@ -23,7 +23,7 @@ abstract class AdropAdsFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<void> initialize(bool production) async {
+    throw UnimplementedError('initialize() has not been implemented.');
   }
 }
