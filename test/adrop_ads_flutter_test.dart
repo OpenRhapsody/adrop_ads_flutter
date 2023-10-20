@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter/adrop_ads_flutter_platform_interface.dart';
 import 'package:adrop_ads_flutter/adrop_ads_flutter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -22,10 +21,8 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    AdropAdsFlutter adropAdsFlutterPlugin = AdropAdsFlutter();
+
     MockAdropAdsFlutterPlatform fakePlatform = MockAdropAdsFlutterPlatform();
     AdropAdsFlutterPlatform.instance = fakePlatform;
-
-    // expect(await adropAdsFlutterPlugin.getPlatformVersion(), '42');
   });
 }
