@@ -14,7 +14,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case AdropMethod.INITIALIZE:
-            Adrop.instance.initialize(production: call.arguments as? Bool ?? false)
+            Adrop.initialize(production: call.arguments as? Bool ?? false)
         default:
             result(FlutterMethodNotImplemented)
         }

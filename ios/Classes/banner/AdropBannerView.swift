@@ -20,7 +20,7 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
         binaryMessenger messenger: FlutterBinaryMessenger,
         call: CallCreateBanner
     ) { 
-        banner = AdropBanner(unitId: call.unitId, adSize: call.adSize)
+        banner = AdropBanner(unitId: call.unitId)
         methodChannel = FlutterMethodChannel(name: AdropChannel.methodBannerChannelOf(id: viewId.description), binaryMessenger: messenger)
 
         super.init()
@@ -42,15 +42,15 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
         }
     }
     
-    func onAdReceived() {
+    func onAdReceived(_ banner: AdropBanner) {
         methodChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: nil)
     }
     
-    func onAdClicked() {
+    func onAdClicked(_ banner: AdropBanner) {
         methodChannel.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: nil)
     }
     
-    func onAdFailedToReceive(_ error: AdropAds.AdropErrorCode) {
+    func onAdFailedToReceive(_ banner: AdropBanner, _ error: AdropAds.AdropErrorCode) {
         methodChannel.invokeMethod(AdropMethod.DID_FAILED_TO_RECEIVE, arguments: error.rawValue)
     }
 }
