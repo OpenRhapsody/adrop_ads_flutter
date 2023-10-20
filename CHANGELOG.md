@@ -1,3 +1,2 @@
 ## 0.1.0
-
-* TODO: Describe initial release.
+    adrop_ads_flutter release
