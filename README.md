@@ -61,7 +61,7 @@ class MyAppState extends State<MyApp> {
 
   Future<void> initialize() async {
     let production = false;  // TODO set true for production mode 
-    await AdropAdsFlutter.initialize(production);
+    await Adrop.initialize(production);
   }
 }
 ```
@@ -96,15 +96,14 @@ class YourComponent extends StatelessWidget {
             child: AdropBanner(
               onAdropBannerCreated: _onAdropBannerCreated,
               unitId: unitId,
-              adSize: AdropBannerSize.h80,
-              onAdClicked: () {
-                debugPrint("onAdClicked");
+              onAdClicked: (banner) {
+                debugPrint("onAdClicked: ${banner.unitId}");
               },
-              onAdReceived: () {
-                debugPrint("onAdReceived");
+              onAdReceived: (banner) {
+                debugPrint("onAdReceived: ${banner.unitId}");
               },
-              onAdFailedToReceive: (code) {
-                debugPrint("onAdFailedToReceive: $code");
+              onAdFailedToReceive: (banner, code) {
+                debugPrint("onAdFailedToReceive: ${banner.unitId} $code");
               },
             ),
           )

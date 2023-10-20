@@ -8,7 +8,6 @@ import com.openrhapsody.adrop_ads_flutter.banner.AdropBannerViewFactory
 import com.openrhapsody.adrop_ads_flutter.bridge.AdropChannel
 import com.openrhapsody.adrop_ads_flutter.bridge.AdropError
 import com.openrhapsody.adrop_ads_flutter.bridge.AdropMethod
-import com.openrhapsody.ads.Adrop
 import com.openrhapsody.ads.model.AdropErrorCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware

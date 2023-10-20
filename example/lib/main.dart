@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+import 'package:adrop_ads_flutter/adrop.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initialize() async {
-    await AdropAdsFlutter.initialize(true);
+    await Adrop.initialize(true);
   }
 
   void _onAdropBannerCreated(AdropBannerController controller) {
@@ -67,15 +67,14 @@ class _MyAppState extends State<MyApp> {
                 child: AdropBanner(
                   onAdropBannerCreated: _onAdropBannerCreated,
                   unitId: getUnitId(),
-                  adSize: AdropBannerSize.h80,
-                  onAdClicked: () {
-                    debugPrint("onAdClicked");
+                  onAdClicked: (banner) {
+                    debugPrint("onAdClicked: ${banner.unitId}");
                   },
-                  onAdReceived: () {
-                    debugPrint("onAdReceived");
+                  onAdReceived: (banner) {
+                    debugPrint("onAdReceived: ${banner.unitId}");
                   },
-                  onAdFailedToReceive: (code) {
-                    debugPrint("onAdFailedToReceive: $code");
+                  onAdFailedToReceive: (banner, code) {
+                    debugPrint("onAdFailedToReceive: ${banner.unitId} $code");
                   },
                 ),
               ),

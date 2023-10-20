@@ -39,15 +39,15 @@ class AdropBannerView(
         banner.destroy()
     }
 
-    override fun onAdReceived() {
+    override fun onAdReceived(banner: AdropBanner) {
         methodChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, null)
     }
 
-    override fun onAdClicked() {
+    override fun onAdClicked(banner: AdropBanner) {
         methodChannel.invokeMethod(AdropMethod.DID_CLICK_AD, null)
     }
 
-    override fun onAdFailedToReceive(error: AdropErrorCode) {
+    override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
         methodChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, error.name)
     }
 
