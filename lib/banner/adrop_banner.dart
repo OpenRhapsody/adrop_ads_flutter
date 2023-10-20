@@ -53,6 +53,11 @@ class AdropBanner extends StatelessWidget {
   }
 
   void _onPlatformViewCreated(int id) {
-    onAdropBannerCreated(AdropBannerController.withId(id));
+    onAdropBannerCreated(AdropBannerController.withId(
+      id,
+      onAdReceived: onAdReceived,
+      onAdClicked: onAdClicked,
+      onAdFailedToReceive: onAdFailedToReceive,
+    ));
   }
 }

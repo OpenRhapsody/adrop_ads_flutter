@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-import 'package:adrop_ads_flutter/banner/adrop_banner.dart';
-import 'package:adrop_ads_flutter/banner/adrop_banner_container.dart';
-import 'package:adrop_ads_flutter/banner/adrop_banner_size.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +24,6 @@ class _MyAppState extends State<MyApp> {
     initialize();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initialize() async {
     await AdropAdsFlutter.initialize(true);
   }
@@ -73,13 +69,13 @@ class _MyAppState extends State<MyApp> {
                   unitId: getUnitId(),
                   adSize: AdropBannerSize.h80,
                   onAdClicked: () {
-                    print("onAdClicked");
+                    debugPrint("onAdClicked");
                   },
                   onAdReceived: () {
-                    print("onAdReceived");
+                    debugPrint("onAdReceived");
                   },
                   onAdFailedToReceive: (code) {
-                    print("onAdFailedToReceive: $code");
+                    debugPrint("onAdFailedToReceive: $code");
                   },
                 ),
               ),
