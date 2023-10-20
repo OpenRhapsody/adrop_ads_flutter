@@ -21,5 +21,8 @@ class AdropBannerViewFactory: NSObject, FlutterPlatformViewFactory {
         let call = CallCreateBanner(encoding: args as? [String : Any?])
         return AdropBannerView(frame: frame, viewIdentifier: viewId, binaryMessenger: messenger, call: call)
     }
+    
+    func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
+        return FlutterStandardMessageCodec.sharedInstance()
+    }
 }
-
