@@ -1,4 +1,3 @@
-import 'package:adrop_ads_flutter/adrop_method_channel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
