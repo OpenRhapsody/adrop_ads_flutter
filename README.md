@@ -112,3 +112,5 @@ class YourComponent extends StatelessWidget {
   }
 }
 ```
+
+# :wanring: iOS Podfile
