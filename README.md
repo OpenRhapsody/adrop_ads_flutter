@@ -13,6 +13,8 @@ Prerequisites
     - compileSdkVersion 33
   - iOS
     - Latest version of Xcode with enabled command-line tools
+    - Swift 5.0
+    - ios 14.0
 
 Getting Started
 ---------------
