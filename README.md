@@ -26,7 +26,8 @@ flutter pub add adrop_ads_flutter
 
 ### 2. Add adrop_service.json
 
-Download ***adrop_service.json*** from [Adrop](https://adrop.io), add to android/ios
+Get ***adrop_service.json*** from [Adrop](https://adrop.io), add to android/ios
+(Use different ***adrop_service.json*** files for each platform.)
 
 Android
 > android/app/src/main/assets/adrop_service.json
@@ -57,7 +58,7 @@ class MyAppState extends State<MyApp> {
   }
 
   Future<void> initialize() async {
-    let production = true;  // set false if developing 
+    let production = false;  // TODO set true for production mode 
     await AdropAdsFlutter.initialize(production);
   }
 }
@@ -67,7 +68,7 @@ class MyAppState extends State<MyApp> {
 ```dart
 class YourComponent extends StatelessWidget {
   late final AdropBannerController _bannerController;
-  final String unitId = ""; // replace your unitId
+  final String unitId = ""; // TODO replace your unitId
 
   void _onAdropBannerCreated(AdropBannerController controller) {
     _bannerController = controller;
