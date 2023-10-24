@@ -1,4 +1,4 @@
-package com.openrhapsody.adrop_ads_flutter.model
+package io.adrop.adrop_ads.model
 
 data class CallCreateBanner(
     var unitId: String

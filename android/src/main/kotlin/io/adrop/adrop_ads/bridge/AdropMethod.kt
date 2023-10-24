@@ -1,4 +1,4 @@
-package com.openrhapsody.adrop_ads_flutter.bridge
+package io.adrop.adrop_ads.bridge
 
 object AdropMethod {
     const val INITIALIZE = "initialize"

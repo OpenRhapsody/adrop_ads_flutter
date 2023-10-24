@@ -1,14 +1,14 @@
-package com.openrhapsody.adrop_ads_flutter.banner
+package io.adrop.adrop_ads.banner
 
 import android.content.Context
 import android.view.View
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropChannel
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropError
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropMethod
-import com.openrhapsody.adrop_ads_flutter.model.CallCreateBanner
-import com.openrhapsody.ads.banner.AdropBanner
-import com.openrhapsody.ads.banner.AdropBannerListener
-import com.openrhapsody.ads.model.AdropErrorCode
+import io.adrop.adrop_ads.bridge.AdropChannel
+import io.adrop.adrop_ads.bridge.AdropError
+import io.adrop.adrop_ads.bridge.AdropMethod
+import io.adrop.adrop_ads.model.CallCreateBanner
+import io.adrop.ads.banner.AdropBanner
+import io.adrop.ads.banner.AdropBannerListener
+import io.adrop.ads.model.AdropErrorCode
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

@@ -68,5 +68,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.openrhapsody:adrop-ads:0.2.1+'
+    implementation 'io.adrop:adrop-ads:0.1.0+'
 }

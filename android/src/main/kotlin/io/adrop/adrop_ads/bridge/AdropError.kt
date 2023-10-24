@@ -1,6 +1,6 @@
-package com.openrhapsody.adrop_ads_flutter.bridge
+package io.adrop.adrop_ads.bridge
 
-import com.openrhapsody.ads.model.AdropErrorCode
+import io.adrop.ads.model.AdropErrorCode
 
 
 class AdropError(private val _code: AdropErrorCode) : Exception(_code.name) {

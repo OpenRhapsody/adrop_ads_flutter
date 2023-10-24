@@ -1,15 +1,15 @@
-package com.openrhapsody.adrop_ads_flutter
+package io.adrop.adrop_ads
 
 import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull
-import com.openrhapsody.adrop_ads_flutter.banner.AdropBannerViewFactory
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropChannel
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropError
-import com.openrhapsody.adrop_ads_flutter.bridge.AdropMethod
-import com.openrhapsody.ads.Adrop
-import com.openrhapsody.ads.model.AdropErrorCode
+import io.adrop.adrop_ads.banner.AdropBannerViewFactory
+import io.adrop.adrop_ads.bridge.AdropChannel
+import io.adrop.adrop_ads.bridge.AdropError
+import io.adrop.adrop_ads.bridge.AdropMethod
+import io.adrop.ads.Adrop
+import io.adrop.ads.model.AdropErrorCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding

@@ -8,7 +8,7 @@
 import Foundation
 
 struct AdropChannel {
-    static let methodChannel = "com.openrhapsody.adrop-ads"
+    static let methodChannel = "io.adrop.adrop-ads"
     static let methodBannerChannel = "\(methodChannel)/banner"
 
     static func methodBannerChannelOf(id: String) -> String {

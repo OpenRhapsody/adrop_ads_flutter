@@ -1,7 +1,7 @@
-package com.openrhapsody.adrop_ads_flutter.banner
+package io.adrop.adrop_ads.banner
 
 import android.content.Context
-import com.openrhapsody.adrop_ads_flutter.model.CallCreateBanner
+import io.adrop.adrop_ads.model.CallCreateBanner
 
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
