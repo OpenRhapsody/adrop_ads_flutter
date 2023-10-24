@@ -1,3 +1,6 @@
+## 0.2.2
+    android sdk version
+
 ## 0.2.1
     update sdk
 
