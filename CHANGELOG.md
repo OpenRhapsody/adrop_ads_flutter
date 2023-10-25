@@ -1,3 +1,5 @@
+## 0.2.4
+    - API Documentation
 ## 0.2.3
     - support kotlin 1.7.10 or higher
 
