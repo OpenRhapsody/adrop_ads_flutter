@@ -1,6 +1,6 @@
 name: adrop_ads_flutter
 description: AdropAds flutter plugin that shows ads using native platform views
-version: 0.2.2
+version: 0.2.3
 publisher: dev@openrhapsody.com
 homepage: https://adrop.io
 repository: https://github.com/OpenRhapsody/adrop_ads_flutter

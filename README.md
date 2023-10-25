@@ -3,13 +3,15 @@ AdropAds
 
 Adrop ads plugin for flutter
 
+[![pub package](https://img.shields.io/pub/v/adrop_ads_flutter)](https://pub.dev/packages/adrop_ads_flutter)
+
 
 Prerequisites
 -------------
   - Flutter 3.3.0 or higher
   - Android
     - Android Studio 3.2 or higher
-    - kotlin 1.9.0 or higher
+    - kotlin 1.7.10 or higher
     - gradle 8.0 or higher
     - minSdkVersion 24
     - compileSdkVersion 33
@@ -121,12 +123,5 @@ class YourComponent extends StatelessWidget {
 add this your ios Podfile
 
 ```
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-        target.build_configurations.each do |config|
-          config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-        end
-  end
-end
+config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'      
 ```

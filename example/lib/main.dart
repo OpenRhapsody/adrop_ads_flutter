@@ -25,7 +25,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initialize() async {
-    await Adrop.initialize(true);
+    var production = false;  // TODO set true for production mode 
+    await Adrop.initialize(production);
   }
 
   void _onAdropBannerCreated(AdropBannerController controller) {

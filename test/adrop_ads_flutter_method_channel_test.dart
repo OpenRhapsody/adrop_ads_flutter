@@ -18,4 +18,8 @@ void main() {
   tearDown(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
   });
+  
+  test('initialize', () async {
+        
+  });
 }
