@@ -37,6 +37,8 @@ Android
 > android/app/src/main/assets/adrop_service.json
 
 iOS
+
+Add "adrop-service.json" to the Runner of your Xcode project
 > ios/Runner/adrop_service.json
 
 ### 3. Initialize AdropAds
