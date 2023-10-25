@@ -9,6 +9,8 @@ Prerequisites
   - Flutter 3.3.0 or higher
   - Android
     - Android Studio 3.2 or higher
+    - kotlin 1.9.0 or higher
+    - gradle 8.0 or higher
     - minSdkVersion 24
     - compileSdkVersion 33
   - iOS
@@ -39,7 +41,7 @@ iOS
 
 ### 3. Initialize AdropAds
 ```dart
-import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+import 'package:adrop_ads_flutter/adrop.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,7 +62,7 @@ class MyAppState extends State<MyApp> {
   }
 
   Future<void> initialize() async {
-    let production = false;  // TODO set true for production mode 
+    var production = false;  // TODO set true for production mode 
     await Adrop.initialize(production);
   }
 }
