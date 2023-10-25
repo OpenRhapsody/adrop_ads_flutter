@@ -1,6 +1,5 @@
 import 'package:adrop_ads_flutter/adrop_platform_interface.dart';
 import 'package:adrop_ads_flutter/adrop_method_channel.dart';
-import 'package:adrop_ads_flutter/adrop.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
