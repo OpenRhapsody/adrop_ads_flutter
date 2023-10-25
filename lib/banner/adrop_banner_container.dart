@@ -10,7 +10,8 @@ class AdropBannerController {
   final AdropBanner _banner;
   final void Function(AdropBanner banner)? onAdReceived;
   final void Function(AdropBanner banner)? onAdClicked;
-  final void Function(AdropBanner banner, AdropErrorCode code)? onAdFailedToReceive;
+  final void Function(AdropBanner banner, AdropErrorCode code)?
+      onAdFailedToReceive;
 
   AdropBannerController.withId(
     int id, {
@@ -29,7 +30,8 @@ class AdropBannerController {
           onAdClicked?.call(_banner);
           break;
         case AdropMethod.didFailToReceiveAd:
-          onAdFailedToReceive?.call(_banner, AdropErrorCode.getByCode(call.arguments));
+          onAdFailedToReceive?.call(
+              _banner, AdropErrorCode.getByCode(call.arguments));
           break;
       }
     });

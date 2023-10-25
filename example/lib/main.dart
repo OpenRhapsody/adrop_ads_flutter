@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initialize() async {
-    var production = false;  // TODO set true for production mode 
+    var production = false; // TODO set true for production mode
     await Adrop.initialize(production);
   }
 

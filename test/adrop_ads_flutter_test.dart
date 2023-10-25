@@ -6,15 +6,11 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockAdropAdsFlutterPlatform
     with MockPlatformInterfaceMixin
     implements AdropPlatform {
-
   @override
-  Future<void> initialize(bool production) async {
-    
-  }
+  Future<void> initialize(bool production) async {}
 }
 
 void main() {
-
   final AdropPlatform initialPlatform = AdropPlatform.instance;
 
   test('$AdropMethodChannel is the default instance', () {
@@ -23,5 +19,5 @@ void main() {
 
   test('initialize', () async {
     await MockAdropAdsFlutterPlatform().initialize(true);
-  }); 
+  });
 }

@@ -6,7 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-typedef AdropBannerCreatedCallback = void Function(AdropBannerController controller);
+typedef AdropBannerCreatedCallback = void Function(
+    AdropBannerController controller);
 
 class AdropBanner extends StatelessWidget {
   final String unitId;
@@ -14,7 +15,8 @@ class AdropBanner extends StatelessWidget {
   final AdropBannerCreatedCallback _onAdropBannerCreated;
   final void Function(AdropBanner banner)? _onAdReceived;
   final void Function(AdropBanner banner)? _onAdClicked;
-  final void Function(AdropBanner banner, AdropErrorCode code)? _onAdFailedToReceive;
+  final void Function(AdropBanner banner, AdropErrorCode code)?
+      _onAdFailedToReceive;
 
   const AdropBanner({
     super.key,
