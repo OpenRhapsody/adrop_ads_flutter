@@ -35,13 +35,19 @@ flutter pub add adrop_ads_flutter
 Get ***adrop_service.json*** from [Adrop](https://adrop.io), add to android/ios
 (Use different ***adrop_service.json*** files for each platform.)
 
-Android
+#### Android
 > android/app/src/main/assets/adrop_service.json
 
-iOS
+#### iOS
 
 Add "adrop-service.json" to the Runner of your Xcode project
 > ios/Runner/adrop_service.json
+
+add this your ios Podfile
+
+```
+config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'      
+```
 
 ### 3. Initialize AdropAds
 ```dart
@@ -72,7 +78,7 @@ class MyAppState extends State<MyApp> {
 }
 ```
 
-### 5. Load Ads
+### 4. Load Ads
 ```dart
 class YourComponent extends StatelessWidget {
   late final AdropBannerController _bannerController;
@@ -116,12 +122,4 @@ class YourComponent extends StatelessWidget {
         ]);
   }
 }
-```
-
-### iOS Podfile
-
-add this your ios Podfile
-
-```
-config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'      
 ```
