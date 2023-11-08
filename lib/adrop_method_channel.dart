@@ -9,6 +9,6 @@ const _methodChannel = MethodChannel(AdropChannel.methodChannel);
 class AdropMethodChannel extends AdropPlatform {
   @override
   Future<void> initialize(bool production) async {
-    await _methodChannel.invokeMethod(AdropMethod.initialize);
+    await _methodChannel.invokeMethod(AdropMethod.initialize, production);
   }
 }

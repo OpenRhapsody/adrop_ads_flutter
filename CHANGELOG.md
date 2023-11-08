@@ -1,3 +1,7 @@
+## 0.2.6
+    - iOS initialize
+    - check production level
+
 ## 0.2.5
     - API Documentation
 

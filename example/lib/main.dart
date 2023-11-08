@@ -36,9 +36,9 @@ class _MyAppState extends State<MyApp> {
   String getUnitId() {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return "01HD5R49SJGY7KKEP9MK8DYEN7";
+        return "ADROP_PUBLIC_TEST_UNIT_ID";
       case TargetPlatform.iOS:
-        return "01HD5R54R6TDK91Y78M0J0SVCV";
+        return "PUBLIC_TEST_UNIT_ID_320_100";
       default:
         return "";
     }
