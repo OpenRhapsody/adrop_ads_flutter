@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 7.0.1">
+  <meta name="generator" content="made with love by dartdoc 7.0.2">
   <meta name="description" content="adrop_ads_flutter API docs, for the Dart programming language.">
   <title>adrop_ads_flutter - Dart API docs</title>
 
@@ -57,45 +57,98 @@
 <p><a href="https://pub.dev/packages/adrop_ads_flutter"><img src="https://img.shields.io/pub/v/adrop_ads_flutter" alt="pub package"></a></p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
-<li>Flutter 3.3.0 or higher</li>
-<li>Android
+<li>Install your preferred <a href="https://flutter.io/get-started/editor/">editor or IDE</a>.</li>
+<li>Make sure that your app meets the following requirements:
 <ul>
-<li>Android Studio 3.2 or higher</li>
-<li>kotlin 1.7.10 or higher</li>
-<li>gradle 8.0 or higher</li>
-<li>minSdkVersion 24</li>
-<li>compileSdkVersion 33</li>
+<li><strong>Android</strong>
+<ul>
+<li>Targets API level 23 (M) or higher</li>
+<li>Uses Android 6.0 or higher
+<ul>
+<li>minSdkVersion 23</li>
 </ul>
 </li>
-<li>iOS
+<li>Uses <a href="https://developer.android.com/jetpack/androidx/migrate">Jetpack (AndroidX)</a>, which includes meeting these version requirements:
 <ul>
-<li>Latest version of Xcode with enabled command-line tools</li>
-<li>Swift 5.0</li>
-<li>ios 14.0</li>
+<li><code>com.android.tools.build:gradle</code> v7.3.0 or later</li>
+<li><code>compileSdkVersion</code> 33</li>
 </ul>
 </li>
 </ul>
-<h2 id="getting-started">Getting Started</h2>
-<p>Before you can display ads in your app, you'll need to create an <a href="https://adrop.io">Adrop</a> account.</p>
-<h3 id="1-add-dependency">1. Add dependency</h3>
-<pre class="language-agsl"><code class="language-agsl">flutter pub add adrop_ads_flutter
+</li>
+<li><strong>iOS</strong>
+<ul>
+<li>ios 13.0</li>
+<li>swift 5.0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Install Flutter for your specific operating system, including the following:
+<ul>
+<li>Flutter SDK</li>
+<li>Supporting libraries</li>
+<li>Platform-specific software and SDKs</li>
+</ul>
+</li>
+<li><a href="https://adrop.io">Sign into Adrop</a> using your email or Google account.</li>
+</ul>
+<p></p>
+<h3 id="step-1-create-a-adrop-project">Step 1: Create a Adrop project</h3>
+<p>Before you can add Adrop to your Flutter app, you need to <a href="https://adrop.gitbook.io/adrop-docs/guides/get-started-with-adrop#create-a-app-container-publisher-project">create a Adrop project</a> to connect to your app.</p>
+<h3 id="step-2-register-your-app-with-adrop">Step 2: Register your app with Adrop</h3>
+<p>To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.</p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>Make sure to enter the package name that your app is actually using. The package name value is case-sensitive, and it cannot be changed for this Adrop Android app after it's registered with your Adrop project.</p>
+</blockquote>
+<ol>
+<li>Go to the Adrop console.</li>
+<li>In the center of the project app page, click the <strong>Flutter</strong> icon button to launch the setup workflow.</li>
+<li>Enter your app's package name in the <strong>Flutter package name</strong> field.
+<ul>
+<li>A <a href="https://developer.android.com/studio/build/application-id">package name</a> uniquely identifies your app on the device and in the Google Play Store or App Store.</li>
+<li>A package name is often referred to as an application ID.</li>
+<li>Be aware that the package name value is case-sensitive, and it cannot be changed for this Adrop Flutter app after it's registered with your Adrop project.</li>
+</ul>
+</li>
+<li>Enter other app information: <strong>App nickname</strong>.
+<ul>
+<li><strong>App nickname</strong>: An internal, convenience identifier that is only visible to you in the Adrop console</li>
+</ul>
+</li>
+<li>Click <strong>Register app</strong> and then Android and Apple apps will be created respectively.</li>
+</ol>
+<h3 id="step-3-add-a-adrop-configuration-file">Step 3: Add a Adrop configuration file</h3>
+<h4 id="android">Android</h4>
+<ol>
+<li>Download <strong>adrop_service.json</strong> to obtain your Adrop Android platforms config file.</li>
+<li>Move your config file into your assets directory.
+<code>android/app/src/main/assets/adrop_service.json</code></li>
+</ol>
+<h4 id="ios">iOS</h4>
+<ol>
+<li>Download <strong>adrop_service.json</strong> to obtain your Adrop Apple platforms config file.</li>
+<li>Move your config file into the root of your Xcode project. If prompted, select to add the config file to all targets.</li>
+</ol>
+<h3 id="step-4-add-adrop-plugin-to-your-app">Step 4: Add Adrop plugin to your app</h3>
+<p>From your Flutter project directory, run the following command to install the plugin.</p>
+<pre class="language-shell"><code class="language-shell">flutter pub add adrop_ads_flutter
 </code></pre>
-<h3 id="2-add-adrop_servicejson">2. Add adrop_service.json</h3>
-<p>Get <em><strong>adrop_service.json</strong></em> from <a href="https://adrop.io">Adrop</a>, add to android/ios
-(Use different <em><strong>adrop_service.json</strong></em> files for each platform.)</p>
-<p>Android</p>
-<blockquote>
-<p>android/app/src/main/assets/adrop_service.json</p>
-</blockquote>
-<p>iOS</p>
-<p>Add "adrop-service.json" to the Runner of your Xcode project</p>
-<blockquote>
-<p>ios/Runner/adrop_service.json</p>
-</blockquote>
-<h3 id="3-initialize-adropads">3. Initialize AdropAds</h3>
-<pre class="language-dart"><code class="language-dart">import 'package:adrop_ads_flutter/adrop.dart';
-
-void main() {
+<p>Install the pods, then open your .xcworkspace file to see the project in Xcode:</p>
+<pre class="language-shell"><code class="language-shell">pod install --repo-update
+</code></pre>
+<h3 id="step-5-initialize-adrop-in-your-app">Step 5: Initialize Adrop in your app</h3>
+<p>The final step is to add initialization code to your application.</p>
+<ol>
+<li>Import the Adrop plugin.</li>
+</ol>
+<pre class="language-dart"><code class="language-dart">import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+</code></pre>
+<ol start="2">
+<li>Also in your <code>lib/main.dart</code> file, initialize Adrop.</li>
+</ol>
+<pre class="language-dart"><code class="language-dart">void main() {
   runApp(const MyApp());
 }
 
@@ -114,58 +167,106 @@ class MyAppState extends State&lt;MyApp&gt; {
   }
 
   Future&lt;void&gt; initialize() async {
-    var production = false;  // TODO set true for production mode 
-    await Adrop.initialize(production);
+    // ..
+    // true for production
+    await Adrop.initialize(false);
   }
 }
-</code></pre>
-<h3 id="5-load-ads">5. Load Ads</h3>
-<pre class="language-dart"><code class="language-dart">class YourComponent extends StatelessWidget {
-  late final AdropBannerController _bannerController;
-  final String unitId = ""; // TODO replace your unitId
 
-  void _onAdropBannerCreated(AdropBannerController controller) {
-    _bannerController = controller;
-  }
+</code></pre>
+<ol start="3">
+<li>Rebuild your Flutter application.</li>
+</ol>
+<pre class="language-shell"><code class="language-shell">flutter run
+</code></pre>
+<h3 id="optional-troubleshooting">(Optional) Troubleshooting</h3>
+<pre class="language-shell"><code class="language-shell"># Add this line to your Podfile
+use_frameworks!
+
+# ...
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+
+    #...
+    # Add this line to your Podfile
+    config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+  end
+end
+</code></pre>
+<hr>
+<p></p>
+<h2 id="create-your-ad-unit">Create your Ad unit</h2>
+<h3 id=""></h3>
+<p>From the <a href="https://adrop.io/projects">Adrop console</a>, go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).</p>
+<hr>
+<h3 id="creating-ad-units">Creating Ad units</h3>
+<p>To create a new Ad unit:</p>
+<ol>
+<li>From the left navigation menu, select <strong>Ad Units</strong>.</li>
+<li>Select <strong>Create Ad unit</strong> to bring up the ad unit builder.</li>
+<li>Enter an Ad unit name, then select your app (iOS or Android) and <a href="https://adrop.gitbook.io/adrop-docs/guides/create-your-ad-unit#a-d-formats">Ad format</a> (Banner, Interstitial, or Rewarded).</li>
+<li>Select <strong>Create</strong> to save your Ad unit.</li>
+</ol>
+<h3 id="ad-unit-id">Ad unit ID</h3>
+<p>The Ad unit’s unique identifier to reference in your code. This setting is read-only.</p>
+<blockquote>
+<p><strong>Note</strong> These are unit ids for test</p>
+<ul>
+<li>PUBLIC_TEST_UNIT_ID_320_50</li>
+<li>PUBLIC_TEST_UNIT_ID_375_80</li>
+<li>PUBLIC_TEST_UNIT_ID_320_100</li>
+</ul>
+</blockquote>
+<h3 id="display-adropbanner">Display AdropBanner</h3>
+<p>Initialize AdropBanner with Ad unit ID, then load ad.</p>
+<pre class="language-dart"><code class="language-dart">class YourComponentState extends State&lt;YourComponent&gt; {
+  
+  final unitId = "";
+  bool isLoaded = false;
+  AdropBannerView? bannerView;
 
   @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+  void initState() {
+    super.initState();
 
+    bannerView = AdropBannerView(
+      unitId: getUnitId(),
+      listener: AdropBannerListener(
+        onAdReceived: (unitId) {
+          setState(() {
+            isLoaded = true;
+          });
+        },
+        onAdFailedToReceive: (unitId, error) {
+          setState(() {
+            isLoaded = false;
+          });
+        },
+      ),
+    );
+    bannerView!.load();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
     return Column(
-        children: [
-          TextButton(
-              onPressed: () {
-                _bannerController.load();
-              },
-              child: const Text('Request Ad!')),
+      children: [
+        TextButton(
+            onPressed: () {
+              bannerManager.load(unitId);
+            },
+            child: const Text('Reload Ad!')),
+        if (bannerView != null &amp;&amp; isLoaded)
           SizedBox(
-            width: screenWidth,
-            height: 80,
-            child: AdropBanner(
-              onAdropBannerCreated: _onAdropBannerCreated,
-              unitId: unitId,
-              onAdClicked: (banner) {
-                debugPrint("onAdClicked: ${banner.unitId}");
-              },
-              onAdReceived: (banner) {
-                debugPrint("onAdReceived: ${banner.unitId}");
-              },
-              onAdFailedToReceive: (banner, code) {
-                debugPrint("onAdFailedToReceive: ${banner.unitId} $code");
-              },
-            ),
-          )
-        ]);
+              width: screenWidth,
+              height: 80,
+              child: bannerView),
+      ],
+    );
   }
 }
-</code></pre>
-<h3 id="ios-podfile">iOS Podfile</h3>
-<p>add this your ios Podfile</p>
-<pre class="language-dart"><code>config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'      
 </code></pre>
 </section>
 
@@ -173,64 +274,8 @@ class MyAppState extends State&lt;MyApp&gt; {
       <section class="summary">
           <h2>Libraries</h2>
         <dl>
-          <dt id="adrop">
-  <span class="name"><a href="adrop/adrop-library.html">adrop</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_banner">
-  <span class="name"><a href="banner_adrop_banner/banner_adrop_banner-library.html">adrop_banner</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_banner_container">
-  <span class="name"><a href="banner_adrop_banner_container/banner_adrop_banner_container-library.html">adrop_banner_container</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_channel">
-  <span class="name"><a href="bridge_adrop_channel/bridge_adrop_channel-library.html">adrop_channel</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_error_code">
-  <span class="name"><a href="adrop_error_code/adrop_error_code-library.html">adrop_error_code</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_method">
-  <span class="name"><a href="bridge_adrop_method/bridge_adrop_method-library.html">adrop_method</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_method_channel">
-  <span class="name"><a href="adrop_method_channel/adrop_method_channel-library.html">adrop_method_channel</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="adrop_platform_interface">
-  <span class="name"><a href="adrop_platform_interface/adrop_platform_interface-library.html">adrop_platform_interface</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="call_create_banner">
-  <span class="name"><a href="model_call_create_banner/model_call_create_banner-library.html">call_create_banner</a></span> 
+          <dt id="adrop_ads_flutter">
+  <span class="name"><a href="adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></span> 
 
 </dt>
 <dd>
@@ -257,15 +302,7 @@ class MyAppState extends State&lt;MyApp&gt; {
     <h5 class="hidden-xs"><span class="package-name">adrop_ads_flutter</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="adrop/adrop-library.html">adrop</a></li>
-      <li><a href="banner_adrop_banner/banner_adrop_banner-library.html">adrop_banner</a></li>
-      <li><a href="banner_adrop_banner_container/banner_adrop_banner_container-library.html">adrop_banner_container</a></li>
-      <li><a href="bridge_adrop_channel/bridge_adrop_channel-library.html">adrop_channel</a></li>
-      <li><a href="adrop_error_code/adrop_error_code-library.html">adrop_error_code</a></li>
-      <li><a href="bridge_adrop_method/bridge_adrop_method-library.html">adrop_method</a></li>
-      <li><a href="adrop_method_channel/adrop_method_channel-library.html">adrop_method_channel</a></li>
-      <li><a href="adrop_platform_interface/adrop_platform_interface-library.html">adrop_platform_interface</a></li>
-      <li><a href="model_call_create_banner/model_call_create_banner-library.html">call_create_banner</a></li>
+      <li><a href="adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
 </ol>
 
   </div>
@@ -278,7 +315,7 @@ class MyAppState extends State&lt;MyApp&gt; {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.2.3
+      0.2.7
   </span>
 
   

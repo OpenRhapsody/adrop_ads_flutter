@@ -27,3 +27,13 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
+
+lib/adrop_error_code.dart
+lib/adrop_method_channel.dart
+lib/adrop_platform_interface.dart
+lib/banner/adrop_banner.dart
+lib/banner/adrop_banner_container.dart
+lib/bridge/adrop_channel.dart
+lib/bridge/adrop_method.dart
+lib/model/call_create_banner.dart
+

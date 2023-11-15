@@ -6,6 +6,7 @@ import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.adrop_ads.model.CallCreateBanner
+
 import io.adrop.ads.banner.AdropBanner
 import io.adrop.ads.banner.AdropBannerListener
 import io.adrop.ads.model.AdropErrorCode
@@ -19,43 +20,37 @@ class AdropBannerView(
     viewId: Int,
     messenger: BinaryMessenger,
     callData: CallCreateBanner,
+    private val bannerManager: AdropBannerManager
 ) : PlatformView, MethodChannel.MethodCallHandler, AdropBannerListener {
-    private var banner: AdropBanner
     private val methodChannel: MethodChannel
+    private var unitId: String
+    private var errorView: View
 
     init {
-        banner = AdropBanner(context, callData.unitId)
-        banner.listener = this
+        unitId = callData.unitId
+        val banner = bannerManager.create(unitId)
+
+        banner?.apply { listener = this@AdropBannerView }
+
+        errorView = View(context)
 
         methodChannel = MethodChannel(messenger, AdropChannel.methodBannerChannelOf(viewId))
         methodChannel.setMethodCallHandler(this)
     }
 
     override fun getView(): View {
-        return banner
+        return bannerManager.getAd(unitId) ?: errorView
     }
 
     override fun dispose() {
-        banner.destroy()
-    }
-
-    override fun onAdReceived(banner: AdropBanner) {
-        methodChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, null)
-    }
-
-    override fun onAdClicked(banner: AdropBanner) {
-        methodChannel.invokeMethod(AdropMethod.DID_CLICK_AD, null)
-    }
-
-    override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
-        methodChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, error.name)
+        bannerManager.destroy(unitId)
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         try {
             when (call.method) {
                 AdropMethod.LOAD_BANNER -> {
-                    banner.load()
+                    bannerManager.load(unitId)
                     result.success(null)
                 }
 
@@ -68,5 +63,21 @@ class AdropBannerView(
         } catch (e: Error) {
             e.printStackTrace()
         }
+    }
+
+    override fun onAdClicked(banner: AdropBanner) {
+        methodChannel.invokeMethod(AdropMethod.DID_CLICK_AD, banner.getUnitId())
+        bannerManager.onAdClicked(banner)
+    }
+
+    override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
+        val args = mapOf<String, String?>("unitId" to banner.getUnitId(), "error" to error.name)
+        methodChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, args)
+        bannerManager.onAdFailedToReceive(banner, error)
+    }
+
+    override fun onAdReceived(banner: AdropBanner) {
+        methodChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, banner.getUnitId())
+        bannerManager.onAdReceived(banner)
     }
 }

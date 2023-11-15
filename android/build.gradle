@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 23
     }
 
     dependencies {
@@ -68,5 +68,5 @@ android {
 }
 
 dependencies {
-    implementation 'io.adrop:adrop-ads:0.1.2'
+    implementation 'io.adrop:adrop-ads:0.1+'
 }

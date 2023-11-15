@@ -1,5 +1,5 @@
-import 'package:adrop_ads_flutter/adrop_platform_interface.dart';
-import 'package:adrop_ads_flutter/adrop_method_channel.dart';
+import 'package:adrop_ads_flutter/src/adrop_platform_interface.dart';
+import 'package:adrop_ads_flutter/src/adrop_method_channel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -8,6 +8,9 @@ class MockAdropAdsFlutterPlatform
     implements AdropPlatform {
   @override
   Future<void> initialize(bool production) async {}
+
+  @override
+  Future<void> loadBanner(String unitId) async {}
 }
 
 void main() {

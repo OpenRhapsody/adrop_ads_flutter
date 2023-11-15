@@ -1,6 +1,8 @@
 import 'dart:async';
 
-import 'package:adrop_ads_flutter/adrop.dart';
+import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+
+import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +18,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final AdropBannerController _bannerController;
+  bool isLoaded = false;
+  AdropBannerView? bannerView;
 
   @override
   void initState() {
     super.initState();
     initialize();
+
+    _loadAd();
   }
 
   Future<void> initialize() async {
@@ -29,16 +34,33 @@ class _MyAppState extends State<MyApp> {
     await Adrop.initialize(production);
   }
 
-  void _onAdropBannerCreated(AdropBannerController controller) {
-    _bannerController = controller;
+  void _loadAd() {
+    bannerView = AdropBannerView(
+      unitId: getUnitId(),
+      listener: AdropBannerListener(
+        onAdReceived: (unitId) {
+          debugPrint("ad received $unitId");
+          setState(() {
+            isLoaded = true;
+          });
+        },
+        onAdFailedToReceive: (unitId, error) {
+          debugPrint("ad onAdFailedToReceive $unitId, $error");
+          setState(() {
+            isLoaded = false;
+          });
+        },
+      ),
+    );
+    bannerView!.load();
   }
 
   String getUnitId() {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return "ADROP_PUBLIC_TEST_UNIT_ID";
+        return testUnitId_50;
       case TargetPlatform.iOS:
-        return "PUBLIC_TEST_UNIT_ID_320_100";
+        return testUnitId_80;
       default:
         return "";
     }
@@ -58,27 +80,16 @@ class _MyAppState extends State<MyApp> {
             children: [
               TextButton(
                   onPressed: () {
-                    _bannerController.load();
+                    bannerView?.load();
                   },
-                  child: const Text('Request Ad!')),
+                  child: const Text('Reload Ad!')),
               const Spacer(),
-              SizedBox(
-                width: screenWidth,
-                height: 80,
-                child: AdropBanner(
-                  onAdropBannerCreated: _onAdropBannerCreated,
-                  unitId: getUnitId(),
-                  onAdClicked: (banner) {
-                    debugPrint("onAdClicked: ${banner.unitId}");
-                  },
-                  onAdReceived: (banner) {
-                    debugPrint("onAdReceived: ${banner.unitId}");
-                  },
-                  onAdFailedToReceive: (banner, code) {
-                    debugPrint("onAdFailedToReceive: ${banner.unitId} $code");
-                  },
-                ),
-              ),
+              if (bannerView != null && isLoaded)
+                SizedBox(
+                  width: screenWidth,
+                  height: 80,
+                  child: bannerView,
+                )
             ],
           ),
         ),

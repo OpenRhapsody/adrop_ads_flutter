@@ -1,3 +1,9 @@
+## 0.2.7
+    - Android minSdkVersion 23
+    - ios 13.0
+    - Add AdropBannerView
+    - Deprecated AdropBannerController, AdropBanner
+
 ## 0.2.6
     - iOS initialize
     - check production level

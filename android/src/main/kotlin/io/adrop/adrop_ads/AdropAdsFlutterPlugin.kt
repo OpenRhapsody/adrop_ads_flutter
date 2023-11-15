@@ -5,9 +5,11 @@ import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull
 import io.adrop.adrop_ads.banner.AdropBannerViewFactory
+import io.adrop.adrop_ads.banner.AdropBannerManager
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
+
 import io.adrop.ads.Adrop
 import io.adrop.ads.model.AdropErrorCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -23,15 +25,18 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var context: Context? = null
 
     private lateinit var channel: MethodChannel
+    private lateinit var bannerManager: AdropBannerManager
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, AdropChannel.METHOD_CHANNEL)
+        val messenger = flutterPluginBinding.binaryMessenger
+        channel = MethodChannel(messenger, AdropChannel.METHOD_CHANNEL)
         channel.setMethodCallHandler(this)
+        bannerManager = AdropBannerManager(context, messenger)
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             AdropChannel.METHOD_BANNER_CHANNEL,
-            AdropBannerViewFactory(flutterPluginBinding.binaryMessenger),
+            AdropBannerViewFactory(messenger, bannerManager),
         )
     }
 
@@ -47,6 +52,10 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                AdropMethod.LOAD_BANNER -> {
+                    bannerManager.load(call.arguments() ?: "")
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         } catch (e: AdropError) {
