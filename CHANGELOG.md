@@ -1,3 +1,6 @@
+## 0.2.8
+    - flutter 3.3.0
+
 ## 0.2.7
     - Android minSdkVersion 23
     - ios 13.0

@@ -19,6 +19,7 @@ class AdropBanner extends StatelessWidget {
       _onAdFailedToReceive;
 
   @Deprecated("use AdropBannerView, AdropManager")
+
   /// Banner view class responsible for displaying banner ads to the user.
   ///
   /// [unitId] required Ad unit ID

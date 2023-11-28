@@ -1,7 +1,6 @@
 import 'adrop_platform_interface.dart';
 
 class Adrop {
-
   /// Initializes Adrop
   ///
   /// [production] When false, display error log in sdk

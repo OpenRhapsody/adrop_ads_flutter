@@ -8,9 +8,6 @@ class MockAdropAdsFlutterPlatform
     implements AdropPlatform {
   @override
   Future<void> initialize(bool production) async {}
-
-  @override
-  Future<void> loadBanner(String unitId) async {}
 }
 
 void main() {

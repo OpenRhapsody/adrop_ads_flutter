@@ -1,17 +1,18 @@
+import '../adrop_error_code.dart';
 import '../banner/adrop_banner_view.dart';
-import '../adrop_platform_interface.dart';
 import '../bridge/adrop_channel.dart';
 import '../bridge/adrop_method.dart';
 import 'package:flutter/services.dart';
 
-AdropAdManager bannerManager = AdropAdManager(AdropChannel.methodChannel);
+final AdropAdManager adropAdManager =
+    AdropAdManager(AdropChannel.methodChannel);
 
 class AdropAdManager {
-  final MethodChannel channel;
+  final MethodChannel _channel;
   final Map<String, AdropBannerView> _loadedAds = <String, AdropBannerView>{};
 
-  AdropAdManager(String channelName) : channel = MethodChannel(channelName) {
-    channel.setMethodCallHandler((call) async {
+  AdropAdManager(String channelName) : _channel = MethodChannel(channelName) {
+    _channel.setMethodCallHandler((call) async {
       switch (call.method) {
         case AdropMethod.didReceiveAd:
           var unitId = call.arguments ?? "";
@@ -24,7 +25,10 @@ class AdropAdManager {
         case AdropMethod.didFailToReceiveAd:
           var args = call.arguments;
           var unitId = args["unitId"];
-          _loadedAds[unitId]?.listener?.onAdFailedToReceive?.call(unitId, args["error"]);
+          _loadedAds[unitId]
+              ?.listener
+              ?.onAdFailedToReceive
+              ?.call(unitId, AdropErrorCode.getByCode(args["error"]));
           break;
       }
     });
@@ -32,6 +36,6 @@ class AdropAdManager {
 
   Future<void> load(AdropBannerView banner) async {
     _loadedAds[banner.unitId] = banner;
-    return await AdropPlatform.instance.loadBanner(banner.unitId);
+    return await _channel.invokeMethod(AdropMethod.loadBanner, banner.unitId);
   }
 }

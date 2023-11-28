@@ -41,6 +41,6 @@ class AdropBannerView extends StatelessWidget {
 
   /// Requests an ad from Adrop using the Ad unit ID of the AdropBannerView.
   Future<void> load() async {
-    return await bannerManager.load(this);
+    return await adropAdManager.load(this);
   }
 }

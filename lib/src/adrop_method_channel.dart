@@ -11,9 +11,4 @@ class AdropMethodChannel extends AdropPlatform {
   Future<void> initialize(bool production) async {
     await _methodChannel.invokeMethod(AdropMethod.initialize, production);
   }
-
-  @override
-  Future<void> loadBanner(String unitId) async {
-    await _methodChannel.invokeMethod(AdropMethod.loadBanner, unitId);
-  }
 }

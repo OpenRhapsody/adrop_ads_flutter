@@ -19,8 +19,4 @@ abstract class AdropPlatform extends PlatformInterface {
   Future<void> initialize(bool production) async {
     throw UnimplementedError('initialize() has not been implemented.');
   }
-
-  Future<void> loadBanner(String unitId) async {
-    throw UnimplementedError('loadBanner(String unitId) has not been implemented.');
-  }
 }
