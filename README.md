@@ -172,7 +172,7 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 Initialize AdropBannerView with Ad unit ID, then load ad.
 ```dart
 class YourComponentState extends State<YourComponent> {
-  
+
   final unitId = "";
   bool isLoaded = false;
   AdropBannerView? bannerView;
@@ -182,7 +182,7 @@ class YourComponentState extends State<YourComponent> {
     super.initState();
 
     bannerView = AdropBannerView(
-      unitId: getUnitId(),
+      unitId: unitId,
       listener: AdropBannerListener(
         onAdReceived: (unitId) {
           setState(() {
@@ -198,7 +198,7 @@ class YourComponentState extends State<YourComponent> {
     );
     bannerView!.load();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -208,11 +208,11 @@ class YourComponentState extends State<YourComponent> {
               bannerManager.load(unitId);
             },
             child: const Text('Reload Ad!')),
-        if (bannerView != null && isLoaded)
-          SizedBox(
-              width: screenWidth,
-              height: 80,
-              child: bannerView),
+        bannerView != null && isLoaded ?
+        SizedBox(
+            width: screenWidth,
+            height: 80,
+            child: bannerView) : Container(),
       ],
     );
   }
