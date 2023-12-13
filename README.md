@@ -168,8 +168,8 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_320_100
 
 
-### Display AdropBanner
-Initialize AdropBanner with Ad unit ID, then load ad.
+### Display AdropBannerView
+Initialize AdropBannerView with Ad unit ID, then load ad.
 ```dart
 class YourComponentState extends State<YourComponent> {
   
@@ -218,6 +218,17 @@ class YourComponentState extends State<YourComponent> {
   }
 }
 ```
+
+### Dispose AdropBannerView
+AdropBannerView must be disposed of when access to it is no longer needed. 
+```dart
+@override
+void dispose() {
+  super.dispose();
+  bannerView?.dispose();
+}
+```
+
 
 
 
