@@ -5,19 +5,31 @@ import UIKit
 class AdropBannerViewFactory: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
     private var bannerManager: AdropBannerManager
-
+    
     init(messenger: FlutterBinaryMessenger, bannerManager: AdropBannerManager) {
         self.messenger = messenger
         self.bannerManager = bannerManager
         super.init()
     }
-
+    
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
         let call = CallCreateBanner(encoding: args as? [String : Any?])
-        return AdropBannerView(frame: frame, viewIdentifier: viewId, binaryMessenger: messenger, call: call, bannerManager: bannerManager)
+        if let banner = bannerManager.getAd(unitId: call.unitId) {
+            return AdropFlutterPlatformView(view: banner)
+        } else {
+            return ErrorView()
+        }
     }
-
+    
     func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
         return FlutterStandardMessageCodec.sharedInstance()
     }
+}
+
+private class ErrorView: NSObject, FlutterPlatformView {
+    
+    func view() -> UIView {
+        return UIView()
+    }
+    
 }

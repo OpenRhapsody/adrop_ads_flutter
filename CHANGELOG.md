@@ -1,3 +1,6 @@
+## 0.2.9
+    - AdropBannerView dispose
+
 ## 0.2.8
     - flutter 3.3.0
 

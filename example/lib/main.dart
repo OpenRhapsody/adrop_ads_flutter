@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _loadAd() {
-    bannerView = AdropBannerView(
+    bannerView ??= AdropBannerView(
       unitId: getUnitId(),
       listener: AdropBannerListener(
         onAdReceived: (unitId) {
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-    bannerView!.load();
+    bannerView?.load();
   }
 
   String getUnitId() {
@@ -63,6 +63,17 @@ class _MyAppState extends State<MyApp> {
         return testUnitId_80;
       default:
         return "";
+    }
+  }
+
+  double adSize() {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 50;
+      case TargetPlatform.iOS:
+        return 80;
+      default:
+        return 0;
     }
   }
 
@@ -78,22 +89,36 @@ class _MyAppState extends State<MyApp> {
         body: SafeArea(
           child: Column(
             children: [
+              TextButton(onPressed: _loadAd, child: const Text('Reload Ad!')),
               TextButton(
                   onPressed: () {
-                    bannerView?.load();
+                    bannerView?.dispose();
+                    setState(() {
+                      bannerView = null;
+                      isLoaded = false;
+                    });
                   },
-                  child: const Text('Reload Ad!')),
+                  child: const Text('dispose')),
               const Spacer(),
-              if (bannerView != null && isLoaded)
-                SizedBox(
-                  width: screenWidth,
-                  height: 80,
-                  child: bannerView,
-                )
+              bannerView != null && isLoaded
+                  ? SizedBox(
+                      width: screenWidth,
+                      height: adSize(),
+                      child: bannerView,
+                    )
+                  : Container(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    bannerView?.dispose();
+    bannerView = null;
   }
 }

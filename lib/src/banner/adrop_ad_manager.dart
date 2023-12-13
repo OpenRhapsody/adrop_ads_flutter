@@ -38,4 +38,9 @@ class AdropAdManager {
     _loadedAds[banner.unitId] = banner;
     return await _channel.invokeMethod(AdropMethod.loadBanner, banner.unitId);
   }
+
+  Future<void> dispose(AdropBannerView banner) async {
+    _loadedAds.remove(banner.unitId);
+    return await _channel.invokeMethod(AdropMethod.adDispose, banner.unitId);
+  }
 }

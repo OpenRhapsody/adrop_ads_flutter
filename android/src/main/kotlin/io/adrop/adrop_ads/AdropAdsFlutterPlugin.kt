@@ -4,12 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull
-import io.adrop.adrop_ads.banner.AdropBannerViewFactory
 import io.adrop.adrop_ads.banner.AdropBannerManager
+import io.adrop.adrop_ads.banner.AdropBannerViewFactory
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
-
 import io.adrop.ads.Adrop
 import io.adrop.ads.model.AdropErrorCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -56,6 +55,12 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     bannerManager.load(call.arguments() ?: "")
                     result.success(null)
                 }
+
+                AdropMethod.AD_DISPOSE -> {
+                    bannerManager.destroy(call.arguments() ?: "")
+                    result.success(null)
+                }
+
                 else -> result.notImplemented()
             }
         } catch (e: AdropError) {

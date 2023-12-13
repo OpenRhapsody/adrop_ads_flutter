@@ -43,4 +43,9 @@ class AdropBannerView extends StatelessWidget {
   Future<void> load() async {
     return await adropAdManager.load(this);
   }
+
+  /// Invoked when dispose() is called on the corresponding AdropBannerView
+  Future<void> dispose() async {
+    return await adropAdManager.dispose(this);
+  }
 }

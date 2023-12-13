@@ -24,6 +24,9 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         case AdropMethod.LOAD_BANNER:
             bannerManager?.load(unitId: call.arguments as? String ??  "")
             result(nil)
+        case AdropMethod.AD_DISPOSE:
+            bannerManager?.destroy(unitId: call.arguments as? String ?? "")
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }

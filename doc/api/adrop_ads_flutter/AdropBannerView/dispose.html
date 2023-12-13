@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the onAdReceived property from the AdropBannerController class, for the Dart programming language.">
-  <title>onAdReceived property - AdropBannerController class - adrop_ads_flutter library - Dart API</title>
+  <meta name="description" content="API docs for the dispose method from the AdropBannerView class, for the Dart programming language.">
+  <title>dispose method - AdropBannerView class - adrop_ads_flutter library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropBannerController-class.html">AdropBannerController</a></li>
-    <li class="self-crumb">onAdReceived property</li>
+    <li><a href="../../adrop_ads_flutter/AdropBannerView-class.html">AdropBannerView</a></li>
+    <li class="self-crumb">dispose method</li>
   </ol>
-  <div class="self-name">onAdReceived</div>
+  <div class="self-name">dispose</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,25 +54,33 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="adrop_ads_flutter&#47;AdropBannerController-class-sidebar.html"
+      data-above-sidebar="adrop_ads_flutter&#47;AdropBannerView-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-property">onAdReceived</span> property 
+<h1><span class="kind-method">dispose</span> method 
 </h1></div>
 
-        <section class="multi-line-signature">
-          
-          (void Function<span class="signature">(<span class="parameter" id="param-banner"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropBanner-class.html">AdropBanner</a></span> <span class="parameter-name">banner</span></span>)</span>?)
-          <span class="name ">onAdReceived</span>
-          <div class="features"><span class="feature">final</span></div>
+    <section class="multi-line-signature">
+      
 
-        </section>
-        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">dispose</span>(<wbr>)
 
-        
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Invoked when dispose() is called on the corresponding AdropBannerView</p>
+</section>
+
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final void Function(AdropBanner banner)? onAdReceived;</code></pre>
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; dispose() async {
+  return await adropAdManager.dispose(this);
+}</code></pre>
 </section>
 
 
@@ -89,12 +97,12 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropBannerController-class.html">AdropBannerController</a></li>
-    <li class="self-crumb">onAdReceived property</li>
+    <li><a href="../../adrop_ads_flutter/AdropBannerView-class.html">AdropBannerView</a></li>
+    <li class="self-crumb">dispose method</li>
 </ol>
 
 
-    <h5>AdropBannerController class</h5>
+    <h5>AdropBannerView class</h5>
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

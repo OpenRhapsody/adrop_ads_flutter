@@ -1,6 +1,7 @@
 class AdropMethod {
   static const String initialize = "initialize";
   static const String loadBanner = "loadBanner";
+  static const String adDispose = "adDispose";
 
   static const String didReceiveAd = "onAdReceived";
   static const String didClickAd = "onAdClicked";

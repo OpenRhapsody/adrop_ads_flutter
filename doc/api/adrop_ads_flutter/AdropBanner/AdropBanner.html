@@ -99,25 +99,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@Deprecated(&quot;use AdropBannerView, AdropManager&quot;)
-&#47;&#47;&#47; Banner view class responsible for displaying banner ads to the user.
-&#47;&#47;&#47;
-&#47;&#47;&#47; [unitId] required Ad unit ID
-&#47;&#47;&#47; [onAdropBannerCreated] required callback controller
-&#47;&#47;&#47; [onAdReceived] optional invoked when the banner receives an ad.
-&#47;&#47;&#47; [onAdClicked] optional invoked when the AdropBanner is clicked.
-&#47;&#47;&#47; [onAdFailedToReceive] optional invoked when the banner fails to receive an ad.
-const AdropBanner({
-  super.key,
-  required this.unitId,
-  required void Function(AdropBannerController) onAdropBannerCreated,
-  void Function(AdropBanner)? onAdReceived,
-  void Function(AdropBanner)? onAdClicked,
-  void Function(AdropBanner, AdropErrorCode)? onAdFailedToReceive,
-})  : _onAdropBannerCreated = onAdropBannerCreated,
-      _onAdFailedToReceive = onAdFailedToReceive,
-      _onAdClicked = onAdClicked,
-      _onAdReceived = onAdReceived;</code></pre>
+  <pre class="language-dart"><code class="language-dart">const AdropBanner</code></pre>
 </section>
 
 
@@ -140,7 +122,6 @@ const AdropBanner({
 
 
     <h5>AdropBanner class</h5>
-    <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -151,7 +132,7 @@ const AdropBanner({
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.2.7
+      0.2.9
   </span>
 
   
