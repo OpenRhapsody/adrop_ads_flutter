@@ -219,10 +219,10 @@ end
 <li>PUBLIC_TEST_UNIT_ID_320_100</li>
 </ul>
 </blockquote>
-<h3 id="display-adropbanner">Display AdropBanner</h3>
-<p>Initialize AdropBanner with Ad unit ID, then load ad.</p>
+<h3 id="display-adropbannerview">Display AdropBannerView</h3>
+<p>Initialize AdropBannerView with Ad unit ID, then load ad.</p>
 <pre class="language-dart"><code class="language-dart">class YourComponentState extends State&lt;YourComponent&gt; {
-  
+
   final unitId = "";
   bool isLoaded = false;
   AdropBannerView? bannerView;
@@ -232,7 +232,7 @@ end
     super.initState();
 
     bannerView = AdropBannerView(
-      unitId: getUnitId(),
+      unitId: unitId,
       listener: AdropBannerListener(
         onAdReceived: (unitId) {
           setState(() {
@@ -248,7 +248,7 @@ end
     );
     bannerView!.load();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -258,14 +258,22 @@ end
               bannerManager.load(unitId);
             },
             child: const Text('Reload Ad!')),
-        if (bannerView != null &amp;&amp; isLoaded)
-          SizedBox(
-              width: screenWidth,
-              height: 80,
-              child: bannerView),
+        bannerView != null &amp;&amp; isLoaded ?
+        SizedBox(
+            width: screenWidth,
+            height: 80,
+            child: bannerView) : Container(),
       ],
     );
   }
+}
+</code></pre>
+<h3 id="dispose-adropbannerview">Dispose AdropBannerView</h3>
+<p>AdropBannerView must be disposed of when access to it is no longer needed.</p>
+<pre class="language-dart"><code class="language-dart">@override
+void dispose() {
+  super.dispose();
+  bannerView?.dispose();
 }
 </code></pre>
 </section>
