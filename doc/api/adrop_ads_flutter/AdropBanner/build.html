@@ -123,14 +123,14 @@ Widget build(BuildContext context) {
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
       return AndroidView(
-        viewType: AdropChannel.methodBannerChannel,
+        viewType: AdropChannel.bannerEventListenerChannel,
         creationParams: creationParams.toJson(),
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
       );
     case TargetPlatform.iOS:
       return UiKitView(
-        viewType: AdropChannel.methodBannerChannel,
+        viewType: AdropChannel.bannerEventListenerChannel,
         creationParams: creationParams.toJson(),
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
@@ -171,7 +171,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.2.9
+      0.3.0
   </span>
 
   

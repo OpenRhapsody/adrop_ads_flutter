@@ -1,18 +1,17 @@
+import 'package:flutter/services.dart';
 import '../adrop_error_code.dart';
 import '../banner/adrop_banner_view.dart';
 import '../bridge/adrop_channel.dart';
 import '../bridge/adrop_method.dart';
-import 'package:flutter/services.dart';
 
-final AdropAdManager adropAdManager =
-    AdropAdManager(AdropChannel.methodChannel);
+final AdropAdManager adropAdManager = AdropAdManager(AdropChannel.invokeChannel);
 
 class AdropAdManager {
-  final MethodChannel _channel;
+  final MethodChannel _invokeChannel;
   final Map<String, AdropBannerView> _loadedAds = <String, AdropBannerView>{};
 
-  AdropAdManager(String channelName) : _channel = MethodChannel(channelName) {
-    _channel.setMethodCallHandler((call) async {
+  AdropAdManager(String channelName) : _invokeChannel = MethodChannel(channelName) {
+    _invokeChannel.setMethodCallHandler((call) async {
       switch (call.method) {
         case AdropMethod.didReceiveAd:
           var unitId = call.arguments ?? "";
@@ -25,10 +24,7 @@ class AdropAdManager {
         case AdropMethod.didFailToReceiveAd:
           var args = call.arguments;
           var unitId = args["unitId"];
-          _loadedAds[unitId]
-              ?.listener
-              ?.onAdFailedToReceive
-              ?.call(unitId, AdropErrorCode.getByCode(args["error"]));
+          _loadedAds[unitId]?.listener?.onAdFailedToReceive?.call(unitId, AdropErrorCode.getByCode(args["error"]));
           break;
       }
     });
@@ -36,11 +32,11 @@ class AdropAdManager {
 
   Future<void> load(AdropBannerView banner) async {
     _loadedAds[banner.unitId] = banner;
-    return await _channel.invokeMethod(AdropMethod.loadBanner, banner.unitId);
+    return await _invokeChannel.invokeMethod(AdropMethod.loadBanner, banner.unitId);
   }
 
   Future<void> dispose(AdropBannerView banner) async {
     _loadedAds.remove(banner.unitId);
-    return await _channel.invokeMethod(AdropMethod.adDispose, banner.unitId);
+    return await _invokeChannel.invokeMethod(AdropMethod.disposeBanner, banner.unitId);
   }
 }

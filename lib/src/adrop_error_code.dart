@@ -17,6 +17,18 @@ enum AdropErrorCode {
   /// Unable to receive ads that meet the criteria. Please retry.
   adNoFill("ERROR_CODE_AD_NO_FILL"),
 
+  /// Unable to load again after ad received.
+  adLoadDuplicate("ERROR_CODE_AD_LOAD_DUPLICATED"),
+
+  /// Unable to load again before ad received
+  adLoading("ERROR_CODE_AD_LOADING"),
+
+  /// Unable to show ad before ad received
+  adEmpty("ERROR_CODE_AD_EMPTY"),
+
+  /// Unable to show ad again
+  adShown("ERROR_CODE_AD_SHOWN"),
+
   /// undefined code
   undefined("UNDEFINED");
 

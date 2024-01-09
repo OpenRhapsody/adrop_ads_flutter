@@ -217,9 +217,13 @@ end
 <li>PUBLIC_TEST_UNIT_ID_320_50</li>
 <li>PUBLIC_TEST_UNIT_ID_375_80</li>
 <li>PUBLIC_TEST_UNIT_ID_320_100</li>
+<li>PUBLIC_TEST_UNIT_ID_INTERSTITIAL</li>
+<li>PUBLIC_TEST_UNIT_ID_REWARDED</li>
 </ul>
 </blockquote>
-<h3 id="display-adropbannerview">Display AdropBannerView</h3>
+<h3 id="display-ads">Display Ads</h3>
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Banner</summary>
 <p>Initialize AdropBannerView with Ad unit ID, then load ad.</p>
 <pre class="language-dart"><code class="language-dart">class YourComponentState extends State&lt;YourComponent&gt; {
 
@@ -268,7 +272,6 @@ end
   }
 }
 </code></pre>
-<h3 id="dispose-adropbannerview">Dispose AdropBannerView</h3>
 <p>AdropBannerView must be disposed of when access to it is no longer needed.</p>
 <pre class="language-dart"><code class="language-dart">@override
 void dispose() {
@@ -276,6 +279,139 @@ void dispose() {
   bannerView?.dispose();
 }
 </code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Interstitial Ad</summary>
+<p>Step 1: (Optional) Construct event listener</p>
+<pre class="language-dart"><code class="language-dart">final AdropInterstitialListener listener = AdropInterstitialListener(
+    onAdReceived: (ad) =&gt;
+        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) =&gt; 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
+        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
+    ...
+);
+</code></pre>
+<p>Step 2: Display an interstitial ad</p>
+<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
+}
+
+class _YourComponentState extends State&lt;YourComponent&gt; {
+  final AdropInterstitialAd interstitialAd = AdropInterstitialAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    interstitialAd.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            final isLoaded = interstitialAd.isLoaded ?? false;
+            if (isLoaded) {
+              interstitialAd.show();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('interstitial ad is loading...'))
+              );
+            }
+          },
+          child: const Text('display ad'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+<p>AdropInterstitialAd must be disposed of when access to it is no longer needed.</p>
+<pre class="language-dart"><code class="language-dart">@override
+void dispose() {
+  super.dispose();
+  interstitialAd.dispose();
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Rewarded Ad</summary>
+<p>Step 1: (Optional) Construct event listener</p>
+<pre class="language-dart"><code class="language-dart">final AdropRewardedListener listener = AdropRewardedListener(
+    onAdReceived: (ad) =&gt;
+        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) =&gt; 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
+        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
+    onAdEarnRewardHandler: (ad, type, amount) {
+        debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
+        // implement your actions with rewards
+    },
+    ...
+);
+</code></pre>
+<p>Step 2: Display a rewarded ad</p>
+<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
+}
+
+class _YourComponentState extends State&lt;YourComponent&gt; {
+  final AdropRewardedAd rewardedAd = AdropRewardedAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    rewardedAd.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            final isLoaded = rewardedAd?.isLoaded ?? false;
+            if (isLoaded) {
+              rewardedAd.show();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('rewarded ad is loading...'))
+              );
+            }
+          },
+          child: const Text('display ad'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+<p>AdropRewardedAd must be disposed of when access to it is no longer needed.</p>
+<pre class="language-dart"><code class="language-dart">@override
+void dispose() {
+  super.dispose();
+  rewardedAd.dispose();
+}
+</code></pre>
+</details>
 </section>
 
 
@@ -323,7 +459,7 @@ void dispose() {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.2.9
+      0.3.0
   </span>
 
   

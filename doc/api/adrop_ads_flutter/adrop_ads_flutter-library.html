@@ -96,7 +96,7 @@
 
 </dt>
 <dd>
-  
+  Listener called when there is a change in the <a href="../adrop_ads_flutter/AdropBannerView-class.html">AdropBannerView</a>.
 </dd>
 
         <dt id="AdropBannerView">
@@ -107,6 +107,38 @@
   
 </dd>
 
+        <dt id="AdropInterstitialAd">
+  <span class="name "><a href="../adrop_ads_flutter/AdropInterstitialAd-class.html">AdropInterstitialAd</a></span> 
+
+</dt>
+<dd>
+  AdropInterstitialAd class responsible for requesting interstitial ads and displaying them to the user.
+</dd>
+
+        <dt id="AdropInterstitialListener">
+  <span class="name "><a href="../adrop_ads_flutter/AdropInterstitialListener-class.html">AdropInterstitialListener</a></span> 
+
+</dt>
+<dd>
+  A listener called when load or show is called in the <a href="../adrop_ads_flutter/AdropInterstitialAd-class.html">AdropInterstitialAd</a>.
+</dd>
+
+        <dt id="AdropRewardedAd">
+  <span class="name "><a href="../adrop_ads_flutter/AdropRewardedAd-class.html">AdropRewardedAd</a></span> 
+
+</dt>
+<dd>
+  AdropRewardedAd class responsible for requesting rewarded ads and displaying them to the user.
+</dd>
+
+        <dt id="AdropRewardedListener">
+  <span class="name "><a href="../adrop_ads_flutter/AdropRewardedListener-class.html">AdropRewardedListener</a></span> 
+
+</dt>
+<dd>
+  A listener called when load or show is called in the <a href="../adrop_ads_flutter/AdropRewardedAd-class.html">AdropRewardedAd</a>.
+</dd>
+
       </dl>
     </section>
 
@@ -115,11 +147,53 @@
 
 
 
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+
+      <dl>
+        <dt id="AdropErrorCode">
+  <span class="name "><a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+      </dl>
+    </section>
 
     <section class="summary offset-anchor" id="typedefs">
       <h2>Typedefs</h2>
 
       <dl>
+          
+  <dt id="AdropAdCallback" class="callable">
+    <span class="name"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a></span><span class="signature">
+      <span class="returntype parameter">= void Function<span class="signature">(<span class="parameter" id="param-ad"><span class="type-annotation">AdropAd</span> <span class="parameter-name">ad</span></span>)</span></span>
+    </span>
+    
+
+  </dt>
+  <dd>
+    
+    
+
+  </dd>
+
+          
+  <dt id="AdropAdErrorCallback" class="callable">
+    <span class="name"><a href="../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a></span><span class="signature">
+      <span class="returntype parameter">= void Function<span class="signature">(<span class="parameter" id="param-ad"><span class="type-annotation">AdropAd</span> <span class="parameter-name">ad</span>, </span><span class="parameter" id="param-errorCode"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span> <span class="parameter-name">errorCode</span></span>)</span></span>
+    </span>
+    
+
+  </dt>
+  <dd>
+    
+    
+
+  </dd>
+
           
   <dt id="AdropAdEventCallback" class="callable">
     <span class="name"><a href="../adrop_ads_flutter/AdropAdEventCallback.html">AdropAdEventCallback</a></span><span class="signature">
@@ -137,7 +211,21 @@
           
   <dt id="AdropAdFailedCallback" class="callable">
     <span class="name"><a href="../adrop_ads_flutter/AdropAdFailedCallback.html">AdropAdFailedCallback</a></span><span class="signature">
-      <span class="returntype parameter">= void Function<span class="signature">(<span class="parameter" id="param-unitId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="param-error"><span class="type-annotation">AdropErrorCode</span> <span class="parameter-name">error</span></span>)</span></span>
+      <span class="returntype parameter">= void Function<span class="signature">(<span class="parameter" id="param-unitId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="param-errorCode"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span> <span class="parameter-name">errorCode</span></span>)</span></span>
+    </span>
+    
+
+  </dt>
+  <dd>
+    
+    
+
+  </dd>
+
+          
+  <dt id="AdropAdRewardEventCallback" class="callable">
+    <span class="name"><a href="../adrop_ads_flutter/AdropAdRewardEventCallback.html">AdropAdRewardEventCallback</a></span><span class="signature">
+      <span class="returntype parameter">= void Function<span class="signature">(<span class="parameter" id="param-ad"><span class="type-annotation">AdropAd</span> <span class="parameter-name">ad</span>, </span><span class="parameter" id="param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">type</span>, </span><span class="parameter" id="param-amount"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">amount</span></span>)</span></span>
     </span>
     
 
@@ -199,7 +287,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.2.9
+      0.3.0
   </span>
 
   

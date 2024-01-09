@@ -1,13 +1,13 @@
-import '../adrop_error_code.dart';
-import 'adrop_banner_controller.dart';
-import '../bridge/adrop_channel.dart';
-import '../model/call_create_banner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-typedef AdropBannerCreatedCallback = void Function(
-    AdropBannerController controller);
+import '../adrop_error_code.dart';
+import '../bridge/adrop_channel.dart';
+import '../model/call_create_banner.dart';
+import 'adrop_banner_controller.dart';
+
+typedef AdropBannerCreatedCallback = void Function(AdropBannerController controller);
 
 class AdropBanner extends StatelessWidget {
   final String unitId;
@@ -15,8 +15,7 @@ class AdropBanner extends StatelessWidget {
   final AdropBannerCreatedCallback _onAdropBannerCreated;
   final void Function(AdropBanner banner)? _onAdReceived;
   final void Function(AdropBanner banner)? _onAdClicked;
-  final void Function(AdropBanner banner, AdropErrorCode code)?
-      _onAdFailedToReceive;
+  final void Function(AdropBanner banner, AdropErrorCode errorCode)? _onAdFailedToReceive;
 
   @Deprecated("use AdropBannerView, AdropManager")
 
@@ -46,14 +45,14 @@ class AdropBanner extends StatelessWidget {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return AndroidView(
-          viewType: AdropChannel.methodBannerChannel,
+          viewType: AdropChannel.bannerEventListenerChannel,
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
           onPlatformViewCreated: _onPlatformViewCreated,
         );
       case TargetPlatform.iOS:
         return UiKitView(
-          viewType: AdropChannel.methodBannerChannel,
+          viewType: AdropChannel.bannerEventListenerChannel,
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
           onPlatformViewCreated: _onPlatformViewCreated,

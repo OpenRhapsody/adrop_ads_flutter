@@ -1,7 +1,7 @@
 package io.adrop.adrop_ads.banner
 
 import android.view.View
-import io.flutter.plugin.platform.PlatformView;
+import io.flutter.plugin.platform.PlatformView
 
 class FlutterPlatformView(
     private var view: View?

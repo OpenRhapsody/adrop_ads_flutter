@@ -12,19 +12,17 @@ import io.flutter.plugin.common.MethodChannel
 
 
 class AdropBannerManager(
-    val context: Context?,
+    private val context: Context?,
     messenger: BinaryMessenger
 ) : AdropBannerListener {
 
-    private val adropChannel = MethodChannel(messenger, AdropChannel.METHOD_CHANNEL)
+    private val adropChannel = MethodChannel(messenger, AdropChannel.INVOKE_CHANNEL)
     private val ads: MutableMap<String, AdropBanner?> = mutableMapOf()
 
-    fun create(unitId: String): AdropBanner? {
+    private fun create(unitId: String): AdropBanner? {
         if (context == null) return null
 
-        return ads[unitId]?.let {
-            it
-        } ?: let {
+        return ads[unitId] ?: let {
             val banner = ads[unitId] ?: AdropBanner(context, unitId)
             banner.listener = this
             ads[unitId] = banner

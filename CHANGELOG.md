@@ -1,3 +1,7 @@
+## 0.3.0
+    - AdropInterstitialAd
+    - AdropRewardedAd
+
 ## 0.2.9
     - AdropBannerView dispose
 

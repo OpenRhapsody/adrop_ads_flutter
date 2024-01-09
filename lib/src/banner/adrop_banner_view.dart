@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'adrop_ad_manager.dart';
-import 'adrop_banner_listener.dart';
+
 import '../bridge/adrop_channel.dart';
 import '../model/call_create_banner.dart';
+import 'adrop_ad_manager.dart';
+import 'adrop_banner_listener.dart';
 
 class AdropBannerView extends StatelessWidget {
   final String unitId;
@@ -24,13 +25,13 @@ class AdropBannerView extends StatelessWidget {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return AndroidView(
-          viewType: AdropChannel.methodBannerChannel,
+          viewType: AdropChannel.bannerEventListenerChannel,
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
         );
       case TargetPlatform.iOS:
         return UiKitView(
-          viewType: AdropChannel.methodBannerChannel,
+          viewType: AdropChannel.bannerEventListenerChannel,
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
         );

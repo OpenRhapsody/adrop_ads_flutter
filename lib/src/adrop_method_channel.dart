@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 
+import 'adrop_platform_interface.dart';
 import 'bridge/adrop_channel.dart';
 import 'bridge/adrop_method.dart';
-import 'adrop_platform_interface.dart';
 
-const _methodChannel = MethodChannel(AdropChannel.methodChannel);
+const _methodChannel = MethodChannel(AdropChannel.invokeChannel);
 
 class AdropMethodChannel extends AdropPlatform {
   @override

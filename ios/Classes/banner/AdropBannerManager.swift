@@ -36,20 +36,20 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     }
     
     private func adropChannel()-> FlutterMethodChannel {
-        return FlutterMethodChannel(name: AdropChannel.methodChannel, binaryMessenger: messenger)
+        return FlutterMethodChannel(name: AdropChannel.invokeChannel, binaryMessenger: messenger)
     }
     
     func onAdClicked(_ banner: AdropAds.AdropBanner) {
-        adropChannel().invokeMethod(AdropMethod.DID_CLICK_AD, arguments: banner.id)
+        adropChannel().invokeMethod(AdropMethod.DID_CLICK_AD, arguments: banner.unitId)
     }
     
     func onAdFailedToReceive(_ banner: AdropBanner, _ error: AdropErrorCode) {
-        let args: [String: Any] = ["unitId": banner.id, "error": AdropErrorCodeToString(code: error)]
+        let args: [String: Any] = ["unitId": banner.unitId, "error": AdropErrorCodeToString(code: error)]
         adropChannel().invokeMethod(AdropMethod.DID_FAILED_TO_RECEIVE, arguments: args)
         
     }
     
     func onAdReceived(_ banner: AdropBanner) {
-        adropChannel().invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: banner.id)
+        adropChannel().invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: banner.unitId)
     }
 }

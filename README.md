@@ -31,7 +31,7 @@ Prerequisites
 
 
 ### Step 1: Create a Adrop project
-Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://adrop.gitbook.io/adrop-docs/guides/get-started-with-adrop#create-a-app-container-publisher-project) to connect to your app.
+Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://docs.adrop.io/fundamentals/get-started-with-adrop#create-an-app-container) to connect to your app.
 
 ### Step 2: Register your app with Adrop
 To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.
@@ -156,7 +156,7 @@ From the [Adrop console](https://adrop.io/projects), go to project, then select 
 To create a new Ad unit:
 1. From the left navigation menu, select **Ad Units**.
 2. Select **Create Ad unit** to bring up the ad unit builder.
-3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://adrop.gitbook.io/adrop-docs/guides/create-your-ad-unit#a-d-formats) (Banner, Interstitial, or Rewarded).
+3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://docs.adrop.io/fundamentals/create-your-ad-unit#a-d-formats) (Banner, Interstitial, or Rewarded).
 4. Select **Create** to save your Ad unit.
 
 ### Ad unit ID
@@ -166,9 +166,13 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_320_50
 > * PUBLIC_TEST_UNIT_ID_375_80
 > * PUBLIC_TEST_UNIT_ID_320_100
+> * PUBLIC_TEST_UNIT_ID_INTERSTITIAL
+> * PUBLIC_TEST_UNIT_ID_REWARDED
 
+### Display Ads
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Banner</summary>
 
-### Display AdropBannerView
 Initialize AdropBannerView with Ad unit ID, then load ad.
 ```dart
 class YourComponentState extends State<YourComponent> {
@@ -218,9 +222,7 @@ class YourComponentState extends State<YourComponent> {
   }
 }
 ```
-
-### Dispose AdropBannerView
-AdropBannerView must be disposed of when access to it is no longer needed. 
+AdropBannerView must be disposed of when access to it is no longer needed.
 ```dart
 @override
 void dispose() {
@@ -228,9 +230,154 @@ void dispose() {
   bannerView?.dispose();
 }
 ```
+</details>
 
+<br>
 
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Interstitial Ad</summary>
 
+Step 1: (Optional) Construct event listener
+```dart
+final AdropInterstitialListener listener = AdropInterstitialListener(
+    onAdReceived: (ad) =>
+        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) => 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    onAdFailedToShowFullScreen: (ad, errorCode) =>
+        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
+    ...
+);
+```
 
+Step 2: Display an interstitial ad
+```dart
+class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _YourComponentState();
+}
 
+class _YourComponentState extends State<YourComponent> {
+  final AdropInterstitialAd interstitialAd = AdropInterstitialAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    interstitialAd.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            final isLoaded = interstitialAd.isLoaded ?? false;
+            if (isLoaded) {
+              interstitialAd.show();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('interstitial ad is loading...'))
+              );
+            }
+          },
+          child: const Text('display ad'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+AdropInterstitialAd must be disposed of when access to it is no longer needed.
+```dart
+@override
+void dispose() {
+  super.dispose();
+  interstitialAd.dispose();
+}
+```
+
+</details>
+
+<br>
+
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Rewarded Ad</summary>
+
+Step 1: (Optional) Construct event listener
+```dart
+final AdropRewardedListener listener = AdropRewardedListener(
+    onAdReceived: (ad) =>
+        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) => 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    onAdFailedToShowFullScreen: (ad, errorCode) =>
+        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
+    onAdEarnRewardHandler: (ad, type, amount) {
+        debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
+        // implement your actions with rewards
+    },
+    ...
+);
+```
+
+Step 2: Display a rewarded ad
+```dart
+class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _YourComponentState();
+}
+
+class _YourComponentState extends State<YourComponent> {
+  final AdropRewardedAd rewardedAd = AdropRewardedAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    rewardedAd.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            final isLoaded = rewardedAd?.isLoaded ?? false;
+            if (isLoaded) {
+              rewardedAd.show();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('rewarded ad is loading...'))
+              );
+            }
+          },
+          child: const Text('display ad'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+AdropRewardedAd must be disposed of when access to it is no longer needed.
+```dart
+@override
+void dispose() {
+  super.dispose();
+  rewardedAd.dispose();
+}
+```
+
+</details>
