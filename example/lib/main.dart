@@ -1,3 +1,4 @@
+import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/views/banner_example.dart';
 import 'package:adrop_ads_flutter_example/views/home.dart';
 import 'package:adrop_ads_flutter_example/views/interstitial_example.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+  Adrop.initialize(false);
 }
 
 class MyApp extends StatefulWidget {

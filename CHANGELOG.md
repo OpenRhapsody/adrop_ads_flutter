@@ -1,3 +1,9 @@
+## 0.4.0
+    - [iOS] Privacy Policy Update (Effective from May 1, 2024)
+
+## 0.3.1
+    - Support adrop-ads version dynamically
+
 ## 0.3.0
     - AdropInterstitialAd
     - AdropRewardedAd

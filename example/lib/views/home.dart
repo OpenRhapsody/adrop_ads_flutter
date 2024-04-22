@@ -1,4 +1,3 @@
-import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -18,11 +17,6 @@ class Home extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 24,
             ),
-            TextButton(
-                onPressed: () {
-                  Adrop.initialize(false);
-                },
-                child: const Text('Adrop Initialize')),
             TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/bannerExample');
