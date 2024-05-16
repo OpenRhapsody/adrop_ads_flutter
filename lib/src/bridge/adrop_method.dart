@@ -7,6 +7,9 @@ class AdropMethod {
   static const showAd = "showAd";
   static const disposeAd = "disposeAd";
 
+  static const setProperty = "setProperty";
+  static const logEvent = "logEvent";
+
   static const didReceiveAd = "onAdReceived";
   static const didClickAd = "onAdClicked";
   static const didFailToReceiveAd = "onAdFailedToReceive";

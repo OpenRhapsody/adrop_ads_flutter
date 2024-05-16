@@ -6,5 +6,7 @@ export 'src/banner/adrop_banner_view.dart';
 export 'src/banner/adrop_banner_listener.dart';
 export 'src/interstitial/adrop_interstitial_ad.dart';
 export 'src/interstitial/adrop_interstitial_listener.dart';
+export 'src/metrics/adrop_metrics.dart';
+export 'src/model/adrop_property.dart';
 export 'src/rewarded/adrop_rewarded_ad.dart';
 export 'src/rewarded/adrop_rewarded_listener.dart';

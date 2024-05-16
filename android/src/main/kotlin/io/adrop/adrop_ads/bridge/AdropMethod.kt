@@ -7,6 +7,8 @@ object AdropMethod {
     const val LOAD_AD = "loadAd"
     const val SHOW_AD = "showAd"
     const val DISPOSE_AD = "disposeAd"
+    const val SET_PROPERTY = "setProperty"
+    const val LOG_EVENT = "logEvent"
 
     const val DID_RECEIVE_AD = "onAdReceived"
     const val DID_CLICK_AD = "onAdClicked"

@@ -10,6 +10,8 @@ import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.Adrop
+import io.adrop.ads.metrics.AdropEventParam
+import io.adrop.ads.metrics.AdropMetrics
 import io.adrop.ads.model.AdropErrorCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -51,6 +53,34 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             when (call.method) {
                 AdropMethod.INITIALIZE -> {
                     initialize(call.arguments())
+                    result.success(null)
+                }
+
+                AdropMethod.SET_PROPERTY -> {
+                    val key = call.argument("key") as String? ?: ""
+                    val value = call.argument("value") as String? ?: ""
+
+                    AdropMetrics.setProperty(key, value)
+                    result.success(null)
+                }
+
+                AdropMethod.LOG_EVENT -> {
+                    val name = call.argument("name") as String? ?: ""
+                    val mapValue = call.argument("params") as? Map<String, Any> ?: HashMap()
+
+                    val builder = AdropEventParam.Builder()
+                    mapValue.keys.forEach {
+                        when(val value = mapValue[it]) {
+                            is String -> builder.putString(it, value)
+                            is Int -> builder.putInt(it, value)
+                            is Float -> builder.putFloat(it, value)
+                            is Double -> builder.putFloat(it, value.toFloat())
+                            is Boolean -> builder.putBoolean(it, value)
+                            else -> {}
+                        }
+                    }
+
+                    AdropMetrics.logEvent(name, builder.build())
                     result.success(null)
                 }
 
