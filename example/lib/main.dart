@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/home',
+      navigatorObservers: [AdropNavigatorObserver()],
       routes: {
         '/home': (context) => const Home(),
         '/bannerExample': (context) => const BannerExample(),

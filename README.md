@@ -112,9 +112,20 @@ class MyAppState extends State<MyApp> {
   }
 }
 
+
 ```
 
-3. Rebuild your Flutter application.
+3. Add **AdropNavigatorObserver** to measure the frequency of ad impressions
+```dart
+  @override
+  Widget build(BuildContext context) {
+  return MaterialApp(
+      navigatorObservers: [AdropNavigatorObserver()],
+      ...
+  );
+```
+
+4. Rebuild your Flutter application.
 ```shell
 flutter run
 ```

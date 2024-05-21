@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'mock_adrop_navigator_observer.dart';
+
 final _random = Random.secure();
 
 class MockAdropAd extends Mock implements AdropAd {
@@ -89,6 +91,7 @@ class MockAdropAd extends Mock implements AdropAd {
         listener!.onAdFailedToReceive?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didImpression:
+        _invokeAttach();
         listener!.onAdImpression?.call(this);
         break;
       case AdropMethod.willDismissFullScreen:
@@ -110,5 +113,10 @@ class MockAdropAd extends Mock implements AdropAd {
         listener!.onAdEarnRewardHandler?.call(this, event.type ?? 0, event.amount ?? 0);
         break;
     }
+  }
+
+  void _invokeAttach() {
+    const MethodChannel(AdropChannel.invokeChannel)
+        .invokeMethod(AdropMethod.pageAttach, {"unitId": unitId, "page": MockAdropNavigatorObserver.last()});
   }
 }

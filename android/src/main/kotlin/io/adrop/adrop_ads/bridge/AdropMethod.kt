@@ -9,6 +9,8 @@ object AdropMethod {
     const val DISPOSE_AD = "disposeAd"
     const val SET_PROPERTY = "setProperty"
     const val LOG_EVENT = "logEvent"
+    const val PAGE_TRACK = "pageTrack"
+    const val PAGE_ATTACH = "pageAttach"
 
     const val DID_RECEIVE_AD = "onAdReceived"
     const val DID_CLICK_AD = "onAdClicked"

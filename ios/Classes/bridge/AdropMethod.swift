@@ -11,6 +11,9 @@ struct AdropMethod {
     static let SET_PROPERTY = "setProperty"
     static let LOG_EVENT = "logEvent"
 
+    static let PAGE_TRACK = "pageTrack"
+    static let PAGE_ATTACH = "pageAttach"
+
     static let DID_RECEIVE_AD = "onAdReceived"
     static let DID_CLICK_AD = "onAdClicked"
     static let DID_FAILED_TO_RECEIVE = "onAdFailedToReceive"

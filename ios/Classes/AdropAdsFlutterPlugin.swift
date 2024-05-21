@@ -6,6 +6,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     private var bannerManager: AdropBannerManager?
     private var messenger: FlutterBinaryMessenger?
     private var adropAdManager : AdropAdManager?
+    private let pageTracker = PageTracker()
 
     private let ModuleError = FlutterError(
         code: "ERROR_CODE_INTERNAL",
@@ -48,6 +49,15 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 }
             }
             AdropMetrics.logEvent(name: name, params: encodableParams)
+        case AdropMethod.PAGE_TRACK:
+            let page = (call.arguments as? [String: Any?])?["page"] as? String ?? ""
+            let size = (call.arguments as? [String: Any?])?["size"] as? Int ?? 0
+            pageTracker.track(page: page, sizeOfRoutes: size)
+            result(nil)
+        case AdropMethod.PAGE_ATTACH:
+            let page = (call.arguments as? [String: Any?])?["page"] as? String ?? ""
+            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
+            pageTracker.attach(unitId: unitId, page: page)
             result(nil)
         case AdropMethod.LOAD_BANNER:
             bannerManager?.load(unitId: call.arguments as? String ??  "")

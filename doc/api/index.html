@@ -173,8 +173,19 @@ class MyAppState extends State&lt;MyApp&gt; {
   }
 }
 
+
 </code></pre>
 <ol start="3">
+<li>Add <strong>AdropNavigatorObserver</strong> to measure the frequency of ad impressions</li>
+</ol>
+<pre class="language-dart"><code class="language-dart">  @override
+  Widget build(BuildContext context) {
+  return MaterialApp(
+      navigatorObservers: [AdropNavigatorObserver()],
+      ...
+  );
+</code></pre>
+<ol start="4">
 <li>Rebuild your Flutter application.</li>
 </ol>
 <pre class="language-shell"><code class="language-shell">flutter run
@@ -459,7 +470,7 @@ void dispose() {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.4.1
+      0.4.2
   </span>
 
   

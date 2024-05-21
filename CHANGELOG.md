@@ -1,3 +1,6 @@
+## 0.4.2
+- Add `AdropNavigatorObserver` to measure the frequency of ad impressions
+
 ## 0.4.1
 - Add `AdropMetrics`
 - `setProperty` for setting a user property

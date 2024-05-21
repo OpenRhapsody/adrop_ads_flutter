@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull
+import io.adrop.adrop_ads.analytics.PageTracker
 import io.adrop.adrop_ads.banner.AdropBannerManager
 import io.adrop.adrop_ads.banner.AdropBannerViewFactory
 import io.adrop.adrop_ads.bridge.AdropChannel
@@ -30,6 +31,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var bannerManager: AdropBannerManager
     private lateinit var messenger: BinaryMessenger
     private val adManager = AdropAdManager()
+    private var pageTracker: PageTracker? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -42,6 +44,10 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             AdropChannel.BANNER_EVENT_LISTENER_CHANNEL,
             AdropBannerViewFactory(bannerManager),
         )
+
+        if (context is Application) {
+            pageTracker = PageTracker(context as Application)
+        }
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -70,7 +76,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                     val builder = AdropEventParam.Builder()
                     mapValue.keys.forEach {
-                        when(val value = mapValue[it]) {
+                        when (val value = mapValue[it]) {
                             is String -> builder.putString(it, value)
                             is Int -> builder.putInt(it, value)
                             is Float -> builder.putFloat(it, value)
@@ -81,6 +87,19 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
 
                     AdropMetrics.logEvent(name, builder.build())
+                }
+                AdropMethod.PAGE_TRACK -> {
+                    val page = call.argument("page") as String? ?: ""
+                    val size = call.argument("size") as Int? ?: 0
+
+                    track(page, size)
+                    result.success(null)
+                }
+
+                AdropMethod.PAGE_ATTACH -> {
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val page = call.argument("page") as String? ?: ""
+                    attach(unitId, page)
                     result.success(null)
                 }
 
@@ -164,6 +183,14 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } else {
             throw AdropError(AdropErrorCode.ERROR_CODE_INITIALIZE)
         }
+    }
+
+    private fun track(page: String, size: Int) {
+        pageTracker?.track(page, size)
+    }
+
+    private fun attach(unitId: String, page: String) {
+        pageTracker?.attach(unitId, page)
     }
 
     /** ActivityAware **/
