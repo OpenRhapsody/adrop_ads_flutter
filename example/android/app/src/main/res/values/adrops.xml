@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adrop_splash_ad_next_activity" translatable="false">com.example.adrop_ads_flutter_example.MainActivity</string>
+    <string name="adrop_splash_ad_unit_id" translatable="false">PUBLIC_TEST_UNIT_ID_SPLASH</string>
+    <integer name="adrop_splash_ad_max_timeout">2000</integer> <!-- optional -->
+</resources>

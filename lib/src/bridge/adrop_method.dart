@@ -5,6 +5,7 @@ class AdropMethod {
 
   static const loadAd = "loadAd";
   static const showAd = "showAd";
+  static const customizeAd = "customizeAd";
   static const disposeAd = "disposeAd";
 
   static const setProperty = "setProperty";

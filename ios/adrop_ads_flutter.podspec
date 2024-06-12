@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'adrop_ads_flutter'
-  s.version          = '0.4.2'
+  s.version          = '0.5.0-dev.1'
   s.summary          = 'Adrop ads'
   s.description      = 'AdropAds flutter plugin that shows ads using native platform views'
   s.homepage         = 'https://openrhapsody.com'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'adrop-ads', '~> 0.4.3'
+  s.dependency 'adrop-ads', '~> 0.5.0'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

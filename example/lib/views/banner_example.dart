@@ -127,7 +127,13 @@ class _BannerExampleState extends State<BannerExample> {
     if (errorCode == null) return Container();
 
     return Column(
-      children: [Text('Error code: $errorCode'), Text(ErrorUtils.descriptionOf(errorCode))],
+      children: [
+        Text('Error code: $errorCode'),
+        Text(
+          ErrorUtils.descriptionOf(errorCode),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 
@@ -135,7 +141,13 @@ class _BannerExampleState extends State<BannerExample> {
     if (emptyErrorCode == null) return Container();
 
     return Column(
-      children: [Text('Error code: $emptyErrorCode'), Text(ErrorUtils.descriptionOf(emptyErrorCode))],
+      children: [
+        Text('Error code: $emptyErrorCode'),
+        Text(
+          ErrorUtils.descriptionOf(emptyErrorCode),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 

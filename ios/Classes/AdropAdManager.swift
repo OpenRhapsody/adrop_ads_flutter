@@ -27,6 +27,17 @@ class AdropAdManager: NSObject {
         }
     }
     
+    func customize(adType: AdType, requestId: String, data: [String:Any]) {
+        switch adType {
+        case AdType.popup:
+            guard let ad = self.ads[self.keyOf(adType, requestId)] as? FlutterAdropPopupAd else { return }
+            
+            ad.customize(data)
+        default:
+            return
+        }
+    }
+    
     func destroy(adType: AdType, requestId: String) {
         let key = keyOf(adType, requestId)
         if self.ads[key] != nil {
@@ -40,6 +51,8 @@ class AdropAdManager: NSObject {
             return FlutterAdropInterstitialAd(unitId: unitId, requesetId: requestId, messenger: messenger)
         case AdType.rewarded:
             return FlutterAdropRewardedAd(unitId: unitId, requesetId: requestId, messenger: messenger)
+        case AdType.popup:
+            return FlutterAdropPopupAd(unitId: unitId, requesetId: requestId, messenger: messenger)
         case AdType.undefined:
             return nil
         }

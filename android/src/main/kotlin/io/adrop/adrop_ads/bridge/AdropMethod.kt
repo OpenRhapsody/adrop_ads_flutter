@@ -6,6 +6,7 @@ object AdropMethod {
     const val DISPOSE_BANNER = "disposeBanner"
     const val LOAD_AD = "loadAd"
     const val SHOW_AD = "showAd"
+    const val CUSTOMIZE_AD = "customizeAd"
     const val DISPOSE_AD = "disposeAd"
     const val SET_PROPERTY = "setProperty"
     const val LOG_EVENT = "logEvent"

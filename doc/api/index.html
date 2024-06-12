@@ -169,6 +169,8 @@ class MyAppState extends State&lt;MyApp&gt; {
   Future&lt;void&gt; initialize() async {
     // ..
     // true for production
+    // If you are using this SDK in specific countries, 
+    // pass an array of ISO 3166 alpha-2 country codes.
     await Adrop.initialize(false);
   }
 }
@@ -230,6 +232,8 @@ end
 <li>PUBLIC_TEST_UNIT_ID_320_100</li>
 <li>PUBLIC_TEST_UNIT_ID_INTERSTITIAL</li>
 <li>PUBLIC_TEST_UNIT_ID_REWARDED</li>
+<li>PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM</li>
+<li>PUBLIC_TEST_UNIT_ID_POPUP_CENTER</li>
 </ul>
 </blockquote>
 <h3 id="display-ads">Display Ads</h3>
@@ -269,13 +273,11 @@ end
     return Column(
       children: [
         TextButton(
-            onPressed: () {
-              bannerManager.load(unitId);
-            },
+            onPressed: bannerView.load,
             child: const Text('Reload Ad!')),
         bannerView != null &amp;&amp; isLoaded ?
         SizedBox(
-            width: screenWidth,
+            width: MediaQuery.of(context).size.width,
             height: 80,
             child: bannerView) : Container(),
       ],
@@ -361,7 +363,7 @@ void dispose() {
 <p>Step 1: (Optional) Construct event listener</p>
 <pre class="language-dart"><code class="language-dart">final AdropRewardedListener listener = AdropRewardedListener(
     onAdReceived: (ad) =&gt;
-        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
+        debugPrint('Adrop Rewarded Ad loaded with unitId ${ad.unitId}!'),
     onAdFailedToReceive: (ad, errorCode) =&gt; 
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
@@ -399,7 +401,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
       body: Center(
         child: TextButton(
           onPressed: () {
-            final isLoaded = rewardedAd?.isLoaded ?? false;
+            final isLoaded = rewardedAd.isLoaded ?? false;
             if (isLoaded) {
               rewardedAd.show();
             } else {
@@ -420,6 +422,70 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 void dispose() {
   super.dispose();
   rewardedAd.dispose();
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Popup Ad</summary>
+<p>Step 1: (Optional) Construct event listener</p>
+<pre class="language-dart"><code class="language-dart">final AdropPopupListener listener = AdropPopupListener(
+    onAdReceived: (ad) =&gt;
+        debugPrint('Adrop Popup Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) =&gt; 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
+        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
+    ...
+);
+</code></pre>
+<p>Step 2: Display a popup ad</p>
+<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
+}
+
+class _YourComponentState extends State&lt;YourComponent&gt; {
+  final AdropPopupAd popupAd = AdropPopupAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    popupAd.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            final isLoaded = popupAd.isLoaded ?? false;
+            if (isLoaded) {
+              popupAd.show();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('popup ad is loading...'))
+              );
+            }
+          },
+          child: const Text('display ad'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+<p>AdropPopupAd must be disposed of when access to it is no longer needed.</p>
+<pre class="language-dart"><code class="language-dart">@override
+void dispose() {
+  super.dispose();
+  popupAd.dispose();
 }
 </code></pre>
 </details>
@@ -470,7 +536,7 @@ void dispose() {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.4.2
+      0.5.0-dev.1
   </span>
 
   

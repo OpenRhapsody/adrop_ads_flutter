@@ -28,11 +28,11 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
     }
     
     func show() {
-        guard let appDelegate = UIApplication.shared.delegate else {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             return
         }
         
-        guard let viewController = appDelegate.window??.rootViewController else {
+        guard let viewController = windowScene.windows.first?.rootViewController else {
             return
         }
         

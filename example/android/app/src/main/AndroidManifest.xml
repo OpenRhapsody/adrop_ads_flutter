@@ -1,8 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application
         android:label="adrop_ads_flutter_example"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/publisher_splash_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -19,8 +20,16 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+        </activity>
+        <activity
+                android:name="io.adrop.ads.splash.AdropSplashAdActivity"
+                android:exported="true"
+                android:theme="@style/Theme.App.SplashTheme"
+                tools:replace="android:theme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

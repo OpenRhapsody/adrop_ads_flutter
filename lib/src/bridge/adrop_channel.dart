@@ -11,6 +11,8 @@ class AdropChannel {
         return "$invokeChannel/interstitial_$id";
       case AdType.rewarded:
         return "$invokeChannel/rewarded_$id";
+      case AdType.popup:
+        return "$invokeChannel/popup_$id";
       case AdType.undefined:
         return null;
     }

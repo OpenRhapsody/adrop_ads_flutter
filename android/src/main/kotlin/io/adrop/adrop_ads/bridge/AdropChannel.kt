@@ -8,8 +8,9 @@ object AdropChannel {
 
     fun adropEventListenerChannelOf(adType: AdType, id: String): String? {
         return when (adType) {
-            AdType.Interstitial -> "${INVOKE_CHANNEL}/interstitial_${id}"
-            AdType.Rewarded -> "${INVOKE_CHANNEL}/rewarded_${id}"
+            AdType.Interstitial -> "$INVOKE_CHANNEL/interstitial_$id"
+            AdType.Rewarded -> "$INVOKE_CHANNEL/rewarded_$id"
+            AdType.Popup -> "$INVOKE_CHANNEL/popup_$id"
             AdType.Undefined -> null
         }
     }

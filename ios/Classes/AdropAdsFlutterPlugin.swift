@@ -31,7 +31,9 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case AdropMethod.INITIALIZE:
-            Adrop.initialize(production: call.arguments as? Bool ?? false)
+            let production = (call.arguments as? [String: Any?])?["production"] as? Bool ?? false
+            let targetCountries = (call.arguments as? [String: Any?])?["targetCountries"] as? [String]
+            Adrop.initialize(production: production, targetCountries: targetCountries)
             result(nil)
         case AdropMethod.SET_PROPERTY:
             let key = (call.arguments as? [String: Any?])?["key"] as? String ?? ""
@@ -87,6 +89,17 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 adType: AdType.allCases[adTypeIndex],
                 requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
             )
+            result(nil)
+        case AdropMethod.CUSTOMIZE_AD:
+            let adTypeIndex = (call.arguments as? [String: Any?])?["adType"] as? Int ?? 0
+            if (adTypeIndex == AdType.allCases.firstIndex(of: .undefined)!) {
+                result(ModuleError)
+                return
+            }
+            adropAdManager?.customize(
+                adType: AdType.allCases[adTypeIndex],
+                requestId:(call.arguments as? [String: Any?])?["requestId"] as? String ?? "",
+                data: (call.arguments as? [String: Any?])?["data"] as? [String:Any] ?? [:])
             result(nil)
         case AdropMethod.DISPOSE_AD:
             let adTypeIndex = (call.arguments as? [String: Any?])?["adType"] as? Int ?? 0

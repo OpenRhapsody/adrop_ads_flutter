@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'bridge/adrop_method.dart';
 
-enum AdType { undefined, interstitial, rewarded }
+enum AdType { undefined, interstitial, rewarded, popup }
 
 class AdropEvent {
   final String unitId;
@@ -112,6 +113,14 @@ abstract class AdropAd {
   /// Requests to show an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> show() async {
     return _invokeChannel.invokeMethod(AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
+  }
+
+  /// Requests to customize an ad from Adrop using the Ad unit ID of the Adrop ad.
+  @protected
+  Future<void> customize([dynamic data]) async {
+    debugPrint("flutter customize $data");
+    return _invokeChannel
+        .invokeMethod(AdropMethod.customizeAd, {"adType": _adType.index, "requestId": _requestId, "data": data});
   }
 
   /// Dispose the Adrop ad to free resources.

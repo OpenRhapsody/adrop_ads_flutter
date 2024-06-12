@@ -3,6 +3,8 @@ package io.adrop.adrop_ads
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
 import io.adrop.adrop_ads.analytics.PageTracker
 import io.adrop.adrop_ads.banner.AdropBannerManager
@@ -22,6 +24,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+
+
 
 class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var activity: Activity? = null
@@ -58,7 +62,9 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         try {
             when (call.method) {
                 AdropMethod.INITIALIZE -> {
-                    initialize(call.arguments())
+                    val production = call.argument("production") as Boolean? ?: false
+                    val targetCountries = call.argument("targetCountries") as List<String>?
+                    initialize(production, targetCountries?.toTypedArray())
                     result.success(null)
                 }
 
@@ -143,11 +149,29 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         result.error(AdropErrorCode.ERROR_CODE_INTERNAL.name, "AdType is undefined", "Expected adType enum index larger than 0")
                         return
                     }
+
+                    val requestId = call.argument("requestId") as String? ?: ""
+
                     adManager.show(
                         AdType.values()[adTypeIndex],
-                        call.argument("requestId") as String? ?: "",
+                        requestId,
                         activity!!
                     )
+                    result.success(null)
+                }
+
+                AdropMethod.CUSTOMIZE_AD -> {
+                    val adTypeIndex = call.argument("adType") as Int? ?: 0
+                    if (adTypeIndex == AdType.Undefined.ordinal) {
+                        result.error(AdropErrorCode.ERROR_CODE_INTERNAL.name, "AdType is undefined", "Expected adType enum index larger than 0")
+                        return
+                    }
+
+                    adManager.customize(
+                        AdType.values()[adTypeIndex],
+                        call.argument("requestId") as String? ?: "",
+                        call.argument("data") as? Map<String, Any> ?: HashMap()
+                        )
                     result.success(null)
                 }
 
@@ -175,10 +199,10 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     @Throws(AdropError::class)
-    private fun initialize(production: Boolean?) {
+    private fun initialize(production: Boolean?, targetCountries: Array<String>? = null) {
         val context = context ?: return
         if (context is Application) {
-            Adrop.initialize(context, production ?: false)
+            Adrop.initialize(context, production ?: false, targetCountries ?: arrayOf())
             return
         } else {
             throw AdropError(AdropErrorCode.ERROR_CODE_INITIALIZE)

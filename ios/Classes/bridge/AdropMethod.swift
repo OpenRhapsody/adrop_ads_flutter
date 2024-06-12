@@ -7,6 +7,7 @@ struct AdropMethod {
 
     static let LOAD_AD = "loadAd"
     static let SHOW_AD = "showAd"
+    static let CUSTOMIZE_AD = "customizeAd"
     static let DISPOSE_AD = "disposeAd"
     static let SET_PROPERTY = "setProperty"
     static let LOG_EVENT = "logEvent"

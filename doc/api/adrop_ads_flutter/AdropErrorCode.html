@@ -136,7 +136,7 @@
 
 </dt>
 <dd>
-  <p>Error in sdk</p>
+  <p>Error in sdk.</p>
   
 
     <div>
@@ -151,7 +151,7 @@
 
 </dt>
 <dd>
-  <p>Before Adrop initialize</p>
+  <p>Before Adrop initialize.</p>
   
 
     <div>
@@ -171,6 +171,21 @@
 
     <div>
       <span class="signature"><code>AdropErrorCode(&quot;ERROR_CODE_INVALID_UNIT&quot;)</code></span>
+    </div>
+</dd>
+
+          <dt id="notTargetCountry" class="constant">
+    <span class="name ">notTargetCountry</span>
+  <span class="signature">&#8594; const <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span>
+  
+
+</dt>
+<dd>
+  <p>Unable to use SDK when the device country is not supported.</p>
+  
+
+    <div>
+      <span class="signature"><code>AdropErrorCode(&quot;ERROR_CODE_NOT_TARGET_COUNTRY&quot;)</code></span>
     </div>
 </dd>
 
@@ -261,6 +276,36 @@
 
     <div>
       <span class="signature"><code>AdropErrorCode(&quot;ERROR_CODE_AD_SHOWN&quot;)</code></span>
+    </div>
+</dd>
+
+          <dt id="adHideForToday" class="constant">
+    <span class="name ">adHideForToday</span>
+  <span class="signature">&#8594; const <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span>
+  
+
+</dt>
+<dd>
+  <p>Unable to load ad for today</p>
+  
+
+    <div>
+      <span class="signature"><code>AdropErrorCode(&quot;ERROR_CODE_AD_HIDE_FOR_TODAY&quot;)</code></span>
+    </div>
+</dd>
+
+          <dt id="adLandscapeUnsupported" class="constant">
+    <span class="name ">adLandscapeUnsupported</span>
+  <span class="signature">&#8594; const <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a></span>
+  
+
+</dt>
+<dd>
+  <p>Unable to display ad in landscape mode</p>
+  
+
+    <div>
+      <span class="signature"><code>AdropErrorCode(&quot;ERROR_CODE_LANDSCAPE_UNSUPPORTED&quot;)</code></span>
     </div>
 </dd>
 
@@ -411,7 +456,7 @@
   
 
     <div>
-      <span class="signature"><code>[network, internal, initialize, invalidUnit, inactive, adNoFill, adLoadDuplicate, adLoading, adEmpty, adShown, undefined]</code></span>
+      <span class="signature"><code>[network, internal, initialize, invalidUnit, notTargetCountry, inactive, adNoFill, adLoadDuplicate, adLoading, adEmpty, adShown, adHideForToday, adLandscapeUnsupported, undefined]</code></span>
     </div>
 </dd>
 
@@ -445,7 +490,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.4.2
+      0.5.0-dev.1
   </span>
 
   

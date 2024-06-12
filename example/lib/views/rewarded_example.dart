@@ -26,6 +26,7 @@ class _RewardedExampleState extends State<RewardedExample> {
   }
 
   void reset(String unitId) {
+    rewardedAd?.dispose();
     rewardedAd = AdropRewardedAd(
         unitId: unitId,
         listener: AdropRewardedListener(onAdReceived: (_) {
@@ -130,7 +131,13 @@ class _RewardedExampleState extends State<RewardedExample> {
     if (errorCode == null) return Container();
 
     return Column(
-      children: [Text('Error code: $errorCode'), Text(ErrorUtils.descriptionOf(errorCode))],
+      children: [
+        Text('Error code: $errorCode'),
+        Text(
+          ErrorUtils.descriptionOf(errorCode),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 

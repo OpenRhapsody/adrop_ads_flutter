@@ -1,3 +1,8 @@
+## 0.5.0-dev.1
+- Add `AdropPopupAd`
+- Support Splash Ad
+- Target countries
+
 ## 0.4.2
 - Add `AdropNavigatorObserver` to measure the frequency of ad impressions
 

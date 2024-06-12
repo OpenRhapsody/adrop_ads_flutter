@@ -26,6 +26,7 @@ class _InterstitialExampleState extends State<InterstitialExample> {
   }
 
   void reset(String unitId) {
+    interstitialAd?.dispose();
     interstitialAd = AdropInterstitialAd(
         unitId: unitId,
         listener: AdropInterstitialListener(onAdReceived: (_) {
@@ -64,7 +65,6 @@ class _InterstitialExampleState extends State<InterstitialExample> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("interstitial errorCode $errorCode");
     return Scaffold(
         appBar: AppBar(
           // Customizing the leading property to show a back button
@@ -130,7 +130,13 @@ class _InterstitialExampleState extends State<InterstitialExample> {
     if (errorCode == null) return Container();
 
     return Column(
-      children: [Text('Error code: $errorCode'), Text(ErrorUtils.descriptionOf(errorCode))],
+      children: [
+        Text('Error code: $errorCode'),
+        Text(
+          ErrorUtils.descriptionOf(errorCode),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 
