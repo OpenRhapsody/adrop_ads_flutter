@@ -1,4 +1,4 @@
-## 0.5.0-dev.1
+## 0.5.0
 - Add `AdropPopupAd`
 - Support Splash Ad
 - Target countries

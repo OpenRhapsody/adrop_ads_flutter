@@ -183,6 +183,7 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_REWARDED
 > * PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM
 > * PUBLIC_TEST_UNIT_ID_POPUP_CENTER
+> * PUBLIC_TEST_UNIT_ID_SPLASH
 
 ### Display Ads
 <details>
