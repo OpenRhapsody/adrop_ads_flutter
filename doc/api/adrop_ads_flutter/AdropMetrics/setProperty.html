@@ -83,7 +83,8 @@ Setting a null <code>value</code> removes the user property.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; setProperty(String key, String value) async {
-  return await _channel.invokeMethod(AdropMethod.setProperty, {&quot;key&quot;: key, &quot;value&quot;: value});
+  return await _channel
+      .invokeMethod(AdropMethod.setProperty, {&quot;key&quot;: key, &quot;value&quot;: value});
 }</code></pre>
 </section>
 
@@ -117,7 +118,7 @@ Setting a null <code>value</code> removes the user property.</p>
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.5.0
+      0.5.1
   </span>
 
   

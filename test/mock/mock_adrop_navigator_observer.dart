@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MockAdropNavigatorObserver extends NavigatorObserver {
-  static final MockAdropNavigatorObserver _instance = MockAdropNavigatorObserver._internal();
+  static final MockAdropNavigatorObserver _instance =
+      MockAdropNavigatorObserver._internal();
 
   factory MockAdropNavigatorObserver() => _instance;
 
-  final MethodChannel _methodChannel = const MethodChannel(AdropChannel.invokeChannel);
+  final MethodChannel _methodChannel =
+      const MethodChannel(AdropChannel.invokeChannel);
 
   static String _current = "";
   static int _size = 0;
@@ -60,7 +62,8 @@ class MockAdropNavigatorObserver extends NavigatorObserver {
   }
 
   void _invoke() {
-    _methodChannel.invokeMethod(AdropMethod.pageTrack, {"page": _current, "size": _size});
+    _methodChannel
+        .invokeMethod(AdropMethod.pageTrack, {"page": _current, "size": _size});
   }
 
   void clear() {

@@ -7,7 +7,8 @@ import '../bridge/adrop_channel.dart';
 import '../model/call_create_banner.dart';
 import 'adrop_banner_controller.dart';
 
-typedef AdropBannerCreatedCallback = void Function(AdropBannerController controller);
+typedef AdropBannerCreatedCallback = void Function(
+    AdropBannerController controller);
 
 class AdropBanner extends StatelessWidget {
   final String unitId;
@@ -15,7 +16,8 @@ class AdropBanner extends StatelessWidget {
   final AdropBannerCreatedCallback _onAdropBannerCreated;
   final void Function(AdropBanner banner)? _onAdReceived;
   final void Function(AdropBanner banner)? _onAdClicked;
-  final void Function(AdropBanner banner, AdropErrorCode errorCode)? _onAdFailedToReceive;
+  final void Function(AdropBanner banner, AdropErrorCode errorCode)?
+      _onAdFailedToReceive;
 
   @Deprecated("use AdropBannerView, AdropManager")
 

@@ -22,15 +22,19 @@ main() {
     onAdReceived: (ad) => handleEventMessage[ad] = 'Ad Received',
     onAdClicked: (ad) => handleEventMessage[ad] = 'Ad Clicked',
     onAdImpression: (ad) => handleEventMessage[ad] = 'Ad Impression',
-    onAdFailedToReceive: (ad, errorCode) => handleEventMessage[ad] = 'Ad Failed to Receive with err: ${errorCode.name}',
-    onAdFailedToShowFullScreen: (ad, errorCode) =>
-        handleEventMessage[ad] = 'Ad Failed to Show with err: ${errorCode.name}',
-    onAdWillPresentFullScreen: (ad) => handleEventMessage[ad] = 'Ad Will Present',
+    onAdFailedToReceive: (ad, errorCode) => handleEventMessage[ad] =
+        'Ad Failed to Receive with err: ${errorCode.name}',
+    onAdFailedToShowFullScreen: (ad, errorCode) => handleEventMessage[ad] =
+        'Ad Failed to Show with err: ${errorCode.name}',
+    onAdWillPresentFullScreen: (ad) =>
+        handleEventMessage[ad] = 'Ad Will Present',
     onAdDidPresentFullScreen: (ad) => handleEventMessage[ad] = 'Ad Did Present',
-    onAdWillDismissFullScreen: (ad) => handleEventMessage[ad] = 'Ad Will Dismiss',
+    onAdWillDismissFullScreen: (ad) =>
+        handleEventMessage[ad] = 'Ad Will Dismiss',
     onAdDidDismissFullScreen: (ad) => handleEventMessage[ad] = 'Ad Did Dismiss',
   );
-  final MockAdropInterstitialAd interstitialAd = MockAdropInterstitialAd(unitId: unitId, listener: listener);
+  final MockAdropInterstitialAd interstitialAd =
+      MockAdropInterstitialAd(unitId: unitId, listener: listener);
 
   Map<String, bool> isLoading = {};
   Map<String, bool> isLoaded = {};
@@ -38,8 +42,8 @@ main() {
   Map<String, bool> isShown = {};
   bool isInitialized = false;
 
-  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(invokeChannel,
-      (call) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(invokeChannel, (call) async {
     switch (call.method) {
       case AdropMethod.initialize:
         return isInitialized = true;
@@ -48,34 +52,42 @@ main() {
         final adType = AdType.values[call.arguments['adType']];
         final unitId = call.arguments['unitId'];
         final requestId = call.arguments['requestId'];
-        final adropEventObserverChannelName = AdropChannel.adropEventListenerChannelOf(adType, requestId);
-        final adropEventObserverChannel =
-            adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+        final adropEventObserverChannelName =
+            AdropChannel.adropEventListenerChannelOf(adType, requestId);
+        final adropEventObserverChannel = adropEventObserverChannelName != null
+            ? MethodChannel(adropEventObserverChannelName)
+            : null;
         final key = '${adType.name}/$requestId';
 
         if (!isInitialized) {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.initialize.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.initialize.code});
         }
         if (unitId == null || unitId == '') {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.invalidUnit.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.invalidUnit.code});
         }
         if (isActive[unitId] == null) {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.adNoFill.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.adNoFill.code});
         }
         if (!isActive[unitId]!) {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.inactive.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.inactive.code});
         }
         if (isLoading[key] ?? false) {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.adLoading.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.adLoading.code});
         }
         if (isLoaded[key] ?? false) {
-          return await adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailToReceiveAd, {'errorCode': AdropErrorCode.adLoadDuplicate.code});
+          return await adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailToReceiveAd,
+              {'errorCode': AdropErrorCode.adLoadDuplicate.code});
         }
 
         isLoading[key] = true;
@@ -83,32 +95,40 @@ main() {
         isLoading[key] = false;
         isLoaded[key] = true;
 
-        return await adropEventObserverChannel?.invokeMethod(AdropMethod.didReceiveAd);
+        return await adropEventObserverChannel
+            ?.invokeMethod(AdropMethod.didReceiveAd);
 
       case AdropMethod.showAd:
         final adType = AdType.values[call.arguments['adType']];
         final requestId = call.arguments['requestId'];
-        final adropEventObserverChannelName = AdropChannel.adropEventListenerChannelOf(adType, requestId);
-        final adropEventObserverChannel =
-            adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+        final adropEventObserverChannelName =
+            AdropChannel.adropEventListenerChannelOf(adType, requestId);
+        final adropEventObserverChannel = adropEventObserverChannelName != null
+            ? MethodChannel(adropEventObserverChannelName)
+            : null;
         final key = '${adType.name}/$requestId';
         if (isLoading[key] ?? false) {
-          return adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailedToShowFullScreen, {'errorCode': AdropErrorCode.adLoading.code});
+          return adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailedToShowFullScreen,
+              {'errorCode': AdropErrorCode.adLoading.code});
         }
         if (isShown[key] ?? false) {
-          return adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailedToShowFullScreen, {'errorCode': AdropErrorCode.adShown.code});
+          return adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailedToShowFullScreen,
+              {'errorCode': AdropErrorCode.adShown.code});
         }
         if (!(isLoaded[key] ?? false)) {
-          return adropEventObserverChannel
-              ?.invokeMethod(AdropMethod.didFailedToShowFullScreen, {'errorCode': AdropErrorCode.adEmpty.code});
+          return adropEventObserverChannel?.invokeMethod(
+              AdropMethod.didFailedToShowFullScreen,
+              {'errorCode': AdropErrorCode.adEmpty.code});
         }
-        await adropEventObserverChannel?.invokeMethod(AdropMethod.willPresentFullScreen);
+        await adropEventObserverChannel
+            ?.invokeMethod(AdropMethod.willPresentFullScreen);
         await Future.delayed(const Duration(seconds: 1));
         isShown[key] = true;
 
-        return await adropEventObserverChannel?.invokeMethod(AdropMethod.didPresentFullScreen);
+        return await adropEventObserverChannel
+            ?.invokeMethod(AdropMethod.didPresentFullScreen);
 
       default:
         return null;
@@ -134,33 +154,37 @@ main() {
   group('load', () {
     test('load before initialized error', () async {
       await interstitialAd.load();
-      expect(handleEventMessage[interstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.initialize.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.initialize.name}');
     });
 
     test('load with invalid unitId error', () async {
       await Adrop.initialize(true);
-      final nullInterstitialAd = MockAdropInterstitialAd(unitId: '', listener: listener);
+      final nullInterstitialAd =
+          MockAdropInterstitialAd(unitId: '', listener: listener);
       await nullInterstitialAd.load();
-      expect(
-          handleEventMessage[nullInterstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.invalidUnit.name}');
+      expect(handleEventMessage[nullInterstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.invalidUnit.name}');
       await nullInterstitialAd.dispose();
     });
 
     test('load with non-exist unitId error', () async {
       await Adrop.initialize(true);
-      final nonExistInterstitialAd = MockAdropInterstitialAd(unitId: nonExistUnitId, listener: listener);
+      final nonExistInterstitialAd =
+          MockAdropInterstitialAd(unitId: nonExistUnitId, listener: listener);
       await nonExistInterstitialAd.load();
-      expect(
-          handleEventMessage[nonExistInterstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.adNoFill.name}');
+      expect(handleEventMessage[nonExistInterstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.adNoFill.name}');
       await nonExistInterstitialAd.dispose();
     });
 
     test('load with inactive unitId error', () async {
       await Adrop.initialize(true);
-      final inactiveInterstitialAd = MockAdropInterstitialAd(unitId: inactiveUnitId, listener: listener);
+      final inactiveInterstitialAd =
+          MockAdropInterstitialAd(unitId: inactiveUnitId, listener: listener);
       await inactiveInterstitialAd.load();
-      expect(
-          handleEventMessage[inactiveInterstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.inactive.name}');
+      expect(handleEventMessage[inactiveInterstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.inactive.name}');
       await inactiveInterstitialAd.dispose();
     });
 
@@ -174,7 +198,8 @@ main() {
 
     test('load two interstitial ads', () async {
       await Adrop.initialize(true);
-      final interstitialAd2 = MockAdropInterstitialAd(unitId: unitId2, listener: listener);
+      final interstitialAd2 =
+          MockAdropInterstitialAd(unitId: unitId2, listener: listener);
       await Future.wait([interstitialAd.load(), interstitialAd2.load()]);
 
       expect(interstitialAd.isLoaded, true);
@@ -187,15 +212,16 @@ main() {
       await Adrop.initialize(true);
       await interstitialAd.load();
       await interstitialAd.load();
-      expect(
-          handleEventMessage[interstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.adLoadDuplicate.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.adLoadDuplicate.name}');
     });
 
     test('load while loading error', () async {
       await Adrop.initialize(true);
       interstitialAd.load();
       interstitialAd.load();
-      expect(handleEventMessage[interstitialAd], 'Ad Failed to Receive with err: ${AdropErrorCode.adLoading.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Receive with err: ${AdropErrorCode.adLoading.name}');
     });
   });
 
@@ -204,7 +230,8 @@ main() {
       await Adrop.initialize(true);
       interstitialAd.load();
       await interstitialAd.show();
-      expect(handleEventMessage[interstitialAd], 'Ad Failed to Show with err: ${AdropErrorCode.adLoading.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Show with err: ${AdropErrorCode.adLoading.name}');
     });
 
     test('show after shown error', () async {
@@ -212,13 +239,15 @@ main() {
       await interstitialAd.load();
       await interstitialAd.show();
       await interstitialAd.show();
-      expect(handleEventMessage[interstitialAd], 'Ad Failed to Show with err: ${AdropErrorCode.adShown.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Show with err: ${AdropErrorCode.adShown.name}');
     });
 
     test('show not loaded ad error', () async {
       await Adrop.initialize(true);
       await interstitialAd.show();
-      expect(handleEventMessage[interstitialAd], 'Ad Failed to Show with err: ${AdropErrorCode.adEmpty.name}');
+      expect(handleEventMessage[interstitialAd],
+          'Ad Failed to Show with err: ${AdropErrorCode.adEmpty.name}');
     });
 
     test('show interstitial ad', () async {
@@ -232,7 +261,8 @@ main() {
 
     test('show two interstitial ads', () async {
       await Adrop.initialize(true);
-      final interstitialAd2 = MockAdropInterstitialAd(unitId: unitId2, listener: listener);
+      final interstitialAd2 =
+          MockAdropInterstitialAd(unitId: unitId2, listener: listener);
       await Future.wait([interstitialAd.load(), interstitialAd2.load()]);
 
       await interstitialAd.show();
@@ -246,18 +276,22 @@ main() {
 
   test('click ad', () async {
     final adropEventObserverChannelName =
-        AdropChannel.adropEventListenerChannelOf(AdType.interstitial, interstitialAd.requestId);
-    final adropEventObserverChannel =
-        adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+        AdropChannel.adropEventListenerChannelOf(
+            AdType.interstitial, interstitialAd.requestId);
+    final adropEventObserverChannel = adropEventObserverChannelName != null
+        ? MethodChannel(adropEventObserverChannelName)
+        : null;
     await adropEventObserverChannel?.invokeMethod(AdropMethod.didClickAd);
     expect(handleEventMessage[interstitialAd], 'Ad Clicked');
   });
 
   test('impression', () async {
     final adropEventObserverChannelName =
-        AdropChannel.adropEventListenerChannelOf(AdType.interstitial, interstitialAd.requestId);
-    final adropEventObserverChannel =
-        adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+        AdropChannel.adropEventListenerChannelOf(
+            AdType.interstitial, interstitialAd.requestId);
+    final adropEventObserverChannel = adropEventObserverChannelName != null
+        ? MethodChannel(adropEventObserverChannelName)
+        : null;
     await adropEventObserverChannel?.invokeMethod(AdropMethod.didImpression);
     expect(handleEventMessage[interstitialAd], 'Ad Impression');
   });
@@ -265,19 +299,25 @@ main() {
   group('close ad', () {
     test('will dismiss', () async {
       final adropEventObserverChannelName =
-          AdropChannel.adropEventListenerChannelOf(AdType.interstitial, interstitialAd.requestId);
-      final adropEventObserverChannel =
-          adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
-      await adropEventObserverChannel?.invokeMethod(AdropMethod.willDismissFullScreen);
+          AdropChannel.adropEventListenerChannelOf(
+              AdType.interstitial, interstitialAd.requestId);
+      final adropEventObserverChannel = adropEventObserverChannelName != null
+          ? MethodChannel(adropEventObserverChannelName)
+          : null;
+      await adropEventObserverChannel
+          ?.invokeMethod(AdropMethod.willDismissFullScreen);
       expect(handleEventMessage[interstitialAd], 'Ad Will Dismiss');
     });
 
     test('did dismiss', () async {
       final adropEventObserverChannelName =
-          AdropChannel.adropEventListenerChannelOf(AdType.interstitial, interstitialAd.requestId);
-      final adropEventObserverChannel =
-          adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
-      await adropEventObserverChannel?.invokeMethod(AdropMethod.didDismissFullScreen);
+          AdropChannel.adropEventListenerChannelOf(
+              AdType.interstitial, interstitialAd.requestId);
+      final adropEventObserverChannel = adropEventObserverChannelName != null
+          ? MethodChannel(adropEventObserverChannelName)
+          : null;
+      await adropEventObserverChannel
+          ?.invokeMethod(AdropMethod.didDismissFullScreen);
       expect(handleEventMessage[interstitialAd], 'Ad Did Dismiss');
     });
   });

@@ -3,7 +3,8 @@ import 'package:adrop_ads_flutter/src/rewarded/adrop_rewarded_ad.dart';
 import '../adrop_ad.dart';
 import '../interstitial/adrop_interstitial_listener.dart';
 
-typedef AdropAdRewardEventCallback = void Function(AdropAd ad, int type, int amount);
+typedef AdropAdRewardEventCallback = void Function(
+    AdropAd ad, int type, int amount);
 
 /// A listener called when load or show is called in the [AdropRewardedAd].
 ///

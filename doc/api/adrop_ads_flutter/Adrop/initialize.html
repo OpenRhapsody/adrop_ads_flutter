@@ -82,8 +82,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; initialize(bool production, {List&lt;String&gt;? targetCountries}) async {
-  return await AdropPlatform.instance.initialize(production, targetCountries ?? []);
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; initialize(bool production,
+    {List&lt;String&gt;? targetCountries}) async {
+  return await AdropPlatform.instance
+      .initialize(production, targetCountries ?? []);
 }</code></pre>
 </section>
 
@@ -117,7 +119,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.5.0
+      0.5.1
   </span>
 
   

@@ -24,7 +24,8 @@ class PropertyExample extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Navigates back when back button is pressed
+              Navigator.of(context)
+                  .pop(); // Navigates back when back button is pressed
             },
           ),
           title: const Text('Property Example'),

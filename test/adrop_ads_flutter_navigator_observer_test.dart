@@ -23,8 +23,8 @@ main() {
   const interstitialUnit = "banner_unit_id";
   const rewardedUnit = "rewarded_unit_id";
 
-  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(invokeChannel,
-      (call) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(invokeChannel, (call) async {
     switch (call.method) {
       case AdropMethod.pageTrack:
         final page = call.arguments['page'];
@@ -104,8 +104,8 @@ main() {
     test("banner attach", () async {
       var home = MockRoute(name: "home");
       observer.didPush(home, null);
-      invokeChannel
-          .invokeMethod(AdropMethod.pageAttach, {"unitId": bannerUnit, "page": MockAdropNavigatorObserver.last()});
+      invokeChannel.invokeMethod(AdropMethod.pageAttach,
+          {"unitId": bannerUnit, "page": MockAdropNavigatorObserver.last()});
       expect(attached[bannerUnit], home.settings.name);
     });
 
@@ -113,12 +113,16 @@ main() {
       var interstitialPage = MockRoute(name: "interstitial_page");
       observer.didPush(interstitialPage, null);
 
-      var interstitial = MockAdropInterstitialAd(unitId: interstitialUnit, listener: const AdropInterstitialListener());
+      var interstitial = MockAdropInterstitialAd(
+          unitId: interstitialUnit,
+          listener: const AdropInterstitialListener());
 
       final adropEventObserverChannelName =
-          AdropChannel.adropEventListenerChannelOf(AdType.interstitial, interstitial.requestId);
-      final adropEventObserverChannel =
-          adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+          AdropChannel.adropEventListenerChannelOf(
+              AdType.interstitial, interstitial.requestId);
+      final adropEventObserverChannel = adropEventObserverChannelName != null
+          ? MethodChannel(adropEventObserverChannelName)
+          : null;
       await adropEventObserverChannel?.invokeMethod(AdropMethod.didImpression);
 
       expect(attached[interstitialUnit], interstitialPage.settings.name);
@@ -128,12 +132,15 @@ main() {
       var rewardedPage = MockRoute(name: "rewarded_page");
       observer.didPush(rewardedPage, null);
 
-      var rewarded = MockAdropRewardedAd(unitId: rewardedUnit, listener: AdropRewardedListener());
+      var rewarded = MockAdropRewardedAd(
+          unitId: rewardedUnit, listener: AdropRewardedListener());
 
       final adropEventObserverChannelName =
-          AdropChannel.adropEventListenerChannelOf(AdType.rewarded, rewarded.requestId);
-      final adropEventObserverChannel =
-          adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+          AdropChannel.adropEventListenerChannelOf(
+              AdType.rewarded, rewarded.requestId);
+      final adropEventObserverChannel = adropEventObserverChannelName != null
+          ? MethodChannel(adropEventObserverChannelName)
+          : null;
       await adropEventObserverChannel?.invokeMethod(AdropMethod.didImpression);
 
       expect(attached[rewardedUnit], rewardedPage.settings.name);

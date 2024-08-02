@@ -75,7 +75,8 @@ class _BannerExampleState extends State<BannerExample> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Navigates back when back button is pressed
+              Navigator.of(context)
+                  .pop(); // Navigates back when back button is pressed
             },
           ),
           title: const Text('Banner Example'),
@@ -89,7 +90,9 @@ class _BannerExampleState extends State<BannerExample> {
                   width: MediaQuery.of(context).size.width,
                   height: 24,
                 ),
-                TextButton(onPressed: bannerView.load, child: const Text('load banner! (test ad)')),
+                TextButton(
+                    onPressed: bannerView.load,
+                    child: const Text('load banner! (test ad)')),
                 const Text(
                   'load banner, you can be received ad successfully when click load button',
                   textAlign: TextAlign.center,
@@ -110,8 +113,11 @@ class _BannerExampleState extends State<BannerExample> {
                 const SizedBox(
                   height: 24,
                 ),
-                TextButton(onPressed: loadEmptyBanner, child: const Text('load banner! (empty ad)')),
-                const Text('load banner, you can be received error callback when click load button',
+                TextButton(
+                    onPressed: loadEmptyBanner,
+                    child: const Text('load banner! (empty ad)')),
+                const Text(
+                    'load banner, you can be received error callback when click load button',
                     textAlign: TextAlign.center),
                 const SizedBox(
                   height: 24,

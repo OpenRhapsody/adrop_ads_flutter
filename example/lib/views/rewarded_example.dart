@@ -51,7 +51,8 @@ class _RewardedExampleState extends State<RewardedExample> {
         }, onAdDidDismissFullScreen: (_) {
           debugPrint("rewardedAd did dismiss full screen $unitId");
         }, onAdFailedToShowFullScreen: (_, error) {
-          debugPrint("rewardedAd failed to show full screen $unitId, $errorCode");
+          debugPrint(
+              "rewardedAd failed to show full screen $unitId, $errorCode");
           setState(() {
             errorCode = error;
           });
@@ -73,7 +74,8 @@ class _RewardedExampleState extends State<RewardedExample> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Navigates back when back button is pressed
+              Navigator.of(context)
+                  .pop(); // Navigates back when back button is pressed
             },
           ),
           title: const Text('RewardedAd Example'),
@@ -92,7 +94,9 @@ class _RewardedExampleState extends State<RewardedExample> {
                       onPressed: rewardedAd?.load,
                       child: const Text('RewardedAd load'),
                     ),
-                    TextButton(onPressed: isLoaded ? rewardedAd?.show : null, child: const Text('RewardedAd show')),
+                    TextButton(
+                        onPressed: isLoaded ? rewardedAd?.show : null,
+                        child: const Text('RewardedAd show')),
                     const SizedBox(
                       height: 24,
                     ),
@@ -117,7 +121,8 @@ class _RewardedExampleState extends State<RewardedExample> {
                                 reset(testUnitId);
                               },
                         child: const Text('reset (empty ad)')),
-                    const Text('Reset rewardedAd, you can be received error callback when click load button',
+                    const Text(
+                        'Reset rewardedAd, you can be received error callback when click load button',
                         textAlign: TextAlign.center),
                     const SizedBox(
                       height: 48,

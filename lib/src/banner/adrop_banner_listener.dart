@@ -3,7 +3,8 @@ import 'package:adrop_ads_flutter/src/banner/adrop_banner_view.dart';
 import '../adrop_error_code.dart';
 
 typedef AdropAdEventCallback = void Function(String unitId);
-typedef AdropAdFailedCallback = void Function(String unitId, AdropErrorCode errorCode);
+typedef AdropAdFailedCallback = void Function(
+    String unitId, AdropErrorCode errorCode);
 
 /// Listener called when there is a change in the [AdropBannerView].
 ///
@@ -15,5 +16,6 @@ class AdropBannerListener {
   final AdropAdEventCallback? onAdClicked;
   final AdropAdFailedCallback? onAdFailedToReceive;
 
-  const AdropBannerListener({this.onAdReceived, this.onAdFailedToReceive, this.onAdClicked});
+  const AdropBannerListener(
+      {this.onAdReceived, this.onAdFailedToReceive, this.onAdClicked});
 }

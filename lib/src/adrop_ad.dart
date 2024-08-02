@@ -56,7 +56,8 @@ class AdropAdListener {
 abstract class AdropAd {
   final _random = Random.secure();
 
-  static const MethodChannel _invokeChannel = MethodChannel(AdropChannel.invokeChannel);
+  static const MethodChannel _invokeChannel =
+      MethodChannel(AdropChannel.invokeChannel);
 
   final AdType _adType;
   final String _unitId;
@@ -82,14 +83,16 @@ abstract class AdropAd {
       if (adropEventObserverChannelName == null) {
         debugPrint('adrop event observer is null');
       } else {
-        _adropEventObserverChannel = MethodChannel(adropEventObserverChannelName);
+        _adropEventObserverChannel =
+            MethodChannel(adropEventObserverChannelName);
         _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
       }
     }
   }
 
   String _getRequestId() {
-    const alphabet = 'ModuleSymbhasOwnPr0123456789ABCDEFGHNRVfgctiUvzKqYTJkLxpZXIjQW';
+    const alphabet =
+        'ModuleSymbhasOwnPr0123456789ABCDEFGHNRVfgctiUvzKqYTJkLxpZXIjQW';
     const len = alphabet.length;
     int size = 21;
 
@@ -106,26 +109,28 @@ abstract class AdropAd {
 
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
-    return await _invokeChannel
-        .invokeMethod(AdropMethod.loadAd, {"adType": _adType.index, "unitId": unitId, "requestId": _requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
+        {"adType": _adType.index, "unitId": unitId, "requestId": _requestId});
   }
 
   /// Requests to show an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> show() async {
-    return _invokeChannel.invokeMethod(AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
+    return _invokeChannel.invokeMethod(
+        AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
   }
 
   /// Requests to customize an ad from Adrop using the Ad unit ID of the Adrop ad.
   @protected
   Future<void> customize([dynamic data]) async {
     debugPrint("flutter customize $data");
-    return _invokeChannel
-        .invokeMethod(AdropMethod.customizeAd, {"adType": _adType.index, "requestId": _requestId, "data": data});
+    return _invokeChannel.invokeMethod(AdropMethod.customizeAd,
+        {"adType": _adType.index, "requestId": _requestId, "data": data});
   }
 
   /// Dispose the Adrop ad to free resources.
   Future<void> dispose() async {
-    return await _invokeChannel.invokeMethod(AdropMethod.disposeAd, {"adType": _adType.index, "requestId": _requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.disposeAd,
+        {"adType": _adType.index, "requestId": _requestId});
   }
 
   Future<void> _handleEvent(MethodCall call) async {
@@ -142,7 +147,8 @@ abstract class AdropAd {
         listener?.onAdClicked?.call(this);
         break;
       case AdropMethod.didFailToReceiveAd:
-        listener?.onAdFailedToReceive?.call(this, event.errorCode ?? AdropErrorCode.undefined);
+        listener?.onAdFailedToReceive
+            ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didImpression:
         _invokeAttach();
@@ -161,16 +167,19 @@ abstract class AdropAd {
         listener?.onAdDidPresentFullScreen?.call(this);
         break;
       case AdropMethod.didFailedToShowFullScreen:
-        listener?.onAdFailedToShowFullScreen?.call(this, event.errorCode ?? AdropErrorCode.undefined);
+        listener?.onAdFailedToShowFullScreen
+            ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didHandleEarnReward:
-        listener?.onAdEarnRewardHandler?.call(this, event.type ?? 0, event.amount ?? 0);
+        listener?.onAdEarnRewardHandler
+            ?.call(this, event.type ?? 0, event.amount ?? 0);
         break;
     }
   }
 
   void _invokeAttach() {
-    const MethodChannel(AdropChannel.invokeChannel)
-        .invokeMethod(AdropMethod.pageAttach, {"unitId": unitId, "page": AdropNavigatorObserver.last()});
+    const MethodChannel(AdropChannel.invokeChannel).invokeMethod(
+        AdropMethod.pageAttach,
+        {"unitId": unitId, "page": AdropNavigatorObserver.last()});
   }
 }

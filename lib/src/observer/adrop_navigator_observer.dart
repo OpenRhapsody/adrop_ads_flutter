@@ -8,11 +8,13 @@ import '../bridge/adrop_method.dart';
 
 /// An interface for observing the behavior of a [Navigator] to measure the frequency of ad impressions.
 class AdropNavigatorObserver extends NavigatorObserver {
-  static final AdropNavigatorObserver _instance = AdropNavigatorObserver._internal();
+  static final AdropNavigatorObserver _instance =
+      AdropNavigatorObserver._internal();
 
   factory AdropNavigatorObserver() => _instance;
 
-  final MethodChannel _methodChannel = const MethodChannel(AdropChannel.invokeChannel);
+  final MethodChannel _methodChannel =
+      const MethodChannel(AdropChannel.invokeChannel);
 
   static String _current = "";
   static int _size = 0;
@@ -72,7 +74,8 @@ class AdropNavigatorObserver extends NavigatorObserver {
 
     _timer = Timer(const Duration(microseconds: 50), () {
       try {
-        _methodChannel.invokeMethod(AdropMethod.pageTrack, {"page": _current, "size": _size});
+        _methodChannel.invokeMethod(
+            AdropMethod.pageTrack, {"page": _current, "size": _size});
       } catch (_) {
         _timer?.cancel();
         _timer = null;

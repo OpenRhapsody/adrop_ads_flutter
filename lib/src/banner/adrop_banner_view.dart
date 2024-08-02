@@ -57,7 +57,8 @@ class AdropBannerView extends StatelessWidget {
   }
 
   Future<void> _attach() async {
-    return await const MethodChannel(AdropChannel.invokeChannel)
-        .invokeMethod(AdropMethod.pageAttach, {"unitId": unitId, "page": AdropNavigatorObserver.last()});
+    return await const MethodChannel(AdropChannel.invokeChannel).invokeMethod(
+        AdropMethod.pageAttach,
+        {"unitId": unitId, "page": AdropNavigatorObserver.last()});
   }
 }

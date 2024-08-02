@@ -10,7 +10,8 @@ class AdropMetrics {
   /// [key] is the name of the user property to set.
   /// Setting a null [value] removes the user property.
   static Future<void> setProperty(String key, String value) async {
-    return await _channel.invokeMethod(AdropMethod.setProperty, {"key": key, "value": value});
+    return await _channel
+        .invokeMethod(AdropMethod.setProperty, {"key": key, "value": value});
   }
 
   /// Logs a custom event with the given [name] and event [params].
@@ -22,6 +23,7 @@ class AdropMetrics {
   ///
   /// The map of event [params]. String, Integer, Float, Boolean param types are supported.
   static Future<void> logEvent(String name, [dynamic params]) async {
-    return await _channel.invokeMethod(AdropMethod.logEvent, {"name": name, "params": params});
+    return await _channel
+        .invokeMethod(AdropMethod.logEvent, {"name": name, "params": params});
   }
 }

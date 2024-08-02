@@ -7,7 +7,8 @@ import '../adrop_ad.dart';
 /// [unitId] required Ad unit ID
 /// [listener] optional invoked when a response from load, show method called back.
 class AdropInterstitialAd extends AdropAd {
-  AdropInterstitialAd({required String unitId, AdropInterstitialListener? listener})
+  AdropInterstitialAd(
+      {required String unitId, AdropInterstitialListener? listener})
       : super(
           adType: AdType.interstitial,
           unitId: unitId,

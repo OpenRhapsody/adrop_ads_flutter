@@ -51,7 +51,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
         }, onAdDidDismissFullScreen: (_) {
           debugPrint("interstitialAd did dismiss full screen $unitId");
         }, onAdFailedToShowFullScreen: (_, error) {
-          debugPrint("interstitialAd failed to show full screen $unitId, $errorCode");
+          debugPrint(
+              "interstitialAd failed to show full screen $unitId, $errorCode");
           setState(() {
             errorCode = error;
           });
@@ -71,7 +72,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Navigates back when back button is pressed
+              Navigator.of(context)
+                  .pop(); // Navigates back when back button is pressed
             },
           ),
           title: const Text('InterstitialAd Example'),
@@ -91,7 +93,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
                       child: const Text('interstitial load'),
                     ),
                     TextButton(
-                        onPressed: isLoaded ? interstitialAd?.show : null, child: const Text('interstitial show')),
+                        onPressed: isLoaded ? interstitialAd?.show : null,
+                        child: const Text('interstitial show')),
                     const SizedBox(
                       height: 24,
                     ),
@@ -116,7 +119,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
                                 reset(testUnitId);
                               },
                         child: const Text('reset (empty ad)')),
-                    const Text('Reset interstitialAd, you can be received error callback when click load button',
+                    const Text(
+                        'Reset interstitialAd, you can be received error callback when click load button',
                         textAlign: TextAlign.center),
                     const SizedBox(
                       height: 48,

@@ -13,7 +13,8 @@ import 'mock_adrop_navigator_observer.dart';
 final _random = Random.secure();
 
 class MockAdropAd extends Mock implements AdropAd {
-  static const MethodChannel _invokeChannel = MethodChannel(AdropChannel.invokeChannel);
+  static const MethodChannel _invokeChannel =
+      MethodChannel(AdropChannel.invokeChannel);
 
   final AdType _adType;
   final String _unitId;
@@ -36,18 +37,22 @@ class MockAdropAd extends Mock implements AdropAd {
     _requestId = _getRequestId();
 
     if (listener != null) {
-      final adropEventObserverChannelName = AdropChannel.adropEventListenerChannelOf(_adType, _requestId);
-      _adropEventObserverChannel =
-          adropEventObserverChannelName != null ? MethodChannel(adropEventObserverChannelName) : null;
+      final adropEventObserverChannelName =
+          AdropChannel.adropEventListenerChannelOf(_adType, _requestId);
+      _adropEventObserverChannel = adropEventObserverChannelName != null
+          ? MethodChannel(adropEventObserverChannelName)
+          : null;
       if (_adropEventObserverChannel != null) {
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-            .setMockMethodCallHandler(_adropEventObserverChannel!, _handleEvent);
+            .setMockMethodCallHandler(
+                _adropEventObserverChannel!, _handleEvent);
       }
     }
   }
 
   String _getRequestId() {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const alphabet =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const len = alphabet.length;
     int size = 21;
 
@@ -60,18 +65,20 @@ class MockAdropAd extends Mock implements AdropAd {
 
   @override
   Future<void> load() async {
-    return await _invokeChannel
-        .invokeMethod(AdropMethod.loadAd, {"adType": _adType.index, "unitId": unitId, "requestId": _requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
+        {"adType": _adType.index, "unitId": unitId, "requestId": _requestId});
   }
 
   @override
   Future<void> show() async {
-    return _invokeChannel.invokeMethod(AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
+    return _invokeChannel.invokeMethod(
+        AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
   }
 
   @override
   Future<void> dispose() async {
-    return await _invokeChannel.invokeMethod(AdropMethod.disposeAd, {"adType": _adType.index, "requestId": _requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.disposeAd,
+        {"adType": _adType.index, "requestId": _requestId});
   }
 
   Future<void> _handleEvent(MethodCall call) async {
@@ -88,7 +95,8 @@ class MockAdropAd extends Mock implements AdropAd {
         listener!.onAdClicked?.call(this);
         break;
       case AdropMethod.didFailToReceiveAd:
-        listener!.onAdFailedToReceive?.call(this, event.errorCode ?? AdropErrorCode.undefined);
+        listener!.onAdFailedToReceive
+            ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didImpression:
         _invokeAttach();
@@ -107,16 +115,19 @@ class MockAdropAd extends Mock implements AdropAd {
         listener!.onAdDidPresentFullScreen?.call(this);
         break;
       case AdropMethod.didFailedToShowFullScreen:
-        listener!.onAdFailedToShowFullScreen?.call(this, event.errorCode ?? AdropErrorCode.undefined);
+        listener!.onAdFailedToShowFullScreen
+            ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didHandleEarnReward:
-        listener!.onAdEarnRewardHandler?.call(this, event.type ?? 0, event.amount ?? 0);
+        listener!.onAdEarnRewardHandler
+            ?.call(this, event.type ?? 0, event.amount ?? 0);
         break;
     }
   }
 
   void _invokeAttach() {
-    const MethodChannel(AdropChannel.invokeChannel)
-        .invokeMethod(AdropMethod.pageAttach, {"unitId": unitId, "page": MockAdropNavigatorObserver.last()});
+    const MethodChannel(AdropChannel.invokeChannel).invokeMethod(
+        AdropMethod.pageAttach,
+        {"unitId": unitId, "page": MockAdropNavigatorObserver.last()});
   }
 }

@@ -77,7 +77,8 @@ class _PopupExampleState extends State<PopupExample> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Navigates back when back button is pressed
+              Navigator.of(context)
+                  .pop(); // Navigates back when back button is pressed
             },
           ),
           title: const Text('PopupAd Example'),

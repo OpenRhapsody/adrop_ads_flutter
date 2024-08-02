@@ -4,7 +4,8 @@ import '../adrop_ad.dart';
 import '../adrop_error_code.dart';
 
 typedef AdropAdCallback = void Function(AdropAd ad);
-typedef AdropAdErrorCallback = void Function(AdropAd ad, AdropErrorCode errorCode);
+typedef AdropAdErrorCallback = void Function(
+    AdropAd ad, AdropErrorCode errorCode);
 
 /// A listener called when load or show is called in the [AdropInterstitialAd].
 ///

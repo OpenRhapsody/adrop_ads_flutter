@@ -9,7 +9,7 @@ const _methodChannel = MethodChannel(AdropChannel.invokeChannel);
 class AdropMethodChannel extends AdropPlatform {
   @override
   Future<void> initialize(bool production, List<String> targetCountries) async {
-    await _methodChannel
-        .invokeMethod(AdropMethod.initialize, {"production": production, "targetCountries": targetCountries});
+    await _methodChannel.invokeMethod(AdropMethod.initialize,
+        {"production": production, "targetCountries": targetCountries});
   }
 }

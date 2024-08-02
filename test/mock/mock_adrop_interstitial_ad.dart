@@ -4,7 +4,8 @@ import 'package:adrop_ads_flutter/src/interstitial/adrop_interstitial_listener.d
 import 'mock_adrop_ad.dart';
 
 class MockAdropInterstitialAd extends MockAdropAd {
-  MockAdropInterstitialAd({required String unitId, AdropInterstitialListener? listener})
+  MockAdropInterstitialAd(
+      {required String unitId, AdropInterstitialListener? listener})
       : super(
           adType: AdType.interstitial,
           unitId: unitId,

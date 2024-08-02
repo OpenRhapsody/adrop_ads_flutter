@@ -1,3 +1,6 @@
+## 0.5.1
+- update sdk
+
 ## 0.5.0
 - Add `AdropPopupAd`
 - Support Splash Ad

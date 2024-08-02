@@ -12,7 +12,8 @@ class AdropBannerController {
   final AdropBanner _banner;
   final void Function(AdropBanner banner)? onAdReceived;
   final void Function(AdropBanner banner)? onAdClicked;
-  final void Function(AdropBanner banner, AdropErrorCode errorCode)? onAdFailedToReceive;
+  final void Function(AdropBanner banner, AdropErrorCode errorCode)?
+      onAdFailedToReceive;
 
   /// Banner controller class responsible for requesting banner ads.
   ///
@@ -27,7 +28,8 @@ class AdropBannerController {
     this.onAdClicked,
     this.onAdFailedToReceive,
   })  : _banner = banner,
-        _channel = MethodChannel(AdropChannel.bannerEventListenerChannelOf(id)) {
+        _channel =
+            MethodChannel(AdropChannel.bannerEventListenerChannelOf(id)) {
     _channel.setMethodCallHandler((call) async {
       switch (call.method) {
         case AdropMethod.didReceiveAd:
@@ -37,7 +39,8 @@ class AdropBannerController {
           onAdClicked?.call(_banner);
           break;
         case AdropMethod.didFailToReceiveAd:
-          onAdFailedToReceive?.call(_banner, AdropErrorCode.getByCode(call.arguments));
+          onAdFailedToReceive?.call(
+              _banner, AdropErrorCode.getByCode(call.arguments));
           break;
       }
     });
