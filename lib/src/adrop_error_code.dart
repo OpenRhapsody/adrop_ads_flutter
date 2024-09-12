@@ -35,6 +35,9 @@ enum AdropErrorCode {
   /// Unable to load ad for today
   adHideForToday("ERROR_CODE_AD_HIDE_FOR_TODAY"),
 
+  /// Account usage limit exceeded
+  accountUsageLimitExceeded("ERROR_CODE_ACCOUNT_USAGE_LIMIT_EXCEEDED"),
+
   /// Unable to display ad in landscape mode
   adLandscapeUnsupported("ERROR_CODE_LANDSCAPE_UNSUPPORTED"),
 

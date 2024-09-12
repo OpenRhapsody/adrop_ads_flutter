@@ -1,3 +1,6 @@
+## 0.5.2
+- Add error code: Account usage limit exceeded 
+
 ## 0.5.1
 - update sdk
 

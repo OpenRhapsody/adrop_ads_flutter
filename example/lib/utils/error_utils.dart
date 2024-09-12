@@ -27,6 +27,8 @@ class ErrorUtils {
         return "The network status is unstable";
       case AdropErrorCode.notTargetCountry:
         return "Unable to use SDK when the device country is not supported.";
+      case AdropErrorCode.accountUsageLimitExceeded:
+        return "Account Usage Limit Exceeded";
       case AdropErrorCode.adLandscapeUnsupported:
         return "Unable to display ad in landscape mode";
       case AdropErrorCode.undefined:

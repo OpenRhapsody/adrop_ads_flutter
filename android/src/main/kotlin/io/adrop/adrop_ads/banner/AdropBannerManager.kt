@@ -62,4 +62,7 @@ class AdropBannerManager(
 
         adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, unitId)
     }
+
+    override fun onAdImpression(banner: AdropBanner) {
+    }
 }
