@@ -45,4 +45,9 @@ class AdropPopupAd extends AdropAd {
       "backgroundColor": backgroundColor?.value,
     });
   }
+
+  /// Returns an Adrop ad's creativeIds.
+  List<String> get creativeIds {
+    return creativeId.split(",");
+  }
 }

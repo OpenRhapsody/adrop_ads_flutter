@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the didReplace method from the AdropNavigatorObserver class, for the Dart programming language.">
-  <title>didReplace method - AdropNavigatorObserver class - adrop_ads_flutter library - Dart API</title>
+  <meta name="description" content="API docs for the creativeId property from the AdropPopupAd class, for the Dart programming language.">
+  <title>creativeId property - AdropPopupAd class - adrop_ads_flutter library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropNavigatorObserver-class.html">AdropNavigatorObserver</a></li>
-    <li class="self-crumb">didReplace method</li>
+    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
+    <li class="self-crumb">creativeId property</li>
   </ol>
-  <div class="self-name">didReplace</div>
+  <div class="self-name">creativeId</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,43 +54,43 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="adrop_ads_flutter&#47;AdropNavigatorObserver-class-sidebar.html"
+      data-above-sidebar="adrop_ads_flutter&#47;AdropPopupAd-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">didReplace</span> method 
+<h1><span class="kind-property">creativeId</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
-      
+
+        
+<section id="getter">
+
+<section class="multi-line-signature">
+  
   <div>
     <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+        <li>@<a href="https://pub.dev/documentation/meta/1.11.0/meta/protected-constant.html">protected</a></li>
     </ol>
   </div>
+  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  <span class="name ">creativeId</span>
+  <div class="features"><span class="feature">inherited</span></div>
 
-<span class="returntype">void</span>
-<span class="name ">didReplace</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="didReplace-param-newRoute">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Route-class.html">Route</a>?</span> <span class="parameter-name">newRoute</span>, </span></li>
-<li><span class="parameter" id="didReplace-param-oldRoute"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Route-class.html">Route</a>?</span> <span class="parameter-name">oldRoute</span>}</span></li>
-</ol>)
-
-      <div class="features"><span class="feature">override</span></div>
-
-    </section>
-    
-<section class="desc markdown">
-  <p>The <a href="https://api.flutter.dev/flutter/widgets/Navigator-class.html">Navigator</a> replaced <code>oldRoute</code> with <code>newRoute</code>.</p>
 </section>
 
 
-    
+<section class="desc markdown">
+  <p>Returns an Adrop ad's creativeId.</p>
+</section>
+
+
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-void didReplace({Route? newRoute, Route? oldRoute}) {
-  super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-  _setCurrentPage(newRoute, true);
-  _invoke();
+  <pre class="language-dart"><code class="language-dart">@protected
+String get creativeId {
+  return _creativeId;
 }</code></pre>
+</section>
+
 </section>
 
 
@@ -107,12 +107,12 @@ void didReplace({Route? newRoute, Route? oldRoute}) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropNavigatorObserver-class.html">AdropNavigatorObserver</a></li>
-    <li class="self-crumb">didReplace method</li>
+    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
+    <li class="self-crumb">creativeId property</li>
 </ol>
 
 
-    <h5>AdropNavigatorObserver class</h5>
+    <h5>AdropPopupAd class</h5>
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -123,7 +123,7 @@ void didReplace({Route? newRoute, Route? oldRoute}) {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.5.2
+      0.6.0
   </span>
 
   

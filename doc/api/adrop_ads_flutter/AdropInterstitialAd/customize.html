@@ -86,7 +86,6 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@protected
 Future&lt;void&gt; customize([dynamic data]) async {
-  debugPrint(&quot;flutter customize $data&quot;);
   return _invokeChannel.invokeMethod(AdropMethod.customizeAd,
       {&quot;adType&quot;: _adType.index, &quot;requestId&quot;: _requestId, &quot;data&quot;: data});
 }</code></pre>
@@ -122,7 +121,7 @@ Future&lt;void&gt; customize([dynamic data]) async {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.5.2
+      0.6.0
   </span>
 
   

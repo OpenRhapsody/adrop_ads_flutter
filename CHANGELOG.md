@@ -1,3 +1,8 @@
+## 0.6.0
+- Support property types - `String`, `int`, `double`, `bool`
+- Callback for creative id
+- Deprecated `AdropNavigatorObserver`
+
 ## 0.5.2
 - Add error code: Account usage limit exceeded 
 

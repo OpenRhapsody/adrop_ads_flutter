@@ -23,4 +23,9 @@ class AdropRewardedAd extends AdropAd {
             onAdEarnRewardHandler: listener?.onAdEarnRewardHandler,
           ),
         );
+
+  @override
+  String get creativeId {
+    return super.creativeId;
+  }
 }

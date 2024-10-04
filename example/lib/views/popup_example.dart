@@ -40,7 +40,7 @@ class _PopupExampleState extends State<PopupExample> {
     popupAd = AdropPopupAd(
       unitId: uniId,
       listener: AdropPopupListener(onAdReceived: (ad) {
-        debugPrint("PopupAd received");
+        debugPrint("PopupAd received ${(ad as AdropPopupAd).creativeIds}");
         setState(() {
           isLoaded = true;
           errorCode = null;
@@ -62,6 +62,7 @@ class _PopupExampleState extends State<PopupExample> {
       }),
       backgroundColor: getRandomColor(),
     );
+
     setState(() {
       isLoaded = false;
       isShown = false;

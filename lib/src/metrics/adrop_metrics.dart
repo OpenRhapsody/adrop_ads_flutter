@@ -9,7 +9,7 @@ class AdropMetrics {
   ///
   /// [key] is the name of the user property to set.
   /// Setting a null [value] removes the user property.
-  static Future<void> setProperty(String key, String value) async {
+  static Future<void> setProperty(String key, dynamic value) async {
     return await _channel
         .invokeMethod(AdropMethod.setProperty, {"key": key, "value": value});
   }

@@ -51,7 +51,7 @@ class FlutterAdropRewardedAd(
     }
 
     override fun onAdReceived(ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, mapOf("creativeId" to ad.creativeId))
     }
 
     override fun onAdClicked(ad: AdropRewardedAd) {

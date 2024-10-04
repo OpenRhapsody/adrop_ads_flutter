@@ -29,8 +29,9 @@ class _RewardedExampleState extends State<RewardedExample> {
     rewardedAd?.dispose();
     rewardedAd = AdropRewardedAd(
         unitId: unitId,
-        listener: AdropRewardedListener(onAdReceived: (_) {
-          debugPrint("rewardedAd received $unitId");
+        listener: AdropRewardedListener(onAdReceived: (ad) {
+          debugPrint(
+              "rewardedAd received $unitId, ${(ad as AdropRewardedAd).creativeId}");
           setState(() {
             isLoaded = true;
             errorCode = null;

@@ -2,7 +2,7 @@ import 'package:adrop_ads_flutter/src/banner/adrop_banner_view.dart';
 
 import '../adrop_error_code.dart';
 
-typedef AdropAdEventCallback = void Function(String unitId);
+typedef AdropAdEventCallback = void Function(String unitId, String? creativeId);
 typedef AdropAdFailedCallback = void Function(
     String unitId, AdropErrorCode errorCode);
 

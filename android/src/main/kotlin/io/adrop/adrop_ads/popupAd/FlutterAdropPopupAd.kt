@@ -2,7 +2,6 @@ package io.adrop.adrop_ads.popupAd
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.bridge.AdropChannel
@@ -67,7 +66,7 @@ class FlutterAdropPopupAd(
     }
 
     override fun onAdReceived(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, mapOf("creativeId" to ad.creativeIds.joinToString(",")))
     }
 
     override fun onAdClicked(ad: AdropPopupAd) {

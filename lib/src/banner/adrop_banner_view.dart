@@ -1,5 +1,4 @@
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-import 'package:adrop_ads_flutter/src/bridge/adrop_method.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -29,17 +28,13 @@ class AdropBannerView extends StatelessWidget {
             viewType: AdropChannel.bannerEventListenerChannel,
             creationParams: creationParams.toJson(),
             creationParamsCodec: const StandardMessageCodec(),
-            onPlatformViewCreated: (_) {
-              _attach();
-            });
+            onPlatformViewCreated: (_) {});
       case TargetPlatform.iOS:
         return UiKitView(
           viewType: AdropChannel.bannerEventListenerChannel,
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: (_) {
-            _attach();
-          },
+          onPlatformViewCreated: (_) {},
         );
       default:
         return Text('$defaultTargetPlatform is not yet supported');
@@ -54,11 +49,5 @@ class AdropBannerView extends StatelessWidget {
   /// Invoked when dispose() is called on the corresponding AdropBannerView
   Future<void> dispose() async {
     return await adropAdManager.dispose(this);
-  }
-
-  Future<void> _attach() async {
-    return await const MethodChannel(AdropChannel.invokeChannel).invokeMethod(
-        AdropMethod.pageAttach,
-        {"unitId": unitId, "page": AdropNavigatorObserver.last()});
   }
 }

@@ -61,9 +61,10 @@ abstract class AdropAd {
 
   final AdType _adType;
   final String _unitId;
+  String _creativeId = '';
   bool _loaded;
-  late final String _requestId;
   final AdropAdListener? listener;
+  late final String _requestId;
   late final MethodChannel? _adropEventObserverChannel;
 
   /// Returns `true` if an Adrop ad is loaded.
@@ -107,6 +108,12 @@ abstract class AdropAd {
     return AdropChannel.adropEventListenerChannelOf(_adType, _requestId);
   }
 
+  /// Returns an Adrop ad's creativeId.
+  @protected
+  String get creativeId {
+    return _creativeId;
+  }
+
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
     return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
@@ -122,7 +129,6 @@ abstract class AdropAd {
   /// Requests to customize an ad from Adrop using the Ad unit ID of the Adrop ad.
   @protected
   Future<void> customize([dynamic data]) async {
-    debugPrint("flutter customize $data");
     return _invokeChannel.invokeMethod(AdropMethod.customizeAd,
         {"adType": _adType.index, "requestId": _requestId, "data": data});
   }
@@ -141,6 +147,7 @@ abstract class AdropAd {
     switch (call.method) {
       case AdropMethod.didReceiveAd:
         _loaded = true;
+        _creativeId = call.arguments['creativeId'] ?? '';
         listener?.onAdReceived?.call(this);
         break;
       case AdropMethod.didClickAd:
@@ -151,7 +158,6 @@ abstract class AdropAd {
             ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
         break;
       case AdropMethod.didImpression:
-        _invokeAttach();
         listener?.onAdImpression?.call(this);
         break;
       case AdropMethod.willDismissFullScreen:
@@ -175,11 +181,5 @@ abstract class AdropAd {
             ?.call(this, event.type ?? 0, event.amount ?? 0);
         break;
     }
-  }
-
-  void _invokeAttach() {
-    const MethodChannel(AdropChannel.invokeChannel).invokeMethod(
-        AdropMethod.pageAttach,
-        {"unitId": unitId, "page": AdropNavigatorObserver.last()});
   }
 }

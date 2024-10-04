@@ -46,12 +46,15 @@ class AdropBannerManager(
     override fun onAdClicked(banner: AdropBanner) {
         val unitId = banner.getUnitId()
         ads[unitId] = banner
-        adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, unitId)
+
+        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId)
+        adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, args)
     }
 
     override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
         val unitId = banner.getUnitId()
         ads[unitId] = banner
+
         val args = mapOf<String, String?>("unitId" to unitId, "error" to error.name)
         adropChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, args)
     }
@@ -60,7 +63,8 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, unitId)
+        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId)
+        adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, args)
     }
 
     override fun onAdImpression(banner: AdropBanner) {

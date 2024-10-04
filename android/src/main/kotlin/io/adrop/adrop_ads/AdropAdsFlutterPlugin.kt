@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.NonNull
 import io.adrop.adrop_ads.analytics.PageTracker
 import io.adrop.adrop_ads.banner.AdropBannerManager
@@ -70,9 +69,16 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 AdropMethod.SET_PROPERTY -> {
                     val key = call.argument("key") as String? ?: ""
-                    val value = call.argument("value") as String? ?: ""
+                    val value = call.argument("value") as Any? ?: arrayOf<Int>()
 
-                    AdropMetrics.setProperty(key, value)
+                    when(value) {
+                        is String -> AdropMetrics.setProperty(key, value)
+                        is Int -> AdropMetrics.setProperty(key, value)
+                        is Double -> AdropMetrics.setProperty(key, value)
+                        is Boolean -> AdropMetrics.setProperty(key, value)
+                        else -> {}
+                    }
+
                     result.success(null)
                 }
 

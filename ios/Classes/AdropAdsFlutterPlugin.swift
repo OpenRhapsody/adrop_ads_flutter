@@ -37,8 +37,8 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             result(nil)
         case AdropMethod.SET_PROPERTY:
             let key = (call.arguments as? [String: Any?])?["key"] as? String ?? ""
-            let value = (call.arguments as? [String: Any?])?["value"] as? String ?? ""
-            AdropMetrics.setProperty(key: key, value: value)
+            let value = (call.arguments as? [String: Any?])?["value"] as? Any ?? [:]
+            AdropMetrics.setProperty(key: key, value: convertToEncodable(value))
             result(nil)
         case AdropMethod.LOG_EVENT:
             let name = (call.arguments as? [String: Any?])?["name"] as? String ?? ""
@@ -51,16 +51,8 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 }
             }
             AdropMetrics.logEvent(name: name, params: encodableParams)
-        case AdropMethod.PAGE_TRACK:
-            let page = (call.arguments as? [String: Any?])?["page"] as? String ?? ""
-            let size = (call.arguments as? [String: Any?])?["size"] as? Int ?? 0
-            pageTracker.track(page: page, sizeOfRoutes: size)
             result(nil)
-        case AdropMethod.PAGE_ATTACH:
-            let page = (call.arguments as? [String: Any?])?["page"] as? String ?? ""
-            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
-            pageTracker.attach(unitId: unitId, page: page)
-            result(nil)
+        
         case AdropMethod.LOAD_BANNER:
             bannerManager?.load(unitId: call.arguments as? String ??  "")
             result(nil)

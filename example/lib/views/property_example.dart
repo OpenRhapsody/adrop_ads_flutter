@@ -2,7 +2,10 @@ import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:flutter/material.dart';
 
 class PropertyExample extends StatelessWidget {
-  const PropertyExample({super.key});
+  PropertyExample({super.key});
+
+  final _keyController = TextEditingController();
+  final _valueController = TextEditingController();
 
   void setGender(AdropGender gender) {
     AdropMetrics.setProperty(AdropProperties.gender.code, gender.code);
@@ -14,6 +17,20 @@ class PropertyExample extends StatelessWidget {
 
   void setBirth(String birth) {
     AdropMetrics.setProperty(AdropProperties.birth.code, birth);
+  }
+
+  void sendProperty(String value) {
+    var key = _keyController.text;
+
+    if (value.toLowerCase() == 'true' || value.toLowerCase() == 'false') {
+      AdropMetrics.setProperty(key, value.toLowerCase() == 'true');
+    } else if (int.tryParse(value) != null) {
+      AdropMetrics.setProperty(key, int.parse(value));
+    } else if (double.tryParse(value) != null) {
+      AdropMetrics.setProperty(key, double.parse(value));
+    } else {
+      AdropMetrics.setProperty(key, value);
+    }
   }
 
   @override
@@ -33,102 +50,78 @@ class PropertyExample extends StatelessWidget {
         body: SafeArea(
             child: Container(
                 padding: const EdgeInsets.all(16),
-                child: Column(children: [
-                  const Text("Gender"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      const Text("Custom Property"),
+                      Row(
+                        children: [
+                          const Text("Key"),
+                          const SizedBox(width: 16),
+                          Container(
+                              width: 200,
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: EditableText(
+                                controller: _keyController,
+                                focusNode: FocusNode(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                                cursorColor: Colors.black,
+                                backgroundCursorColor: Colors.white,
+                              )),
+                        ],
+                      ),
+                      Row(children: [
+                        const Text("Value"),
+                        const SizedBox(width: 16),
+                        Container(
+                          width: 200,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                          ),
+                          child: EditableText(
+                            controller: _valueController,
+                            focusNode: FocusNode(),
+                            style: const TextStyle(color: Colors.black),
+                            cursorColor: Colors.black,
+                            backgroundCursorColor: Colors.white,
+                          ),
+                        )
+                      ]),
                       TextButton(
                           onPressed: () {
-                            setGender(AdropGender.male);
+                            sendProperty(_valueController.text);
                           },
-                          child: const Text("Male")),
-                      TextButton(
-                          onPressed: () {
-                            setGender(AdropGender.female);
-                          },
-                          child: const Text("Female")),
-                      TextButton(
-                          onPressed: () {
-                            setGender(AdropGender.other);
-                          },
-                          child: const Text("Other")),
-                      TextButton(
-                          onPressed: () {
-                            setGender(AdropGender.unknown);
-                          },
-                          child: const Text("Unknown"))
-                    ],
-                  ),
-                  const Text("Age"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            setAge(18);
-                          },
-                          child: const Text("18")),
-                      TextButton(
-                          onPressed: () {
-                            setAge(25);
-                          },
-                          child: const Text("25")),
-                      TextButton(
-                          onPressed: () {
-                            setAge(37);
-                          },
-                          child: const Text("37")),
-                      TextButton(
-                          onPressed: () {
-                            setAge(45);
-                          },
-                          child: const Text("45"))
-                    ],
-                  ),
-                  const Text("Birth"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            setBirth("20101111");
-                          },
-                          child: const Text("20101111")),
-                      TextButton(
-                          onPressed: () {
-                            setBirth("199507");
-                          },
-                          child: const Text("199507")),
-                      TextButton(
-                          onPressed: () {
-                            setBirth("2000");
-                          },
-                          child: const Text("2000")),
-                    ],
-                  ),
-                  const Text("Event"),
-                  Column(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            var params = {
-                              "key1": true,
-                              "key2": 123,
-                              "key3": 1.1,
-                              "key4": "value",
-                              "array": ["123"],
-                              "dictionary": {"1": "1"},
-                              "null": null,
-                              "exp": 1.42e32
-                            };
-                            debugPrint("event key: CustomKey, value: $params");
-                            AdropMetrics.logEvent("CustomKey", params);
-                          },
-                          child: const Text(
-                              "send event \nkey: \"CustomKey\", \nvalue: {\n\tkey1: true,\n\tkey2: 123,\n\tkey3: 1.1,\n\tkey4: 'value'\n\t}"))
-                    ],
-                  )
-                ]))));
+                          child: const Text("set property")),
+                      const Text("Event"),
+                      Column(
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                var params = {
+                                  "key1": true,
+                                  "key2": 123,
+                                  "key3": 1.1,
+                                  "key4": "value",
+                                  "array": ["123"],
+                                  "dictionary": {"1": "1"},
+                                  "null": null,
+                                  "exp": 1.42e32
+                                };
+                                debugPrint(
+                                    "event key: CustomKey, value: $params");
+                                AdropMetrics.logEvent("CustomKey", params);
+                              },
+                              child: const Text(
+                                  "send event \nkey: \"CustomKey\", \nvalue: {\n\tkey1: true,\n\tkey2: 123,\n\tkey3: 1.1,\n\tkey4: 'value'\n\t}"))
+                        ],
+                      )
+                    ]))));
   }
 }

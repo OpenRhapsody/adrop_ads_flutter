@@ -14,18 +14,17 @@ class AdropAdManager {
   AdropAdManager(String channelName)
       : _invokeChannel = MethodChannel(channelName) {
     _invokeChannel.setMethodCallHandler((call) async {
+      var args = call.arguments;
+      var unitId = args["unitId"] ?? "";
+      var creativeId = args["creativeId"] ?? "";
       switch (call.method) {
         case AdropMethod.didReceiveAd:
-          var unitId = call.arguments ?? "";
-          _loadedAds[unitId]?.listener?.onAdReceived?.call(unitId);
+          _loadedAds[unitId]?.listener?.onAdReceived?.call(unitId, creativeId);
           break;
         case AdropMethod.didClickAd:
-          var unitId = call.arguments ?? "";
-          _loadedAds[unitId]?.listener?.onAdClicked?.call(unitId);
+          _loadedAds[unitId]?.listener?.onAdClicked?.call(unitId, creativeId);
           break;
         case AdropMethod.didFailToReceiveAd:
-          var args = call.arguments;
-          var unitId = args["unitId"];
           _loadedAds[unitId]
               ?.listener
               ?.onAdFailedToReceive
