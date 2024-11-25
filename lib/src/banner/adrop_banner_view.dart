@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../bridge/adrop_channel.dart';
-import '../model/call_create_banner.dart';
+import '../model/call_create_ad.dart';
 import 'adrop_ad_manager.dart';
 
 class AdropBannerView extends StatelessWidget {
@@ -20,7 +20,7 @@ class AdropBannerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final creationParams = CallCreateBanner(unitId: unitId);
+    final creationParams = CallCreateAd(unitId: unitId);
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

@@ -13,7 +13,7 @@ class AdropBannerViewFactory: NSObject, FlutterPlatformViewFactory {
     }
     
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
-        let call = CallCreateBanner(encoding: args as? [String : Any?])
+        let call = CallCreateAd(encoding: args as? [String : Any?])
         if let banner = bannerManager.getAd(unitId: call.unitId) {
             return AdropFlutterPlatformView(view: banner)
         } else {

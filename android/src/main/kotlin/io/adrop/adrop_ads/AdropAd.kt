@@ -2,7 +2,7 @@ package io.adrop.adrop_ads
 
 import android.app.Activity
 
-enum class AdType {Undefined, Interstitial, Rewarded, Popup}
+enum class AdType {Undefined, Interstitial, Rewarded, Popup, Native}
 
 abstract class AdropAd {
 

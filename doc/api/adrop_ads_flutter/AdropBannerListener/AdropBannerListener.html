@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
+    <li><a href="../../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter.dart</a></li>
     <li><a href="../../adrop_ads_flutter/AdropBannerListener-class.html">AdropBannerListener</a></li>
     <li class="self-crumb">AdropBannerListener const constructor</li>
   </ol>
@@ -37,14 +37,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
       <span id="dark-theme-button" class="material-symbols-outlined">
-        brightness_4
+        dark_mode
       </span>
       <span id="light-theme-button" class="material-symbols-outlined">
-        brightness_5
+        light_mode
       </span>
     </label>
   </div>
@@ -62,10 +62,10 @@
 
     <section class="multi-line-signature">
       const
-      <span class="name ">AdropBannerListener</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-onAdReceived">{<span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdEventCallback.html">AdropAdEventCallback</a>?</span> <span class="parameter-name">onAdReceived</span>, </span></li>
+      <span class="name ">AdropBannerListener</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-onAdReceived"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdEventCallback.html">AdropAdEventCallback</a>?</span> <span class="parameter-name">onAdReceived</span>, </span></li>
 <li><span class="parameter" id="-param-onAdFailedToReceive"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdFailedCallback.html">AdropAdFailedCallback</a>?</span> <span class="parameter-name">onAdFailedToReceive</span>, </span></li>
-<li><span class="parameter" id="-param-onAdClicked"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdEventCallback.html">AdropAdEventCallback</a>?</span> <span class="parameter-name">onAdClicked</span>}</span></li>
-</ol>)
+<li><span class="parameter" id="-param-onAdClicked"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdEventCallback.html">AdropAdEventCallback</a>?</span> <span class="parameter-name">onAdClicked</span>, </span></li>
+</ol>})
     </section>
 
     
@@ -74,7 +74,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const AdropBannerListener</code></pre>
+  <pre class="language-dart"><code class="language-dart">const AdropBannerListener(
+    {this.onAdReceived, this.onAdFailedToReceive, this.onAdClicked});</code></pre>
 </section>
 
 
@@ -97,6 +98,7 @@
 
 
     <h5>AdropBannerListener class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -107,7 +109,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.6.0
+      0.7.0
   </span>
 
   

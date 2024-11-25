@@ -5,12 +5,13 @@ enum AdType: String, CaseIterable {
     case interstitial = "interstitial"
     case rewarded = "rewarded"
     case popup = "popup"
+    case native = "native"
 }
 
 protocol AdropAd: NSObject {
-
+    
     func load()
-
+    
     func show()
-
+    
 }

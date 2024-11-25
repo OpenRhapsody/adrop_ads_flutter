@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 7.0.0-dev">
   <meta name="description" content="adrop_ads_flutter API docs, for the Dart programming language.">
   <title>adrop_ads_flutter - Dart API docs</title>
 
@@ -12,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="static-assets/github.css?v1">
   <link rel="stylesheet" href="static-assets/styles.css?v1">
@@ -35,14 +34,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
       <span id="dark-theme-button" class="material-symbols-outlined">
-        brightness_4
+        dark_mode
       </span>
       <span id="light-theme-button" class="material-symbols-outlined">
-        brightness_5
+        light_mode
       </span>
     </label>
   </div>
@@ -235,6 +234,7 @@ end
 <li>PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM</li>
 <li>PUBLIC_TEST_UNIT_ID_POPUP_CENTER</li>
 <li>PUBLIC_TEST_UNIT_ID_SPLASH</li>
+<li>PUBLIC_TEST_UNIT_ID_NATIVE</li>
 </ul>
 </blockquote>
 <h3 id="display-ads">Display Ads</h3>
@@ -490,6 +490,81 @@ void dispose() {
 }
 </code></pre>
 </details>
+<br>
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Native Ad</summary>
+<p>Step 1: (Optional) Construct event listener</p>
+<pre class="language-dart"><code class="language-dart">final AdropNativeListener listener = AdropNativeListener(
+    onAdReceived: (ad) =&gt;
+        debugPrint('Adrop Native Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) =&gt; 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    ...
+);
+</code></pre>
+<p>Step 2: Display a native ad</p>
+<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
+}
+
+class _YourComponentState extends State&lt;YourComponent&gt; {
+  final AdropNativeAd nativeAd = AdropNativeAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+  
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    nativeAd.load();
+  }
+  
+  Widget nativeAdView(BuildContext context) {
+    if (!isLoaded) return Container();
+    
+    return AdropNativeView(
+      ad: nativeAd,
+      child: Column(
+        children: [
+          if (nativeAd.properties.profile?.displayLogo)
+              Image.network(
+                nativeAd.properties.profile?.displayLogo,
+                width: 24,
+                height: 24,
+              ),
+          if (nativeAd.properties.profile?.displayName) 
+              Text(
+                nativeAd.properties.profile?.displayName,
+              ),
+          if (nativeAd.properties.headline != null)
+            Text(nativeAd.properties.headline),
+          if (nativeAd.properties.body != null)
+            Text(nativeAd.properties.body),
+          if (nativeAd.properties.asset != null)
+            Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
+          if (nativeAd.properties.extra['sampleExtraId'] != null)
+            Text(nativeAd.properties.extra['sampleExtraId']),
+        ],
+      )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: nativeAdView(context),
+      ),
+    );
+  }
+}
+</code></pre>
+</details>
 </section>
 
 
@@ -537,7 +612,7 @@ void dispose() {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      0.6.0
+      0.7.0
   </span>
 
   

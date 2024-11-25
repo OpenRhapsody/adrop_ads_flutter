@@ -4,9 +4,8 @@ import AdropAds
 
 public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     private var bannerManager: AdropBannerManager?
-    private var messenger: FlutterBinaryMessenger?
     private var adropAdManager : AdropAdManager?
-    private let pageTracker = PageTracker()
+    private var messenger: FlutterBinaryMessenger?
 
     private let ModuleError = FlutterError(
         code: "ERROR_CODE_INTERNAL",
@@ -18,7 +17,9 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         let instance = AdropAdsFlutterPlugin()
         let messenger = registrar.messenger()
         instance.messenger = messenger
-        instance.adropAdManager = AdropAdManager(messenger: messenger)
+        
+        let adManager = AdropAdManager(messenger: messenger)
+        instance.adropAdManager = adManager
 
         let invokeChannel = FlutterMethodChannel(name: AdropChannel.invokeChannel, binaryMessenger: messenger)
         let bannerManager = AdropBannerManager(messenger: messenger)
@@ -26,14 +27,17 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
         instance.bannerManager = bannerManager
         registrar.register(AdropBannerViewFactory(messenger: messenger, bannerManager: bannerManager), withId: AdropChannel.bannerEventListenerChannel)
+        registrar.register(AdropNativeAdViewFactory(messenger: messenger, adManager: adManager), withId: AdropChannel.nativeEventListenerChannel)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case AdropMethod.INITIALIZE:
-            let production = (call.arguments as? [String: Any?])?["production"] as? Bool ?? false
-            let targetCountries = (call.arguments as? [String: Any?])?["targetCountries"] as? [String]
-            Adrop.initialize(production: production, targetCountries: targetCountries)
+            let args = call.arguments as? [String: Any?]
+            let production = args?["production"] as? Bool ?? false
+            let targetCountries = args?["targetCountries"] as? [String]
+            let useInAppBrowser = args?["useInAppBrowser"] as? Bool ?? false
+            Adrop.initialize(production: production, useInAppBrowser: useInAppBrowser, targetCountries: targetCountries)
             result(nil)
         case AdropMethod.SET_PROPERTY:
             let key = (call.arguments as? [String: Any?])?["key"] as? String ?? ""
@@ -52,7 +56,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             }
             AdropMetrics.logEvent(name: name, params: encodableParams)
             result(nil)
-        
+
         case AdropMethod.LOAD_BANNER:
             bannerManager?.load(unitId: call.arguments as? String ??  "")
             result(nil)

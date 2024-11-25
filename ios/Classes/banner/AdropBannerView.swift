@@ -12,7 +12,7 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
         frame: CGRect,
         viewIdentifier viewId: Int64,
         binaryMessenger messenger: FlutterBinaryMessenger,
-        call: CallCreateBanner,
+        call: CallCreateAd,
         bannerManager: AdropBannerManager
     ) {
         self.bannerManager = bannerManager

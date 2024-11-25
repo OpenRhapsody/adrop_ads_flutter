@@ -12,11 +12,11 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
 
     init(
         unitId: String,
-        requesetId: String,
+        requestId: String,
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
-            self.requestId = requesetId
-            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.rewarded, id: requesetId)
+            self.requestId = requestId
+            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.rewarded, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
 
             self.rewardedAd = AdropRewardedAd(unitId: unitId)
@@ -39,7 +39,7 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
         rewardedAd.show(fromRootViewController: viewController) { [weak self] type, amount in
             guard let strongSelf = self else { return }
             strongSelf.adropEventListenerChannel?.invokeMethod(AdropMethod.HANDLE_EARN_REWARD,
-                                            arguments: ["type": type, "amount": amount])
+                                                               arguments: ["type": type, "amount": amount])
         }
     }
 

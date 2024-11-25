@@ -11,11 +11,11 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
 
     init(
         unitId: String,
-        requesetId: String,
+        requestId: String,
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
-            self.requestId = requesetId
-            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.popup, id: requesetId)
+            self.requestId = requestId
+            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.popup, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
 
             self.popupAd = AdropPopupAd(unitId: unitId)

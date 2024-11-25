@@ -2,6 +2,7 @@ import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/views/banner_example.dart';
 import 'package:adrop_ads_flutter_example/views/home.dart';
 import 'package:adrop_ads_flutter_example/views/interstitial_example.dart';
+import 'package:adrop_ads_flutter_example/views/native_example.dart';
 import 'package:adrop_ads_flutter_example/views/popup_example.dart';
 import 'package:adrop_ads_flutter_example/views/property_example.dart';
 import 'package:adrop_ads_flutter_example/views/rewarded_example.dart';
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
         '/interstitialExample': (_) => const InterstitialExample(),
         '/rewardedExample': (_) => const RewardedExample(),
         '/popupExample': (_) => const PopupExample(),
+        '/nativeExample': (_) => const NativeExample(),
         '/propertyExample': (_) => PropertyExample(),
         // Add more routes as needed
       },

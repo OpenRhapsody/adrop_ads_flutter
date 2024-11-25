@@ -13,3 +13,7 @@ export 'src/popupAd/adrop_popup_listener.dart';
 export 'src/observer/adrop_navigator_observer.dart';
 export 'src/rewarded/adrop_rewarded_ad.dart';
 export 'src/rewarded/adrop_rewarded_listener.dart';
+
+export 'src/native/adrop_native_ad.dart';
+export 'src/native/adrop_native_ad_view.dart';
+export 'src/native/adrop_native_listener.dart';

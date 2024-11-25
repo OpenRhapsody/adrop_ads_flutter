@@ -5,4 +5,5 @@ const testUnitIdInterstitialAd = 'PUBLIC_TEST_UNIT_ID_INTERSTITIAL';
 const testUnitIdRewardedAd = 'PUBLIC_TEST_UNIT_ID_REWARDED';
 const testUnitIdPopupAdBottom = 'PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM';
 const testUnitIdPopupAdCenter = 'PUBLIC_TEST_UNIT_ID_POPUP_CENTER';
+const testUnitIdNative = 'PUBLIC_TEST_UNIT_ID_NATIVE';
 const testUnitId = 'TEST_UNIT_ID';

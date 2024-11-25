@@ -47,13 +47,15 @@ class AdropAdManager: NSObject {
     
     func createAd(adType: AdType, unitId: String, requestId: String) -> AdropAd? {
         switch adType {
-        case AdType.interstitial:
-            return FlutterAdropInterstitialAd(unitId: unitId, requesetId: requestId, messenger: messenger)
-        case AdType.rewarded:
-            return FlutterAdropRewardedAd(unitId: unitId, requesetId: requestId, messenger: messenger)
-        case AdType.popup:
-            return FlutterAdropPopupAd(unitId: unitId, requesetId: requestId, messenger: messenger)
-        case AdType.undefined:
+        case .interstitial:
+            return FlutterAdropInterstitialAd(unitId: unitId, requestId: requestId, messenger: messenger)
+        case .rewarded:
+            return FlutterAdropRewardedAd(unitId: unitId, requestId: requestId, messenger: messenger)
+        case .popup:
+            return FlutterAdropPopupAd(unitId: unitId, requestId: requestId, messenger: messenger)
+        case .native:
+            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, messenger: messenger)
+        case .undefined:
             return nil
         }
     }

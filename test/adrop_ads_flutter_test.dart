@@ -7,8 +7,8 @@ class MockAdropAdsFlutterPlatform
     with MockPlatformInterfaceMixin
     implements AdropPlatform {
   @override
-  Future<void> initialize(
-      bool production, List<String> targetCountries) async {}
+  Future<void> initialize(bool production, List<String> targetCountries,
+      bool useInAppBrowser) async {}
 }
 
 void main() {
@@ -19,6 +19,6 @@ void main() {
   });
 
   test('initialize', () async {
-    await MockAdropAdsFlutterPlatform().initialize(true, []);
+    await MockAdropAdsFlutterPlatform().initialize(true, [], false);
   });
 }

@@ -16,7 +16,8 @@ abstract class AdropPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> initialize(bool production, List<String> targetCountries) async {
+  Future<void> initialize(bool production, List<String> targetCountries,
+      bool useInAppBrowser) async {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 }

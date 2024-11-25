@@ -12,11 +12,11 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
 
     init(
         unitId: String,
-        requesetId: String,
+        requestId: String,
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
-            self.requestId = requesetId
-            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.interstitial, id: requesetId)
+            self.requestId = requestId
+            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.interstitial, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
 
             self.interstitialAd = AdropInterstitialAd(unitId: unitId)

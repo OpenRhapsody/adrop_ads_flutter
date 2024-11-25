@@ -1,10 +1,10 @@
+import 'package:adrop_ads_flutter/src/model/call_create_ad.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../adrop_error_code.dart';
 import '../bridge/adrop_channel.dart';
-import '../model/call_create_banner.dart';
 import 'adrop_banner_controller.dart';
 
 typedef AdropBannerCreatedCallback = void Function(
@@ -42,7 +42,7 @@ class AdropBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final creationParams = CallCreateBanner(unitId: unitId);
+    final creationParams = CallCreateAd(unitId: unitId);
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

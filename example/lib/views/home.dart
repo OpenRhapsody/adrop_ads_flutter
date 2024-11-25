@@ -39,6 +39,11 @@ class Home extends StatelessWidget {
                 child: const Text('PopupAd Example')),
             TextButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, '/nativeExample');
+                },
+                child: const Text('NativeAd Example')),
+            TextButton(
+                onPressed: () {
                   Navigator.pushNamed(context, '/propertyExample');
                 },
                 child: const Text('Property Example')),

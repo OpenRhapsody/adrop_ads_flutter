@@ -38,7 +38,6 @@ class AdropBannerManager(
 
     fun destroy(unitId: String) {
         ads[unitId]?.let {
-            it.destroy()
             ads.remove(unitId)
         }
     }

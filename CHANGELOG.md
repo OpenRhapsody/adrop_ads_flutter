@@ -1,3 +1,10 @@
+## 0.7.0
+- Support `AdropNativeAd`
+- [iOS] Support enable to use in-app browser
+
+## 0.6.1
+- [iOS] Support `useInAppBrowser`
+
 ## 0.6.0
 - Support property types - `String`, `int`, `double`, `bool`
 - Callback for creative id
@@ -7,7 +14,7 @@
 - Add error code: Account usage limit exceeded 
 
 ## 0.5.1
-- update sdk
+- Update sdk
 
 ## 0.5.0
 - Add `AdropPopupAd`
@@ -39,29 +46,29 @@
 - flutter 3.3.0
 
 ## 0.2.7
-- Android minSdkVersion 23
-- ios 13.0
+- [Android] minSdkVersion 23
+- [iOS] 13.0
 - Add AdropBannerView
-- Deprecated AdropBannerController, AdropBanner
+- Deprecated `AdropBannerController`, `AdropBanner`
 
 ## 0.2.6
-- iOS initialize
+- [iOS] initialize
 - check production level
 
 ## 0.2.5
 - API Documentation
 
 ## 0.2.3
-- support kotlin 1.7.10 or higher
+- Support kotlin 1.7.10 or higher
 
 ## 0.2.1
-- update sdk
+- Update sdk
 
 ## 0.2.0
-- network update
+- Network update
 
 ## 0.1.1
-- update use ios sdk 
+- Update use ios sdk 
 
 ## 0.1.0+1
-- adrop_ads_flutter release
+- `adrop_ads_flutter` release

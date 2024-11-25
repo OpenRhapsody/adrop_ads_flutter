@@ -2,7 +2,7 @@ import UIKit
 import Flutter
 import AdropAds
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
     
     override func application(
@@ -16,7 +16,6 @@ import AdropAds
         splashViewController.backgroundColor = UIColor(white: 1, alpha: 1)
         splashViewController.logoImage = UIImage(named: "splashLogo")
         splashViewController.mainViewController = controller
-        splashViewController.timeout = 0.5
         splashViewController.delegate = self
 
         self.window?.rootViewController = splashViewController

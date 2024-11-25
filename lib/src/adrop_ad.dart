@@ -1,14 +1,13 @@
-import 'dart:math';
-
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
+import 'package:adrop_ads_flutter/src/utils/id.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'bridge/adrop_method.dart';
 
-enum AdType { undefined, interstitial, rewarded, popup }
+enum AdType { undefined, interstitial, rewarded, popup, native }
 
 class AdropEvent {
   final String unitId;
@@ -54,8 +53,6 @@ class AdropAdListener {
 }
 
 abstract class AdropAd {
-  final _random = Random.secure();
-
   static const MethodChannel _invokeChannel =
       MethodChannel(AdropChannel.invokeChannel);
 
@@ -77,7 +74,7 @@ abstract class AdropAd {
       : _adType = adType,
         _unitId = unitId,
         _loaded = false {
-    _requestId = _getRequestId();
+    _requestId = nanoid();
 
     if (listener != null) {
       final adropEventObserverChannelName = _getChannel();
@@ -89,19 +86,6 @@ abstract class AdropAd {
         _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
       }
     }
-  }
-
-  String _getRequestId() {
-    const alphabet =
-        'ModuleSymbhasOwnPr0123456789ABCDEFGHNRVfgctiUvzKqYTJkLxpZXIjQW';
-    const len = alphabet.length;
-    int size = 21;
-
-    String id = '';
-    while (0 < size--) {
-      id += alphabet[_random.nextInt(len)];
-    }
-    return id;
   }
 
   String? _getChannel() {

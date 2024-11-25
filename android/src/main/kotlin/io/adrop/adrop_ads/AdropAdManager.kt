@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import io.adrop.adrop_ads.popupAd.FlutterAdropPopupAd
 import io.adrop.adrop_ads.interstitial.FlutterAdropInterstitialAd
+import io.adrop.adrop_ads.native.FlutterAdropNativeAd
 import io.adrop.adrop_ads.rewarded.FlutterAdropRewardedAd
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -49,11 +50,12 @@ class AdropAdManager {
             AdType.Interstitial -> FlutterAdropInterstitialAd(context, unitId, requestId, messenger)
             AdType.Rewarded -> FlutterAdropRewardedAd(context, unitId, requestId, messenger)
             AdType.Popup -> FlutterAdropPopupAd(context, unitId, requestId, messenger)
+            AdType.Native -> FlutterAdropNativeAd(context, unitId, requestId, messenger)
             AdType.Undefined -> null
         }
     }
 
-    private fun getAd(adType: AdType, requestId: String): AdropAd? {
+    fun getAd(adType: AdType, requestId: String): AdropAd? {
         return ads[keyOf(adType, requestId)]
     }
 

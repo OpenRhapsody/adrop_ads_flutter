@@ -184,6 +184,7 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM
 > * PUBLIC_TEST_UNIT_ID_POPUP_CENTER
 > * PUBLIC_TEST_UNIT_ID_SPLASH
+> * PUBLIC_TEST_UNIT_ID_NATIVE
 
 ### Display Ads
 <details>
@@ -464,6 +465,88 @@ AdropPopupAd must be disposed of when access to it is no longer needed.
 void dispose() {
   super.dispose();
   popupAd.dispose();
+}
+```
+
+</details>
+
+<br/>
+
+<details>
+<summary style="font-size: 16px; font-weight: bold;">Native Ad</summary>
+
+Step 1: (Optional) Construct event listener
+```dart
+final AdropNativeListener listener = AdropNativeListener(
+    onAdReceived: (ad) =>
+        debugPrint('Adrop Native Ad loaded with unitId ${ad.unitId}!'),
+    onAdFailedToReceive: (ad, errorCode) => 
+        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
+    ...
+);
+```
+
+Step 2: Display a native ad
+```dart
+class YourComponent extends StatefulWidget {
+  const YourComponent({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _YourComponentState();
+}
+
+class _YourComponentState extends State<YourComponent> {
+  final AdropNativeAd nativeAd = AdropNativeAd(
+    unitId: 'YOUR_UNIT_ID',
+    listener: listener,
+  );
+  
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    nativeAd.load();
+  }
+  
+  Widget nativeAdView(BuildContext context) {
+    if (!isLoaded) return Container();
+    
+    return AdropNativeView(
+      ad: nativeAd,
+      child: Column(
+        children: [
+          if (nativeAd.properties.profile?.displayLogo)
+              Image.network(
+                nativeAd.properties.profile?.displayLogo,
+                width: 24,
+                height: 24,
+              ),
+          if (nativeAd.properties.profile?.displayName) 
+              Text(
+                nativeAd.properties.profile?.displayName,
+              ),
+          if (nativeAd.properties.headline != null)
+            Text(nativeAd.properties.headline),
+          if (nativeAd.properties.body != null)
+            Text(nativeAd.properties.body),
+          if (nativeAd.properties.asset != null)
+            Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
+          if (nativeAd.properties.extra['sampleExtraId'] != null)
+            Text(nativeAd.properties.extra['sampleExtraId']),
+        ],
+      )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: nativeAdView(context),
+      ),
+    );
+  }
 }
 ```
 
