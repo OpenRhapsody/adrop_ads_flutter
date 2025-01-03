@@ -473,6 +473,7 @@ void dispose() {
 <br/>
 
 <details>
+
 <summary style="font-size: 16px; font-weight: bold;">Native Ad</summary>
 
 Step 1: (Optional) Construct event listener

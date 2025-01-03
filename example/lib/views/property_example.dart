@@ -31,6 +31,10 @@ class PropertyExample extends StatelessWidget {
     } else {
       AdropMetrics.setProperty(key, value);
     }
+
+    Future.delayed(const Duration(seconds: 1), () async {
+      debugPrint("properties: ${await AdropMetrics.properties()}");
+    });
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import '../adrop_ad.dart';
+import '../utils/color.dart';
 import 'adrop_popup_listener.dart';
 
 /// AdropPopupAd class responsible for requesting popup ads and displaying them to the user.
@@ -40,9 +41,9 @@ class AdropPopupAd extends AdropAd {
   Future<void> load() async {
     super.load();
     customize({
-      "closeTextColor": closeTextColor?.value,
-      "hideForTodayTextColor": hideForTodayTextColor?.value,
-      "backgroundColor": backgroundColor?.value,
+      "closeTextColor": colorValue(closeTextColor),
+      "hideForTodayTextColor": colorValue(hideForTodayTextColor),
+      "backgroundColor": colorValue(backgroundColor),
     });
   }
 

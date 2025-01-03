@@ -9,6 +9,7 @@ class AdropMethod {
   static const disposeAd = "disposeAd";
 
   static const setProperty = "setProperty";
+  static const getProperty = "getProperty";
   static const logEvent = "logEvent";
   static const pageTrack = "pageTrack";
   static const pageAttach = "pageAttach";

@@ -17,7 +17,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         let instance = AdropAdsFlutterPlugin()
         let messenger = registrar.messenger()
         instance.messenger = messenger
-        
+
         let adManager = AdropAdManager(messenger: messenger)
         instance.adropAdManager = adManager
 
@@ -44,6 +44,8 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             let value = (call.arguments as? [String: Any?])?["value"] as? Any ?? [:]
             AdropMetrics.setProperty(key: key, value: convertToEncodable(value))
             result(nil)
+        case AdropMethod.GET_PROPERTY:
+            result(AdropMetrics.properties())
         case AdropMethod.LOG_EVENT:
             let name = (call.arguments as? [String: Any?])?["name"] as? String ?? ""
             let params = (call.arguments as? [String: Any?])?["params"] as? [String:Any] ?? [:]

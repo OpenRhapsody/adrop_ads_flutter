@@ -9,6 +9,7 @@ object AdropMethod {
     const val CUSTOMIZE_AD = "customizeAd"
     const val DISPOSE_AD = "disposeAd"
     const val SET_PROPERTY = "setProperty"
+    const val GET_PROPERTY = "getProperty"
     const val LOG_EVENT = "logEvent"
 
     const val DID_RECEIVE_AD = "onAdReceived"

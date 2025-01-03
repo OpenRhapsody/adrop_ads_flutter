@@ -26,4 +26,15 @@ class AdropMetrics {
     return await _channel
         .invokeMethod(AdropMethod.logEvent, {"name": name, "params": params});
   }
+
+  /// Get all user properties saved in the SDK.
+  static Future<Map<String, dynamic>> properties() async {
+    var res = await _channel.invokeMethod(AdropMethod.getProperty);
+
+    if (res is Map) {
+      return Map<String, dynamic>.from(res);
+    } else {
+      return {};
+    }
+  }
 }

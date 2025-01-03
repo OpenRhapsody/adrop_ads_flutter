@@ -3,13 +3,13 @@ package io.adrop.adrop_ads
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.NonNull
 import io.adrop.adrop_ads.banner.AdropBannerManager
 import io.adrop.adrop_ads.banner.AdropBannerViewFactory
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
+import io.adrop.adrop_ads.metrics.FlutterAdropMetrics
 import io.adrop.adrop_ads.native.AdropNativeAdViewFactory
 import io.adrop.ads.Adrop
 import io.adrop.ads.metrics.AdropEventParam
@@ -70,15 +70,13 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     val key = call.argument("key") as String? ?: ""
                     val value = call.argument("value") as Any? ?: arrayOf<Int>()
 
-                    when(value) {
-                        is String -> AdropMetrics.setProperty(key, value)
-                        is Int -> AdropMetrics.setProperty(key, value)
-                        is Double -> AdropMetrics.setProperty(key, value)
-                        is Boolean -> AdropMetrics.setProperty(key, value)
-                        else -> {}
-                    }
+                    FlutterAdropMetrics.setProperty(key, value)
 
                     result.success(null)
+                }
+
+                AdropMethod.GET_PROPERTY -> {
+                    result.success(FlutterAdropMetrics.properties())
                 }
 
                 AdropMethod.LOG_EVENT -> {
@@ -98,6 +96,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
 
                     AdropMetrics.logEvent(name, builder.build())
+                    result.success(null)
                 }
 
                 AdropMethod.LOAD_BANNER -> {

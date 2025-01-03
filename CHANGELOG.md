@@ -1,3 +1,7 @@
+## 1.0.0
+- Support Adrop 1.0.0
+- `AdropMetrics.properties()` for getting user properties 
+
 ## 0.7.0
 - Support `AdropNativeAd`
 - [iOS] Support enable to use in-app browser
