@@ -61,7 +61,8 @@ class FlutterAdropNativeAd(
             "displayLogo" to ad.profile.displayLogo,
             "displayName" to ad.profile.displayName,
             "extra" to ad.extra.toString(),
-            "asset" to ad.asset
+            "asset" to ad.asset,
+            "destinationURL" to ad.destinationURL
         )
 
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, properties)

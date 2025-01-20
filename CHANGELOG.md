@@ -1,3 +1,7 @@
+## 1.0.1
+- Support `Adrop.setUID` for consistent web and app targeting
+- Add the `destinationURL` property to the `AdropNativeProperties` class. 
+
 ## 1.0.0
 - Support Adrop 1.0.0
 - `AdropMetrics.properties()` for getting user properties 

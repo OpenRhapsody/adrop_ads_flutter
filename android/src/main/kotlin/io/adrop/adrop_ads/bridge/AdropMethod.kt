@@ -2,6 +2,7 @@ package io.adrop.adrop_ads.bridge
 
 object AdropMethod {
     const val INITIALIZE = "initialize"
+    const val SET_UID = "setUid"
     const val LOAD_BANNER = "loadBanner"
     const val DISPOSE_BANNER = "disposeBanner"
     const val LOAD_AD = "loadAd"

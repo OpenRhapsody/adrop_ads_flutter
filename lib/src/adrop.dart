@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'adrop_platform_interface.dart';
 
 class Adrop {
@@ -10,5 +12,16 @@ class Adrop {
       {List<String>? targetCountries, bool? useInAppBrowser}) async {
     return await AdropPlatform.instance.initialize(
         production, targetCountries ?? [], useInAppBrowser ?? false);
+  }
+
+  /// Set UID
+  ///
+  /// [uid] User ID for consistent web and app targeting
+  static Future<void> setUID(String uid) async {
+    try {
+      return await AdropPlatform.instance.setUID(uid);
+    } catch (e) {
+      log('Error: $e', name: 'Adrop');
+    }
   }
 }

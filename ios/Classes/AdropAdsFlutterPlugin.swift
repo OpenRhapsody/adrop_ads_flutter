@@ -39,6 +39,19 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             let useInAppBrowser = args?["useInAppBrowser"] as? Bool ?? false
             Adrop.initialize(production: production, useInAppBrowser: useInAppBrowser, targetCountries: targetCountries)
             result(nil)
+        case AdropMethod.SET_UID:
+            let uid = (call.arguments as? [String: Any?])?["uid"] as? String ?? ""
+            if (uid.isEmpty) {
+                result(FlutterError(
+                    code: "ERROR_CODE_INTERNAL",
+                    message: "Invalid uid",
+                    details: "Expected not empty string"
+                ))
+                return
+            }
+            
+            Adrop.setUID(uid)
+            result(nil)
         case AdropMethod.SET_PROPERTY:
             let key = (call.arguments as? [String: Any?])?["key"] as? String ?? ""
             let value = (call.arguments as? [String: Any?])?["value"] as? Any ?? [:]
@@ -117,20 +130,28 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
     private func convertToEncodable(_ value: Any) -> Encodable? {
         switch value {
-        case let stringValue as String:
-            return stringValue
-        case let boolValue as Bool:
-            return boolValue
         case let numberValue as NSNumber:
-            if (CFGetTypeID(numberValue) != CFNumberGetTypeID()) {
-                return nil
-            } else if (numberValue is Int) {
-                return numberValue.intValue
-            } else if (numberValue is Float || numberValue is Double) {
-                return numberValue.doubleValue
+            if CFGetTypeID(numberValue) == CFBooleanGetTypeID() {
+                return numberValue.boolValue
+            } else if CFGetTypeID(numberValue) == CFNumberGetTypeID() {
+                if numberValue is Int {
+                    return  numberValue.intValue
+                } else if numberValue is Double || numberValue is Float {
+                    return numberValue.doubleValue
+                } else {
+                    return nil
+                }
             } else {
                 return nil
             }
+        case let boolValue as Bool:
+            return boolValue
+        case let stringValue as String:
+            return stringValue
+        case let intValue as Int:
+            return intValue
+        case let doubleValue as Double:
+            return doubleValue
         case _ as [Any]:
             // array not supported
             return nil

@@ -16,4 +16,9 @@ class AdropMethodChannel extends AdropPlatform {
       "useInAppBrowser": useInAppBrowser
     });
   }
+
+  @override
+  Future<void> setUID(String uid) async {
+    await _methodChannel.invokeMethod(AdropMethod.setUID, {"uid": uid});
+  }
 }

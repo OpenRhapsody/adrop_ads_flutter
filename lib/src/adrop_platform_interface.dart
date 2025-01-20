@@ -20,4 +20,8 @@ abstract class AdropPlatform extends PlatformInterface {
       bool useInAppBrowser) async {
     throw UnimplementedError('initialize() has not been implemented.');
   }
+
+  Future<void> setUID(String uid) async {
+    throw UnimplementedError('setUID() has not been implemented.');
+  }
 }

@@ -1,5 +1,6 @@
 class AdropMethod {
   static const initialize = "initialize";
+  static const setUID = "setUid";
   static const loadBanner = "loadBanner";
   static const disposeBanner = "disposeBanner";
 

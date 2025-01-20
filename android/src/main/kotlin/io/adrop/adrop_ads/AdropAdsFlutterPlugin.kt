@@ -65,6 +65,20 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     initialize(production, targetCountries?.toTypedArray())
                     result.success(null)
                 }
+                AdropMethod.SET_UID -> {
+                    val uid = call.argument("uid") as String? ?: ""
+                    if (uid.isEmpty()) {
+                        result.error(
+                            AdropErrorCode.ERROR_CODE_INTERNAL.name,
+                            "Invalid uid",
+                            "Expected not empty string"
+                        )
+                        return
+                    }
+
+                    Adrop.setUID(uid)
+                    result.success(null)
+                }
 
                 AdropMethod.SET_PROPERTY -> {
                     val key = call.argument("key") as String? ?: ""

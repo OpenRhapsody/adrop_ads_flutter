@@ -9,6 +9,9 @@ class MockAdropAdsFlutterPlatform
   @override
   Future<void> initialize(bool production, List<String> targetCountries,
       bool useInAppBrowser) async {}
+
+  @override
+  Future<void> setUID(String uid) async {}
 }
 
 void main() {
@@ -20,5 +23,9 @@ void main() {
 
   test('initialize', () async {
     await MockAdropAdsFlutterPlatform().initialize(true, [], false);
+  });
+
+  test('setUID', () async {
+    await MockAdropAdsFlutterPlatform().setUID('uid');
   });
 }

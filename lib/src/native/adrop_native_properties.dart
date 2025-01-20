@@ -14,6 +14,7 @@ class AdropNativeProperties {
   String? body;
   String? creative;
   String? asset;
+  String? destinationURL;
   AdropNativeProfile? profile;
   late Map<String, String> extra;
 
@@ -22,6 +23,8 @@ class AdropNativeProperties {
         body = arguments != null ? arguments['body'] ?? '' : '',
         creative = arguments != null ? arguments['creative'] ?? '' : '',
         asset = arguments != null ? arguments['asset'] ?? '' : '',
+        destinationURL =
+            arguments != null ? arguments['destinationURL'] ?? '' : '',
         profile = arguments != null
             ? AdropNativeProfile(
                 displayLogo: arguments['displayLogo'],

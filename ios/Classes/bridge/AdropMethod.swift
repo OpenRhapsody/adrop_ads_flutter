@@ -2,6 +2,7 @@ import Foundation
 
 struct AdropMethod {
     static let INITIALIZE = "initialize"
+    static let SET_UID = "setUid"
     static let LOAD_BANNER = "loadBanner"
     static let DISPOSE_BANNER = "disposeBanner"
 

@@ -73,8 +73,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static Future&lt;Map&lt;String, dynamic&gt;&gt; properties() async {
-  var res = await _channel
-      .invokeMethod(AdropMethod.getProperty);
+  var res = await _channel.invokeMethod(AdropMethod.getProperty);
 
   if (res is Map) {
     return Map&lt;String, dynamic&gt;.from(res);
@@ -109,7 +108,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.0.0
+      1.0.1
   </span>
   
 </footer>
