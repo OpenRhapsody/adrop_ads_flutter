@@ -16,7 +16,7 @@ Prerequisites
         * Uses Android 6.0 or higher
             * minSdkVersion 23
         * Uses [Jetpack (AndroidX)](https://developer.android.com/jetpack/androidx/migrate), which includes meeting these version requirements:
-            * ```com.android.tools.build:gradle``` v7.3.0 or later
+            * ```com.android.tools.build:gradle``` v7.4.2 or later
             * ```compileSdkVersion``` 33
     * **iOS**
         * ios 13.0

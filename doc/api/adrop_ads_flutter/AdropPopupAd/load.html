@@ -81,9 +81,9 @@
 Future&lt;void&gt; load() async {
   super.load();
   customize({
-    &quot;closeTextColor&quot;: colorValue(closeTextColor),
-    &quot;hideForTodayTextColor&quot;: colorValue(hideForTodayTextColor),
-    &quot;backgroundColor&quot;: colorValue(backgroundColor),
+    &quot;closeTextColor&quot;: closeTextColor?.value,
+    &quot;hideForTodayTextColor&quot;: hideForTodayTextColor?.value,
+    &quot;backgroundColor&quot;: backgroundColor?.value,
   });
 }</code></pre>
 </section>
@@ -113,7 +113,7 @@ Future&lt;void&gt; load() async {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.0.1
+      1.0.2
   </span>
   
 </footer>

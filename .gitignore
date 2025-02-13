@@ -36,4 +36,5 @@ lib/banner/adrop_banner_container.dart
 lib/bridge/adrop_channel.dart
 lib/bridge/adrop_method.dart
 lib/model/call_create_banner.dart
+lib/src/utils/color.dart
 

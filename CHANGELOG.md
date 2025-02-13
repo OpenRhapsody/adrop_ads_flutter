@@ -1,3 +1,6 @@
+## 1.0.2
+- use `Color.value` in `AdropPopupAd`
+
 ## 1.0.1
 - Support `Adrop.setUID` for consistent web and app targeting
 - Add the `destinationURL` property to the `AdropNativeProperties` class. 
