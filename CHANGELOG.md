@@ -1,3 +1,7 @@
+## 1.0.3
+- Updated **dependency configuration**:
+  `implementation 'io.adrop:adrop-ads'` -> `api 'io.adrop:adrop-ads'`
+
 ## 1.0.2
 - use `Color.value` in `AdropPopupAd`
 
