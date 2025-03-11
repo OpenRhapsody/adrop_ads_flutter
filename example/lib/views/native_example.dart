@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:adrop_ads_flutter_example/utils/error_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class NativeExample extends StatefulWidget {
   const NativeExample({Key? key}) : super(key: key);
@@ -16,12 +20,17 @@ class _NativeExampleState extends State<NativeExample> {
   bool isShown = false;
   AdropErrorCode? errorCode;
   AdropNativeAd? nativeAd;
+  late final WebViewController webViewController;
+  bool isWebviewUsed = true; // true: use webview, false: use image
 
-  bool disabledReset() => !(errorCode != null || isShown);
+  bool disabledReset() => !(errorCode != null || isLoaded);
 
   @override
   void initState() {
     super.initState();
+    webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted);
+
     reset(testUnitIdNative);
   }
 
@@ -30,6 +39,11 @@ class _NativeExampleState extends State<NativeExample> {
         unitId: unitId,
         listener: AdropNativeListener(onAdReceived: (ad) {
           debugPrint("nativeAd received $unitId, ${ad.properties}");
+          String base64Data =
+              base64Encode(utf8.encode(ad.properties.creative ?? ''));
+          webViewController
+              .loadRequest(Uri.parse('data:text/html;base64,$base64Data'));
+
           setState(() {
             isLoaded = true;
             errorCode = null;
@@ -44,7 +58,6 @@ class _NativeExampleState extends State<NativeExample> {
         }));
     setState(() {
       isLoaded = false;
-      isShown = false;
       errorCode = null;
     });
   }
@@ -99,24 +112,12 @@ class _NativeExampleState extends State<NativeExample> {
                     fontSize: 14,
                   ),
                 ),
-              if (nativeAd?.properties.asset != null)
-                Column(children: [
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Image.network(
-                    nativeAd?.properties.asset ?? '',
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return const CupertinoActivityIndicator();
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.error);
-                    },
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                  )
-                ]),
+              Column(children: [
+                const SizedBox(
+                  height: 4,
+                ),
+                creativeView(context),
+              ]),
               if (nativeAd?.properties.extra['sampleExtraId'] != null)
                 Column(
                   children: [
@@ -136,6 +137,33 @@ class _NativeExampleState extends State<NativeExample> {
         ),
       ),
     );
+  }
+
+  Widget creativeView(BuildContext context) {
+    if (!isLoaded) return Container();
+
+    if (isWebviewUsed && nativeAd?.properties.creative != null) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: Platform.isIOS ? 420 : 330,
+        child: WebViewWidget(controller: webViewController),
+      );
+    } else if (nativeAd?.properties.asset != null) {
+      return Image.network(
+        nativeAd?.properties.asset ?? '',
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return const CupertinoActivityIndicator();
+        },
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(Icons.error);
+        },
+        width: MediaQuery.of(context).size.width,
+        height: 300,
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override

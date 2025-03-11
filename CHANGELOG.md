@@ -1,3 +1,6 @@
+## 1.0.4
+- Support `creative` in `AdropNativeProperties` for displaying CTA 
+
 ## 1.0.3
 - Updated **dependency configuration**:
   `implementation 'io.adrop:adrop-ads'` -> `api 'io.adrop:adrop-ads'`
