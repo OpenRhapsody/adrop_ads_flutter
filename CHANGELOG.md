@@ -1,3 +1,7 @@
+## 1.1.0
+- Support for multiple templates in `AdropPopupAd`
+- [iOS] Resolved overlapping issue between Flutter platform view and `AdropPopupAd`
+
 ## 1.0.4
 - Support `creative` in `AdropNativeProperties` for displaying CTA 
 
