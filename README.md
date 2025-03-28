@@ -31,7 +31,7 @@ Prerequisites
 
 
 ### Step 1: Create a Adrop project
-Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://docs.adrop.io/fundamentals/get-started-with-adrop#create-an-app-container) to connect to your app.
+Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://help.adrop.io/publisher-guide/start-ads-platform) to connect to your app.
 
 ### Step 2: Register your app with Adrop
 To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.
@@ -169,7 +169,7 @@ From the [Adrop console](https://adrop.io/projects), go to project, then select 
 To create a new Ad unit:
 1. From the left navigation menu, select **Ad Units**.
 2. Select **Create Ad unit** to bring up the ad unit builder.
-3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://docs.adrop.io/fundamentals/create-your-ad-unit#a-d-formats) (Banner, Interstitial, or Rewarded).
+3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://help.adrop.io/publisher-guide/ads-builder) (Banner, Interstitial, Rewarded, Native, Popup, or Splash).
 4. Select **Create** to save your Ad unit.
 
 ### Ad unit ID
