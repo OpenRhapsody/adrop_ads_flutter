@@ -1,3 +1,6 @@
+## 1.1.1
+- Support preview ads using adId
+
 ## 1.1.0
 - Support for multiple templates in `AdropPopupAd`
 - [iOS] Resolved overlapping issue between Flutter platform view and `AdropPopupAd`
