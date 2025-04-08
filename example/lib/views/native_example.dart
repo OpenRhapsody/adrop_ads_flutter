@@ -21,7 +21,7 @@ class _NativeExampleState extends State<NativeExample> {
   AdropErrorCode? errorCode;
   AdropNativeAd? nativeAd;
   late final WebViewController webViewController;
-  bool isWebviewUsed = true; // true: use webview, false: use image
+  bool isWebviewUsed = true;
 
   bool disabledReset() => !(errorCode != null || isLoaded);
 
@@ -38,7 +38,6 @@ class _NativeExampleState extends State<NativeExample> {
     nativeAd = AdropNativeAd(
         unitId: unitId,
         listener: AdropNativeListener(onAdReceived: (ad) {
-          debugPrint("nativeAd received $unitId, ${ad.properties}");
           String base64Data =
               base64Encode(utf8.encode(ad.properties.creative ?? ''));
           webViewController

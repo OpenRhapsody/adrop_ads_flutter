@@ -1,3 +1,6 @@
+## 1.1.2
+- Close `AdropPopupAd` when the ad called `dispose`
+
 ## 1.1.1
 - Support preview ads using adId
 

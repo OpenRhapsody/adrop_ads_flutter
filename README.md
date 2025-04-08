@@ -257,7 +257,7 @@ Step 1: (Optional) Construct event listener
 final AdropInterstitialListener listener = AdropInterstitialListener(
     onAdReceived: (ad) =>
         debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) => 
+    onAdFailedToReceive: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
@@ -297,7 +297,7 @@ class _YourComponentState extends State<YourComponent> {
               interstitialAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('interstitial ad is loading...'))
+                  const SnackBar(content: Text('interstitial ad is loading...'))
               );
             }
           },
@@ -330,13 +330,13 @@ Step 1: (Optional) Construct event listener
 final AdropRewardedListener listener = AdropRewardedListener(
     onAdReceived: (ad) =>
         debugPrint('Adrop Rewarded Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) => 
+    onAdFailedToReceive: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
     onAdEarnRewardHandler: (ad, type, amount) {
-        debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
-        // implement your actions with rewards
+      debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
+      // implement your actions with rewards
     },
     ...
 );
@@ -374,7 +374,7 @@ class _YourComponentState extends State<YourComponent> {
               rewardedAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('rewarded ad is loading...'))
+                  const SnackBar(content: Text('rewarded ad is loading...'))
               );
             }
           },
@@ -407,7 +407,7 @@ Step 1: (Optional) Construct event listener
 final AdropPopupListener listener = AdropPopupListener(
     onAdReceived: (ad) =>
         debugPrint('Adrop Popup Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) => 
+    onAdFailedToReceive: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
@@ -447,7 +447,7 @@ class _YourComponentState extends State<YourComponent> {
               popupAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('popup ad is loading...'))
+                  const SnackBar(content: Text('popup ad is loading...'))
               );
             }
           },
@@ -481,7 +481,7 @@ Step 1: (Optional) Construct event listener
 final AdropNativeListener listener = AdropNativeListener(
     onAdReceived: (ad) =>
         debugPrint('Adrop Native Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) => 
+    onAdFailedToReceive: (ad, errorCode) =>
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     ...
 );
@@ -501,7 +501,7 @@ class _YourComponentState extends State<YourComponent> {
     unitId: 'YOUR_UNIT_ID',
     listener: listener,
   );
-  
+
   bool isLoaded = false;
 
   @override
@@ -509,34 +509,34 @@ class _YourComponentState extends State<YourComponent> {
     super.initState();
     nativeAd.load();
   }
-  
+
   Widget nativeAdView(BuildContext context) {
     if (!isLoaded) return Container();
-    
+
     return AdropNativeView(
-      ad: nativeAd,
-      child: Column(
-        children: [
-          if (nativeAd.properties.profile?.displayLogo)
+        ad: nativeAd,
+        child: Column(
+          children: [
+            if (nativeAd.properties.profile?.displayLogo)
               Image.network(
                 nativeAd.properties.profile?.displayLogo,
                 width: 24,
                 height: 24,
               ),
-          if (nativeAd.properties.profile?.displayName) 
+            if (nativeAd.properties.profile?.displayName)
               Text(
                 nativeAd.properties.profile?.displayName,
               ),
-          if (nativeAd.properties.headline != null)
-            Text(nativeAd.properties.headline),
-          if (nativeAd.properties.body != null)
-            Text(nativeAd.properties.body),
-          if (nativeAd.properties.asset != null)
-            Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
-          if (nativeAd.properties.extra['sampleExtraId'] != null)
-            Text(nativeAd.properties.extra['sampleExtraId']),
-        ],
-      )
+            if (nativeAd.properties.headline != null)
+              Text(nativeAd.properties.headline),
+            if (nativeAd.properties.body != null)
+              Text(nativeAd.properties.body),
+            if (nativeAd.properties.asset != null)
+              Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
+            if (nativeAd.properties.extra['sampleExtraId'] != null)
+              Text(nativeAd.properties.extra['sampleExtraId']),
+          ],
+        )
     );
   }
 

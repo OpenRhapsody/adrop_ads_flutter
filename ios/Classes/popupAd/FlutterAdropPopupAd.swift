@@ -49,6 +49,10 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
             popupAd.backgroundColor = UIColor(fromFlutterColor: backgroundColor)
         }
     }
+    
+    func destroy() {
+        popupAd.close()
+    }
 
     func onAdReceived(_ ad: AdropPopupAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: ["creativeId": ad.creativeIds.joined(separator: ",")])

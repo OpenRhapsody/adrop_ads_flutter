@@ -296,7 +296,7 @@ void dispose() {
 <pre class="language-dart"><code class="language-dart">final AdropInterstitialListener listener = AdropInterstitialListener(
     onAdReceived: (ad) =&gt;
         debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt; 
+    onAdFailedToReceive: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
@@ -334,7 +334,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
               interstitialAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('interstitial ad is loading...'))
+                  const SnackBar(content: Text('interstitial ad is loading...'))
               );
             }
           },
@@ -360,13 +360,13 @@ void dispose() {
 <pre class="language-dart"><code class="language-dart">final AdropRewardedListener listener = AdropRewardedListener(
     onAdReceived: (ad) =&gt;
         debugPrint('Adrop Rewarded Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt; 
+    onAdFailedToReceive: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
     onAdEarnRewardHandler: (ad, type, amount) {
-        debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
-        // implement your actions with rewards
+      debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
+      // implement your actions with rewards
     },
     ...
 );
@@ -402,7 +402,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
               rewardedAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('rewarded ad is loading...'))
+                  const SnackBar(content: Text('rewarded ad is loading...'))
               );
             }
           },
@@ -428,7 +428,7 @@ void dispose() {
 <pre class="language-dart"><code class="language-dart">final AdropPopupListener listener = AdropPopupListener(
     onAdReceived: (ad) =&gt;
         debugPrint('Adrop Popup Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt; 
+    onAdFailedToReceive: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while showing: $errorCode'),
@@ -466,7 +466,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
               popupAd.show();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('popup ad is loading...'))
+                  const SnackBar(content: Text('popup ad is loading...'))
               );
             }
           },
@@ -492,7 +492,7 @@ void dispose() {
 <pre class="language-dart"><code class="language-dart">final AdropNativeListener listener = AdropNativeListener(
     onAdReceived: (ad) =&gt;
         debugPrint('Adrop Native Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt; 
+    onAdFailedToReceive: (ad, errorCode) =&gt;
         debugPrint('error in ${ad.unitId} while loading: $errorCode'),
     ...
 );
@@ -510,7 +510,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
     unitId: 'YOUR_UNIT_ID',
     listener: listener,
   );
-  
+
   bool isLoaded = false;
 
   @override
@@ -518,34 +518,34 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
     super.initState();
     nativeAd.load();
   }
-  
+
   Widget nativeAdView(BuildContext context) {
     if (!isLoaded) return Container();
-    
+
     return AdropNativeView(
-      ad: nativeAd,
-      child: Column(
-        children: [
-          if (nativeAd.properties.profile?.displayLogo)
+        ad: nativeAd,
+        child: Column(
+          children: [
+            if (nativeAd.properties.profile?.displayLogo)
               Image.network(
                 nativeAd.properties.profile?.displayLogo,
                 width: 24,
                 height: 24,
               ),
-          if (nativeAd.properties.profile?.displayName) 
+            if (nativeAd.properties.profile?.displayName)
               Text(
                 nativeAd.properties.profile?.displayName,
               ),
-          if (nativeAd.properties.headline != null)
-            Text(nativeAd.properties.headline),
-          if (nativeAd.properties.body != null)
-            Text(nativeAd.properties.body),
-          if (nativeAd.properties.asset != null)
-            Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
-          if (nativeAd.properties.extra['sampleExtraId'] != null)
-            Text(nativeAd.properties.extra['sampleExtraId']),
-        ],
-      )
+            if (nativeAd.properties.headline != null)
+              Text(nativeAd.properties.headline),
+            if (nativeAd.properties.body != null)
+              Text(nativeAd.properties.body),
+            if (nativeAd.properties.asset != null)
+              Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
+            if (nativeAd.properties.extra['sampleExtraId'] != null)
+              Text(nativeAd.properties.extra['sampleExtraId']),
+          ],
+        )
     );
   }
 
@@ -600,7 +600,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.1
+      1.1.2
   </span>
   
 </footer>
