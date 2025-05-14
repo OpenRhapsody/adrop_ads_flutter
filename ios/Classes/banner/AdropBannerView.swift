@@ -17,7 +17,7 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
     ) {
         self.bannerManager = bannerManager
         self.methodChannel = FlutterMethodChannel(name: AdropChannel.bannerEventListenerChannelOf(id: viewId.description), binaryMessenger: messenger)
-        self.banner = bannerManager.create(unitId: call.unitId)
+        self.banner = bannerManager.create(unitId: call.unitId, requestId: call.requestId)
         
         super.init()
         banner.delegate = self

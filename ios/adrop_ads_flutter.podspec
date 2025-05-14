@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'adrop_ads_flutter'
-  s.version          = '1.1.2'
+  s.version          = '1.1.3'
   s.summary          = 'Adrop ads'
   s.description      = 'AdropAds flutter plugin that shows ads using native platform views'
   s.homepage         = 'https://openrhapsody.com'

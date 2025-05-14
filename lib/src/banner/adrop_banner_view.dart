@@ -1,4 +1,5 @@
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
+import 'package:adrop_ads_flutter/src/utils/id.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -12,15 +13,17 @@ class AdropBannerView extends StatelessWidget {
 
   final AdropBannerListener? listener;
 
+  final String _requestId;
+
   /// Banner view class responsible for displaying banner ads to the user.
   ///
   /// [unitId] required Ad unit ID
   /// [listener] optional invoked when the banner received, failed to receive and clicked
-  const AdropBannerView({super.key, required this.unitId, this.listener});
+  AdropBannerView({super.key, required this.unitId, this.listener}): _requestId = nanoid();
 
   @override
   Widget build(BuildContext context) {
-    final creationParams = CallCreateAd(unitId: unitId);
+    final creationParams = CallCreateAd(unitId: unitId, requestId: _requestId);
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -43,11 +46,11 @@ class AdropBannerView extends StatelessWidget {
 
   /// Requests an ad from Adrop using the Ad unit ID of the AdropBannerView.
   Future<void> load() async {
-    return await adropAdManager.load(this);
+    return await adropAdManager.load(this, _requestId);
   }
 
   /// Invoked when dispose() is called on the corresponding AdropBannerView
   Future<void> dispose() async {
-    return await adropAdManager.dispose(this);
+    return await adropAdManager.dispose(this, _requestId);
   }
 }

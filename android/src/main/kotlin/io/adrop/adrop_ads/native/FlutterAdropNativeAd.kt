@@ -2,7 +2,6 @@ package io.adrop.adrop_ads.native
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.bridge.AdropChannel

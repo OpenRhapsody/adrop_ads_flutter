@@ -49,7 +49,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 ))
                 return
             }
-            
+
             Adrop.setUID(uid)
             result(nil)
         case AdropMethod.SET_PROPERTY:
@@ -73,10 +73,16 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             result(nil)
 
         case AdropMethod.LOAD_BANNER:
-            bannerManager?.load(unitId: call.arguments as? String ??  "")
+            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
+            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+
+            bannerManager?.load(unitId: unitId, requestId: requestId)
             result(nil)
         case AdropMethod.DISPOSE_BANNER:
-            bannerManager?.destroy(unitId: call.arguments as? String ?? "")
+            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
+            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+
+            bannerManager?.destroy(unitId: unitId, requestId: requestId)
             result(nil)
         case AdropMethod.LOAD_AD:
             let adTypeIndex = (call.arguments as? [String: Any?])?["adType"] as? Int ?? 0

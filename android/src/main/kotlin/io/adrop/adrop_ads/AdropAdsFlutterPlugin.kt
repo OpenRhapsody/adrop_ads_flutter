@@ -114,12 +114,16 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
 
                 AdropMethod.LOAD_BANNER -> {
-                    bannerManager.load(call.arguments() ?: "")
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestId = call.argument("requestId") as String? ?: ""
+                    bannerManager.load(unitId, requestId)
                     result.success(null)
                 }
 
                 AdropMethod.DISPOSE_BANNER -> {
-                    bannerManager.destroy(call.arguments() ?: "")
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestId = call.argument("requestId") as String? ?: ""
+                    bannerManager.destroy(unitId, requestId)
                     result.success(null)
                 }
 

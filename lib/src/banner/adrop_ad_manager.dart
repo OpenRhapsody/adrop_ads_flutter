@@ -17,15 +17,18 @@ class AdropAdManager {
       var args = call.arguments;
       var unitId = args["unitId"] ?? "";
       var creativeId = args["creativeId"] ?? "";
+      var requestId = args["requestId"] ?? "";
+      var key = "${unitId}_$requestId";
+
       switch (call.method) {
         case AdropMethod.didReceiveAd:
-          _loadedAds[unitId]?.listener?.onAdReceived?.call(unitId, creativeId);
+          _loadedAds[key]?.listener?.onAdReceived?.call(unitId, creativeId);
           break;
         case AdropMethod.didClickAd:
-          _loadedAds[unitId]?.listener?.onAdClicked?.call(unitId, creativeId);
+          _loadedAds[key]?.listener?.onAdClicked?.call(unitId, creativeId);
           break;
         case AdropMethod.didFailToReceiveAd:
-          _loadedAds[unitId]
+          _loadedAds[key]
               ?.listener
               ?.onAdFailedToReceive
               ?.call(unitId, AdropErrorCode.getByCode(args["error"]));
@@ -34,15 +37,15 @@ class AdropAdManager {
     });
   }
 
-  Future<void> load(AdropBannerView banner) async {
-    _loadedAds[banner.unitId] = banner;
+  Future<void> load(AdropBannerView banner, String requestId) async {
+    _loadedAds["${banner.unitId}_$requestId"] = banner;
     return await _invokeChannel.invokeMethod(
-        AdropMethod.loadBanner, banner.unitId);
+        AdropMethod.loadBanner, { 'unitId': banner.unitId, 'requestId': requestId });
   }
 
-  Future<void> dispose(AdropBannerView banner) async {
-    _loadedAds.remove(banner.unitId);
+  Future<void> dispose(AdropBannerView banner, String requestId) async {
+    _loadedAds.remove("${banner.unitId}_$requestId");
     return await _invokeChannel.invokeMethod(
-        AdropMethod.disposeBanner, banner.unitId);
+        AdropMethod.disposeBanner, { 'unitId': banner.unitId, 'requestId': requestId });
   }
 }

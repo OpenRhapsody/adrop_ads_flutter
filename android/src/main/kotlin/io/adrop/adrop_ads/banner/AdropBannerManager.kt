@@ -18,35 +18,46 @@ class AdropBannerManager(
 
     private val adropChannel = MethodChannel(messenger, AdropChannel.INVOKE_CHANNEL)
     private val ads: MutableMap<String, AdropBanner?> = mutableMapOf()
+    private val requestIdMap: MutableMap<AdropBanner, String> = mutableMapOf()
 
-    private fun create(unitId: String): AdropBanner? {
+    private fun create(unitId: String, requestId: String): AdropBanner? {
         if (context == null) return null
 
-        return ads[unitId] ?: let {
-            val banner = ads[unitId] ?: AdropBanner(context, unitId)
+        val key = keyOf(unitId, requestId)
+        return ads[key] ?: let {
+            val banner = ads[key] ?: AdropBanner(context, unitId)
             banner.listener = this
-            ads[unitId] = banner
+            ads[key] = banner
+            requestIdMap[banner] = requestId
             banner
         }
     }
 
-    fun load(unitId: String) {
-        create(unitId)?.load()
+    fun load(unitId: String, requestId: String) {
+        create(unitId, requestId)?.load()
     }
 
-    fun getAd(unitId: String): AdropBanner? = ads[unitId]
+    fun getAd(unitId: String, requestId: String): AdropBanner? {
+        return ads[keyOf(unitId, requestId)]
+    }
 
-    fun destroy(unitId: String) {
-        ads[unitId]?.let {
-            ads.remove(unitId)
+    fun destroy(unitId: String, requestId: String) {
+        val key = keyOf(unitId, requestId)
+        ads[key]?.let {
+            requestIdMap.remove(it)
+            ads.remove(key)
         }
+    }
+
+    private fun keyOf(unitId: String, requestId: String): String {
+        return "${unitId}_${requestId}"
     }
 
     override fun onAdClicked(banner: AdropBanner) {
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId)
+        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
         adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, args)
     }
 
@@ -54,7 +65,7 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf<String, String?>("unitId" to unitId, "error" to error.name)
+        val args = mapOf<String, String?>("unitId" to unitId, "error" to error.name, "requestId" to requestIdMap[banner])
         adropChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, args)
     }
 
@@ -62,7 +73,8 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId)
+        val args = mapOf("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
+
         adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, args)
     }
 

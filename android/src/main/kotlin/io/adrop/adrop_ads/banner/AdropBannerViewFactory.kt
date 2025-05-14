@@ -13,7 +13,7 @@ class AdropBannerViewFactory(
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val callData = CallCreateAd(args as? Map<String, Any?>)
 
-        val banner = viewManager.getAd(callData.unitId)
+        val banner = viewManager.getAd(callData.unitId, callData.requestId)
         return if (banner == null) {
             return ErrorView(context)
         } else {
