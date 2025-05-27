@@ -25,7 +25,8 @@ class _BannerExampleState extends State<BannerExample> {
       unitId: testUnitId_80,
       listener: AdropBannerListener(
         onAdReceived: (unitId, creativeId) {
-          debugPrint("ad received $unitId, $creativeId");
+          debugPrint(
+              "ad received $unitId, $creativeId ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height}");
           setState(() {
             isLoaded = true;
             errorCode = null;
@@ -48,7 +49,6 @@ class _BannerExampleState extends State<BannerExample> {
       listener: AdropBannerListener(
         onAdReceived: (unitId, creativeId) {
           debugPrint("ad received $unitId $creativeId");
-          setState(() {});
         },
         onAdFailedToReceive: (unitId, error) {
           debugPrint("ad onAdFailedToReceive $unitId, $error");

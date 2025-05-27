@@ -63,6 +63,8 @@ class FlutterAdropNativeAd(
             "asset" to ad.asset,
             "destinationURL" to ad.destinationURL,
             "creative" to ad.creative,
+            "creativeSizeWidth" to ad.creativeSize.width,
+            "creativeSizeHeight" to ad.creativeSize.height,
         )
 
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, properties)

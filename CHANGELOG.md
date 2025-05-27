@@ -1,3 +1,6 @@
+## 1.1.4
+- Added `AdropBannerView`, `AdropNativeAd` to support creative size
+
 ## 1.1.3
 - Updated `AdropBannerView` mapping key to ensure unique native view identification and prevent conflicts in multiple view instances.
 

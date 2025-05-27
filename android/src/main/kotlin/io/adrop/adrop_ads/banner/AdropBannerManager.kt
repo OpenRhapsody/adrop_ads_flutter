@@ -57,7 +57,7 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf<String, String?>("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
+        val args = mapOf("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
         adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, args)
     }
 
@@ -65,7 +65,7 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf<String, String?>("unitId" to unitId, "error" to error.name, "requestId" to requestIdMap[banner])
+        val args = mapOf("unitId" to unitId, "error" to error.name, "requestId" to requestIdMap[banner])
         adropChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, args)
     }
 
@@ -73,7 +73,13 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
+        val args = mapOf(
+            "unitId" to unitId,
+            "creativeId" to banner.creativeId,
+            "requestId" to requestIdMap[banner],
+            "creativeSizeWidth" to banner.creativeSize.width,
+            "creativeSizeHeight" to banner.creativeSize.height
+        )
 
         adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, args)
     }

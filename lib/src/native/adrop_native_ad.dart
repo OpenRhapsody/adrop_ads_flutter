@@ -2,6 +2,7 @@ import 'package:adrop_ads_flutter/src/adrop_ad.dart';
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_method.dart';
+import 'package:adrop_ads_flutter/src/model/creative_size.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_event.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_listener.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_properties.dart';
@@ -20,10 +21,12 @@ class AdropNativeAd {
   final AdropNativeListener? listener;
   late final String _requestId;
   late final MethodChannel? _adropEventObserverChannel;
+  CreativeSize get creativeSize => _creativeSize;
 
   String _creativeId = '';
   bool _loaded;
   AdropNativeProperties _properties = AdropNativeProperties.from(null);
+  CreativeSize _creativeSize = const CreativeSize(width: 0.0, height: 0.0);
 
   AdropNativeAd({
     required String unitId,
@@ -68,7 +71,16 @@ class AdropNativeAd {
   Future<void> _handleEvent(MethodCall call) async {
     if (listener == null) return;
 
-    final event = AdropNativeEvent.from(call.arguments);
+    var args = call.arguments;
+    final event = AdropNativeEvent.from(args);
+
+    if (args['creativeSizeWidth'] != null &&
+        args['creativeSizeHeight'] != null) {
+      _creativeSize = CreativeSize(
+        width: args['creativeSizeWidth'],
+        height: args['creativeSizeHeight'],
+      );
+    }
 
     switch (call.method) {
       case AdropMethod.didReceiveAd:

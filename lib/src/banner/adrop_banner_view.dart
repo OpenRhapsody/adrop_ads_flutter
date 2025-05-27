@@ -15,11 +15,15 @@ class AdropBannerView extends StatelessWidget {
 
   final String _requestId;
 
+  CreativeSize? get creativeSize =>
+      adropAdManager.getCreativeSize(this, _requestId);
+
   /// Banner view class responsible for displaying banner ads to the user.
   ///
   /// [unitId] required Ad unit ID
   /// [listener] optional invoked when the banner received, failed to receive and clicked
-  AdropBannerView({super.key, required this.unitId, this.listener}): _requestId = nanoid();
+  AdropBannerView({super.key, required this.unitId, this.listener})
+      : _requestId = nanoid();
 
   @override
   Widget build(BuildContext context) {

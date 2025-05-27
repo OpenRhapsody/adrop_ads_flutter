@@ -65,7 +65,13 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     }
 
     func onAdReceived(_ banner: AdropBanner) {
-        let args: [String: Any] = ["unitId": banner.unitId, "creativeId": banner.creativeId, "requestId": requestIdMap[banner]]
+        let args: [String: Any] = [
+            "unitId": banner.unitId,
+            "creativeId": banner.creativeId,
+            "requestId": requestIdMap[banner],
+            "creativeSizeWidth": banner.creativeSize.width,
+            "creativeSizeHeight": banner.creativeSize.height
+        ]
         adropChannel().invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: args)
     }
 }

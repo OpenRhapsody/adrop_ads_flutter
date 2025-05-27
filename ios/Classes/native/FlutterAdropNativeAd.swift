@@ -35,7 +35,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     }
 
     func onAdReceived(_ ad: AdropNativeAd) {
-        let arguments = [
+        let arguments: [String: Any] = [
             "creativeId": ad.creativeId,
             "headline": ad.headline,
             "body": ad.body,
@@ -44,7 +44,9 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "extra": dictionaryToJSONString(ad.extra),
             "asset": ad.asset,
             "destinationURL": ad.destinationURL,
-            "creative": ad.creative
+            "creative": ad.creative,
+            "creativeSizeWidth": ad.creativeSize.width,
+            "creativeSizeHeight": ad.creativeSize.height
         ]
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: arguments)
     }
