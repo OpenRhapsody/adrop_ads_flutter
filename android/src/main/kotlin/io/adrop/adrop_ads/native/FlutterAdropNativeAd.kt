@@ -19,7 +19,7 @@ class FlutterAdropNativeAd(
     messenger: BinaryMessenger
 ): AdropAd(), AdropNativeAdListener {
 
-    val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId)
+    val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId, "")
     private var adropEventListenerChannel: MethodChannel?
 
     init {

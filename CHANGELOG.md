@@ -1,3 +1,6 @@
+## 1.1.5
+- Android: Improved stability of `AdropNativeAdView`
+
 ## 1.1.4
 - Added `AdropBannerView`, `AdropNativeAd` to support creative size
 
