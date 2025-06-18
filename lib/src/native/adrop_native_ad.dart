@@ -74,16 +74,16 @@ class AdropNativeAd {
     var args = call.arguments;
     final event = AdropNativeEvent.from(args);
 
-    if (args['creativeSizeWidth'] != null &&
-        args['creativeSizeHeight'] != null) {
-      _creativeSize = CreativeSize(
-        width: args['creativeSizeWidth'],
-        height: args['creativeSizeHeight'],
-      );
-    }
-
     switch (call.method) {
       case AdropMethod.didReceiveAd:
+        if (args['creativeSizeWidth'] != null &&
+            args['creativeSizeHeight'] != null) {
+          _creativeSize = CreativeSize(
+            width: args['creativeSizeWidth'],
+            height: args['creativeSizeHeight'],
+          );
+        }
+
         _loaded = true;
         _creativeId = call.arguments['creativeId'] ?? '';
         _properties = event.properties;

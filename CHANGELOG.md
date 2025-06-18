@@ -1,3 +1,6 @@
+## 1.1.6
+- Fix the issue where the `onAdClicked` of the `AdropNativeAd` is not being called. 
+
 ## 1.1.5
 - Android: Improved stability of `AdropNativeAdView`
 
