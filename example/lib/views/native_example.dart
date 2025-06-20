@@ -82,10 +82,15 @@ class _NativeExampleState extends State<NativeExample> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.network(
-                    nativeAd?.properties.profile?.displayLogo ?? '',
-                    width: 24,
-                    height: 24,
+                  InkWell(
+                    onTap: () {
+                      debugPrint('Profile logo tapped');
+                    },
+                    child: Image.network(
+                      nativeAd?.properties.profile?.displayLogo ?? '',
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                   const SizedBox(
                     width: 4,
@@ -99,11 +104,16 @@ class _NativeExampleState extends State<NativeExample> {
                 height: 8,
               ),
               if (nativeAd?.properties.headline != null)
-                Text(
-                  nativeAd?.properties.headline ?? '',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                InkWell(
+                  onTap: () {
+                    debugPrint('Headline tapped');
+                  },
+                  child: Text(
+                    nativeAd?.properties.headline ?? '',
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               if (nativeAd?.properties.body != null)
@@ -147,7 +157,17 @@ class _NativeExampleState extends State<NativeExample> {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Platform.isIOS ? 420 : 330,
-        child: WebViewWidget(controller: webViewController),
+        child: InkWell(
+          onTap: () {
+            debugPrint('Creative tapped');
+          },
+          onLongPress: () {
+            debugPrint('Creative long pressed');
+          },
+          child: IgnorePointer(
+            child: WebViewWidget(controller: webViewController),
+          ),
+        ),
       );
     } else if (nativeAd?.properties.asset != null) {
       return Image.network(

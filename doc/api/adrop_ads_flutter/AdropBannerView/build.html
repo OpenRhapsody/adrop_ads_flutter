@@ -116,11 +116,29 @@ Widget build(BuildContext context) {
 
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
-      return AndroidView(
+      return PlatformViewLink(
           viewType: AdropChannel.bannerEventListenerChannel,
-          creationParams: creationParams.toJson(),
-          creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: (_) {});
+          surfaceFactory: (context, controller) {
+            return AndroidViewSurface(
+              controller: controller as AndroidViewController,
+              gestureRecognizers: {
+                Factory&lt;OneSequenceGestureRecognizer&gt;(
+                    () =&gt; EagerGestureRecognizer())
+              },
+              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+            );
+          },
+          onCreatePlatformView: (params) {
+            return PlatformViewsService.initSurfaceAndroidView(
+              id: params.id,
+              viewType: AdropChannel.bannerEventListenerChannel,
+              layoutDirection: TextDirection.ltr,
+              creationParams: creationParams.toJson(),
+              creationParamsCodec: const StandardMessageCodec(),
+            )
+              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+              ..create();
+          });
     case TargetPlatform.iOS:
       return UiKitView(
         viewType: AdropChannel.bannerEventListenerChannel,
@@ -159,7 +177,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.6
+      1.1.7
   </span>
   
 </footer>

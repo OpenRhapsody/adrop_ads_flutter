@@ -15,21 +15,32 @@ class AdropNativeAdViewFactory(
     private val viewManager: AdropAdManager
 ) : PlatformViewFactory(StandardMessageCodec.INSTANCE)  {
 
+    private val viewMap = mutableMapOf<String, FlutterPlatformView>()
+
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val callData = CallCreateAd(args as? Map<String, Any?>)
 
         val ad = viewManager.getAd(AdType.Native, callData.requestId) as? FlutterAdropNativeAd
-        return if (ad == null) {
+        if (ad == null) {
             return ErrorView(context)
         } else {
             val nativeAdView = AdropNativeAdView(context, null)
             nativeAdView.isEntireClick = true
             nativeAdView.setNativeAd(ad.nativeAd)
 
-            return FlutterPlatformView(nativeAdView)
+            val platformView = FlutterPlatformView(nativeAdView)
+            viewMap[callData.requestId] = platformView as FlutterPlatformView
+
+            return platformView
         }
     }
 
+    fun performClick(requestId: String) {
+        val nativeAdView = viewMap[requestId]?.getView()
+        nativeAdView?: return
+
+        nativeAdView.performClick()
+    }
 }
 
 private class ErrorView(val context: Context) : PlatformView {

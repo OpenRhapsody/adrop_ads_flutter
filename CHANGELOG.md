@@ -1,3 +1,7 @@
+## 1.1.7
+- Enhanced layout rendering stability for `AdropBannerView`
+- Enabled support for `useCustomClick` in `AdropNativeAd` to handle manual click events
+
 ## 1.1.6
 - Fix the issue where the `onAdClicked` of the `AdropNativeAd` is not being called. 
 

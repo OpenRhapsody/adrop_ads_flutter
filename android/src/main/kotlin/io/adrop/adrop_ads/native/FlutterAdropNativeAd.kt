@@ -1,6 +1,5 @@
 package io.adrop.adrop_ads.native
 
-import android.app.Activity
 import android.content.Context
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.AdropAd
@@ -16,6 +15,7 @@ class FlutterAdropNativeAd(
     context: Context,
     unitId: String,
     requestId: String,
+    useCustomClick: Boolean,
     messenger: BinaryMessenger
 ): AdropAd(), AdropNativeAdListener {
 
@@ -24,6 +24,7 @@ class FlutterAdropNativeAd(
 
     init {
         nativeAd.listener = this
+        nativeAd.useCustomClick = useCustomClick
         val channelName = AdropChannel.adropEventListenerChannelOf(AdType.Native, requestId)
         adropEventListenerChannel = if (channelName != null) {
             MethodChannel(messenger, channelName)

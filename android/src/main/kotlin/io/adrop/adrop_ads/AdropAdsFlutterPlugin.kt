@@ -34,6 +34,8 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var messenger: BinaryMessenger
     private val adManager = AdropAdManager()
 
+    private lateinit var nativeAdViewFactory: AdropNativeAdViewFactory
+
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
         messenger = flutterPluginBinding.binaryMessenger
@@ -46,9 +48,10 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             AdropBannerViewFactory(bannerManager),
         )
 
+        nativeAdViewFactory = AdropNativeAdViewFactory(adManager)
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             AdropChannel.NATIVE_EVENT_LISTENER_CHANNEL,
-            AdropNativeAdViewFactory(adManager),
+            nativeAdViewFactory,
         )
     }
 
@@ -142,6 +145,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         AdType.values()[adTypeIndex],
                         call.argument("unitId") as String? ?: "",
                         call.argument("requestId") as String? ?: "",
+                        call.argument("useCustomClick") as Boolean? ?: false,
                         messenger
                     )
                     result.success(null)
@@ -193,6 +197,10 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         AdType.values()[adTypeIndex],
                         call.argument("requestId") as String? ?: ""
                     )
+                    result.success(null)
+                }
+                AdropMethod.PERFORM_CLICK -> {
+                    nativeAdViewFactory.performClick(call.argument("requestId") as String? ?: "")
                     result.success(null)
                 }
                 else -> result.notImplemented()

@@ -6,6 +6,7 @@ import AdropAds
 class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
     private var adManager: AdropAdManager
+    private var viewMap = [String:FlutterPlatformView]()
     
     init(messenger: FlutterBinaryMessenger, adManager: AdropAdManager) {
         self.messenger = messenger
@@ -20,7 +21,9 @@ class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
             adView.setIsEntireClick(true)
             adView.setNativeAd(ad.nativeAd)
             
-            return AdropFlutterPlatformView(view: adView)
+            let platformView = AdropFlutterPlatformView(view: adView)
+            viewMap[call.requestId] = platformView
+            return platformView
         } else {
             return ErrorView()
         }
@@ -28,6 +31,18 @@ class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
     
     func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
         return FlutterStandardMessageCodec.sharedInstance()
+    }
+    
+    func performClick(_ requestId: String) {
+        guard let platformView = viewMap[requestId] as? AdropFlutterPlatformView else {
+            return
+        }
+        
+        guard let nativeView = platformView.view() as? AdropNativeAdView else {
+            return
+        }
+        
+        nativeView.performClick()
     }
 }
 

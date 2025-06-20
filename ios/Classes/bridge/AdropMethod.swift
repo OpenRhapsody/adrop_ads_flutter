@@ -13,6 +13,7 @@ struct AdropMethod {
     static let SET_PROPERTY = "setProperty"
     static let GET_PROPERTY = "getProperty"
     static let LOG_EVENT = "logEvent"
+    static let PERFORM_CLICK = "performClick"
 
     static let DID_RECEIVE_AD = "onAdReceived"
     static let DID_CLICK_AD = "onAdClicked"

@@ -1,6 +1,8 @@
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter/src/utils/id.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -31,11 +33,29 @@ class AdropBannerView extends StatelessWidget {
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return AndroidView(
+        return PlatformViewLink(
             viewType: AdropChannel.bannerEventListenerChannel,
-            creationParams: creationParams.toJson(),
-            creationParamsCodec: const StandardMessageCodec(),
-            onPlatformViewCreated: (_) {});
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                gestureRecognizers: {
+                  Factory<OneSequenceGestureRecognizer>(
+                      () => EagerGestureRecognizer())
+                },
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initSurfaceAndroidView(
+                id: params.id,
+                viewType: AdropChannel.bannerEventListenerChannel,
+                layoutDirection: TextDirection.ltr,
+                creationParams: creationParams.toJson(),
+                creationParamsCodec: const StandardMessageCodec(),
+              )
+                ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                ..create();
+            });
       case TargetPlatform.iOS:
         return UiKitView(
           viewType: AdropChannel.bannerEventListenerChannel,

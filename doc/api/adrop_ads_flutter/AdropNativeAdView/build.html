@@ -114,13 +114,30 @@ and</li>
 Widget build(BuildContext context) {
   if (ad == null) return Container();
 
+  var useCustomClick = ad?.useCustomClick ?? false;
+  var platformView = Positioned.fill(
+      child: IgnorePointer(ignoring: useCustomClick, child: _platformView()));
+  var children = useCustomClick
+      ? [
+          platformView,
+          Listener(
+            behavior: HitTestBehavior.deferToChild,
+            onPointerDown: (_) {
+              const MethodChannel(AdropChannel.invokeChannel)
+                  .invokeMethod(AdropMethod.performClick, {
+                &quot;adType&quot;: AdType.native.name,
+                &quot;requestId&quot;: ad?.requestId,
+              });
+            },
+            child: child,
+          )
+        ]
+      : [child, platformView];
+
   return AdropNativeAdProvider(
     ad: ad,
     child: Stack(
-      children: [
-        child,
-        Positioned.fill(child: _platformView()),
-      ],
+      children: children,
     ),
   );
 }</code></pre>
@@ -151,7 +168,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.6
+      1.1.7
   </span>
   
 </footer>

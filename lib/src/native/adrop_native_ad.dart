@@ -13,11 +13,13 @@ import 'package:flutter/services.dart';
 ///
 /// [unitId] required Ad unit ID
 /// [listener] optional invoked when a response from load method called back.
+/// [useCustomClick] optional, if true, the ad will use custom click handling.
 class AdropNativeAd {
   static const MethodChannel _invokeChannel =
       MethodChannel(AdropChannel.invokeChannel);
 
   final String _unitId;
+  final bool useCustomClick;
   final AdropNativeListener? listener;
   late final String _requestId;
   late final MethodChannel? _adropEventObserverChannel;
@@ -30,6 +32,7 @@ class AdropNativeAd {
 
   AdropNativeAd({
     required String unitId,
+    this.useCustomClick = false,
     this.listener,
   })  : _unitId = unitId,
         _loaded = false {
@@ -64,6 +67,7 @@ class AdropNativeAd {
     return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
       "adType": AdType.native.index,
       "unitId": unitId,
+      "useCustomClick": useCustomClick,
       "requestId": _requestId
     });
   }

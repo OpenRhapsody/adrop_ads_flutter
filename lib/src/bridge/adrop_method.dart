@@ -15,6 +15,8 @@ class AdropMethod {
   static const pageTrack = "pageTrack";
   static const pageAttach = "pageAttach";
 
+  static const performClick = "performClick";
+
   static const didReceiveAd = "onAdReceived";
   static const didClickAd = "onAdClicked";
   static const didFailToReceiveAd = "onAdFailedToReceive";

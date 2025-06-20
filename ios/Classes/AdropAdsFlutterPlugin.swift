@@ -6,6 +6,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     private var bannerManager: AdropBannerManager?
     private var adropAdManager : AdropAdManager?
     private var messenger: FlutterBinaryMessenger?
+    private var nativeViewFactory: AdropNativeAdViewFactory?
 
     private let ModuleError = FlutterError(
         code: "ERROR_CODE_INTERNAL",
@@ -27,7 +28,11 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
         instance.bannerManager = bannerManager
         registrar.register(AdropBannerViewFactory(messenger: messenger, bannerManager: bannerManager), withId: AdropChannel.bannerEventListenerChannel)
-        registrar.register(AdropNativeAdViewFactory(messenger: messenger, adManager: adManager), withId: AdropChannel.nativeEventListenerChannel)
+        
+        instance.nativeViewFactory = AdropNativeAdViewFactory(messenger: messenger, adManager: adManager)
+        guard let nativeViewFactory = instance.nativeViewFactory else { return }
+        
+        registrar.register(nativeViewFactory, withId: AdropChannel.nativeEventListenerChannel)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -93,7 +98,8 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             adropAdManager?.load(
                 adType: AdType.allCases[adTypeIndex],
                 unitId: (call.arguments as? [String: Any?])?["unitId"] as? String ?? "",
-                requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+                requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? "",
+                useCustomClick: (call.arguments as? [String: Any?])?["useCustomClick"] as? Bool ?? false
             )
             result(nil)
         case AdropMethod.SHOW_AD:
@@ -128,6 +134,10 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 adType: AdType.allCases[adTypeIndex],
                 requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
             )
+            result(nil)
+        case AdropMethod.PERFORM_CLICK:
+            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+            nativeViewFactory?.performClick(requestId)
             result(nil)
         default:
             result(FlutterMethodNotImplemented)

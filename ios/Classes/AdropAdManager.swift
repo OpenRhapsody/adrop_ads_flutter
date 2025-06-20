@@ -10,9 +10,9 @@ class AdropAdManager: NSObject {
         self.messenger = messenger
     }
 
-    func load(adType: AdType, unitId: String, requestId: String) {
+    func load(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool) {
         let ad = getAd(adType: adType, requestId: requestId)
-        ?? createAd(adType: adType, unitId: unitId, requestId: requestId)
+        ?? createAd(adType: adType, unitId: unitId, requestId: requestId, useCustomClick: useCustomClick)
         let key = keyOf(adType, requestId)
         if self.ads[key] == nil {
             self.ads[key] = ad
@@ -44,24 +44,24 @@ class AdropAdManager: NSObject {
         switch adType {
         case AdType.popup:
             guard let ad = self.ads[self.keyOf(adType, requestId)] as? FlutterAdropPopupAd else { return }
-            
+
             DispatchQueue.main.async { [weak self] in
                 ad.destroy()
                 self?.removeAds(key)
             }
-            
+
         default:
             removeAds(key)
         }
     }
-    
+
     private func removeAds(_ key: String) {
         DispatchQueue.main.async { [weak self] in
             self?.ads.removeValue(forKey: key)
         }
     }
 
-    func createAd(adType: AdType, unitId: String, requestId: String) -> AdropAd? {
+    func createAd(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool = false) -> AdropAd? {
         switch adType {
         case .interstitial:
             return FlutterAdropInterstitialAd(unitId: unitId, requestId: requestId, messenger: messenger)
@@ -70,7 +70,7 @@ class AdropAdManager: NSObject {
         case .popup:
             return FlutterAdropPopupAd(unitId: unitId, requestId: requestId, messenger: messenger)
         case .native:
-            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, messenger: messenger)
+            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, messenger: messenger)
         case .undefined:
             return nil
         }

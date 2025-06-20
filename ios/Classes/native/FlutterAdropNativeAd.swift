@@ -13,12 +13,14 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     init(
         unitId: String,
         requestId: String,
+        useCustomClick: Bool,
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             self.requestId = requestId
             let methodChannelName = AdropChannel.adropEventListenerChannel(adType: .native, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
             self.nativeAd = AdropNativeAd(unitId: unitId)
+            self.nativeAd.useCustomClick = useCustomClick
         }
 
     func load() {

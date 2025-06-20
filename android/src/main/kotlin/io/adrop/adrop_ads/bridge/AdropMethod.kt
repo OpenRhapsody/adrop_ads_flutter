@@ -12,6 +12,7 @@ object AdropMethod {
     const val SET_PROPERTY = "setProperty"
     const val GET_PROPERTY = "getProperty"
     const val LOG_EVENT = "logEvent"
+    const val PERFORM_CLICK = "performClick"
 
     const val DID_RECEIVE_AD = "onAdReceived"
     const val DID_CLICK_AD = "onAdClicked"
