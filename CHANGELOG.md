@@ -1,3 +1,7 @@
+## 1.1.8
+- Improved gesture handling for `AdropBannerView` to prevent touch event conflicts with scrollable parent views
+- Fixed iOS banner scroll interference issue by implementing proper gesture recognizers
+
 ## 1.1.7
 - Enhanced layout rendering stability for `AdropBannerView`
 - Enabled support for `useCustomClick` in `AdropNativeAd` to handle manual click events

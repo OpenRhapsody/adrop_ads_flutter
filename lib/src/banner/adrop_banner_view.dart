@@ -40,7 +40,7 @@ class AdropBannerView extends StatelessWidget {
                 controller: controller as AndroidViewController,
                 gestureRecognizers: {
                   Factory<OneSequenceGestureRecognizer>(
-                      () => EagerGestureRecognizer())
+                      () => PanGestureRecognizer())
                 },
                 hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               );
@@ -62,6 +62,10 @@ class AdropBannerView extends StatelessWidget {
           creationParams: creationParams.toJson(),
           creationParamsCodec: const StandardMessageCodec(),
           onPlatformViewCreated: (_) {},
+          gestureRecognizers: {
+            Factory<OneSequenceGestureRecognizer>(() => PanGestureRecognizer())
+          },
+          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
         );
       default:
         return Text('$defaultTargetPlatform is not yet supported');

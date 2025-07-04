@@ -123,7 +123,7 @@ Widget build(BuildContext context) {
               controller: controller as AndroidViewController,
               gestureRecognizers: {
                 Factory&lt;OneSequenceGestureRecognizer&gt;(
-                    () =&gt; EagerGestureRecognizer())
+                    () =&gt; PanGestureRecognizer())
               },
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
             );
@@ -145,6 +145,10 @@ Widget build(BuildContext context) {
         creationParams: creationParams.toJson(),
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: (_) {},
+        gestureRecognizers: {
+          Factory&lt;OneSequenceGestureRecognizer&gt;(() =&gt; PanGestureRecognizer())
+        },
+        hitTestBehavior: PlatformViewHitTestBehavior.opaque,
       );
     default:
       return Text(&#39;$defaultTargetPlatform is not yet supported&#39;);
@@ -177,7 +181,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.7
+      1.1.8
   </span>
   
 </footer>
