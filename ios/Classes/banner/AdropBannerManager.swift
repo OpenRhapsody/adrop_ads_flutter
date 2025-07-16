@@ -16,6 +16,8 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     func create(unitId: String, requestId: String) -> AdropBanner {
         let key = keyOf(unitId, requestId)
         if let banner = ads[key] { return banner! }
+
+        NSLog("Flutter:iOS AdropBannerManager create unitId:\(unitId), requestId:\(requestId)")
         let banner = AdropBanner(unitId: unitId)
         banner.delegate = self
         ads[key] = banner
@@ -25,6 +27,7 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     }
 
     func load(unitId: String, requestId: String) {
+        NSLog("Flutter:iOS AdropBannerManager load unitId:\(unitId), requestId:\(requestId)")
         create(unitId: unitId, requestId: requestId).load()
     }
 
@@ -55,6 +58,7 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
 
     func onAdClicked(_ banner: AdropAds.AdropBanner) {
         let args: [String: Any] = ["unitId": banner.unitId, "creativeId": banner.creativeId, "requestId": requestIdMap[banner]]
+        NSLog("Flutter:iOS AdropBannerManager onAdClicked args:\(args)")
         adropChannel().invokeMethod(AdropMethod.DID_CLICK_AD, arguments: args)
     }
 

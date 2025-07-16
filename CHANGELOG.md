@@ -1,3 +1,6 @@
+## 1.1.9-pre.1
+- Improved `AdropBannerView` carousel type 
+
 ## 1.1.8
 - Improved gesture handling for `AdropBannerView` to prevent touch event conflicts with scrollable parent views
 - Fixed iOS banner scroll interference issue by implementing proper gesture recognizers
