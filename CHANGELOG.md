@@ -1,3 +1,6 @@
+## 1.1.9-pre.2
+- Improved `AdropBannerView` carousel type, updated embla-carousel
+
 ## 1.1.9-pre.1
 - Improved `AdropBannerView` carousel type 
 
