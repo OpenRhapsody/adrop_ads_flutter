@@ -31,7 +31,7 @@ class _InterstitialExampleState extends State<InterstitialExample> {
         unitId: unitId,
         listener: AdropInterstitialListener(onAdReceived: (ad) {
           debugPrint(
-              "interstitialAd received $unitId, ${(ad as AdropInterstitialAd).creativeId}");
+              "interstitialAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
           setState(() {
             isLoaded = true;
             errorCode = null;

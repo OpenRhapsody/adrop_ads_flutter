@@ -26,6 +26,9 @@ class AdropNativeAd {
   CreativeSize get creativeSize => _creativeSize;
 
   String _creativeId = '';
+  String _txId = '';
+  String _campaignId = '';
+  String _destinationURL = '';
   bool _loaded;
   AdropNativeProperties _properties = AdropNativeProperties.from(null);
   CreativeSize _creativeSize = const CreativeSize(width: 0.0, height: 0.0);
@@ -53,11 +56,20 @@ class AdropNativeAd {
   /// Returns an Adrop ad's unitId.
   String get unitId => _unitId;
 
-  /// Returns an Adrop ad's creativeId.
+  /// Returns an Adrop ad's creative id.
   String get creativeId => _creativeId;
 
   /// internal requestId for interaction.
   String get requestId => _requestId;
+
+  /// Returns an Adrop ad's transaction id.
+  String get txId => _txId;
+
+  /// Returns an Adrop ad's campaign id.
+  String get campaignId => _campaignId;
+
+  /// Returns an Adrop ad's destination url.
+  String get destinationURL => _destinationURL;
 
   /// Returns an Adrop native ad's properties.
   AdropNativeProperties get properties => _properties;
@@ -78,18 +90,22 @@ class AdropNativeAd {
     var args = call.arguments;
     final event = AdropNativeEvent.from(args);
 
+    _creativeId = call.arguments['creativeId'] ?? '';
+    _txId = call.arguments['txId'] ?? '';
+    _campaignId = call.arguments['campaignId'] ?? '';
+    _destinationURL = call.arguments['destinationURL'] ?? '';
+
+    if (args['creativeSizeWidth'] != null &&
+        args['creativeSizeHeight'] != null) {
+      _creativeSize = CreativeSize(
+        width: args['creativeSizeWidth'],
+        height: args['creativeSizeHeight'],
+      );
+    }
+
     switch (call.method) {
       case AdropMethod.didReceiveAd:
-        if (args['creativeSizeWidth'] != null &&
-            args['creativeSizeHeight'] != null) {
-          _creativeSize = CreativeSize(
-            width: args['creativeSizeWidth'],
-            height: args['creativeSizeHeight'],
-          );
-        }
-
         _loaded = true;
-        _creativeId = call.arguments['creativeId'] ?? '';
         _properties = event.properties;
         listener?.onAdReceived?.call(this);
         break;
@@ -99,6 +115,9 @@ class AdropNativeAd {
       case AdropMethod.didFailToReceiveAd:
         listener?.onAdFailedToReceive
             ?.call(this, event.errorCode ?? AdropErrorCode.undefined);
+        break;
+      case AdropMethod.didImpression:
+        listener?.onAdImpression?.call(this);
         break;
     }
   }

@@ -40,7 +40,7 @@ class _PopupExampleState extends State<PopupExample> {
     popupAd = AdropPopupAd(
       unitId: uniId,
       listener: AdropPopupListener(onAdReceived: (ad) {
-        debugPrint("PopupAd received ${(ad as AdropPopupAd).creativeIds}");
+        debugPrint("PopupAd received ${ad.unitId}");
         setState(() {
           isLoaded = true;
           errorCode = null;
@@ -59,6 +59,9 @@ class _PopupExampleState extends State<PopupExample> {
         setState(() {
           this.errorCode = errorCode;
         });
+      }, onAdImpression: (ad) {
+        debugPrint(
+            "PopupAd impression ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.destinationURL}");
       }),
       backgroundColor: getRandomColor(),
     );

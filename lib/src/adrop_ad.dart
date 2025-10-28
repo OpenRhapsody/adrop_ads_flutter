@@ -59,6 +59,9 @@ abstract class AdropAd {
   final AdType _adType;
   final String _unitId;
   String _creativeId = '';
+  String _txId = '';
+  String _destinationURL = '';
+  String _campaignId = '';
   bool _loaded;
   final AdropAdListener? listener;
   late final String _requestId;
@@ -93,9 +96,23 @@ abstract class AdropAd {
   }
 
   /// Returns an Adrop ad's creativeId.
-  @protected
   String get creativeId {
     return _creativeId;
+  }
+
+  /// Returns an Adrop ad's transaction id.
+  String get txId {
+    return _txId;
+  }
+
+  /// Returns an Adrop ad's campaign id.
+  String get campaignId {
+    return _campaignId;
+  }
+
+  /// Returns an Adrop ad's destination url.
+  String get destinationURL {
+    return _destinationURL;
   }
 
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
@@ -110,11 +127,18 @@ abstract class AdropAd {
         AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
   }
 
-  /// Requests to customize an ad from Adrop using the Ad unit ID of the Adrop ad.
+  /// Requests to customize a popup ad.
   @protected
   Future<void> customize([dynamic data]) async {
     return _invokeChannel.invokeMethod(AdropMethod.customizeAd,
         {"adType": _adType.index, "requestId": _requestId, "data": data});
+  }
+
+  /// Requests to close a popup ad.
+  @protected
+  Future<void> closeAd() async {
+    return _invokeChannel.invokeMethod(AdropMethod.closeAd,
+        {"adType": _adType.index, "requestId": _requestId});
   }
 
   /// Dispose the Adrop ad to free resources.
@@ -127,11 +151,16 @@ abstract class AdropAd {
     if (listener == null) return;
 
     final event = AdropEvent.from(call.arguments);
+    if (event.method != AdropMethod.didHandleEarnReward) {
+      _creativeId = call.arguments['creativeId'] ?? '';
+      _txId = call.arguments['txId'] ?? '';
+      _campaignId = call.arguments['campaignId'] ?? '';
+      _destinationURL = call.arguments['destinationURL'] ?? '';
+    }
 
     switch (call.method) {
       case AdropMethod.didReceiveAd:
         _loaded = true;
-        _creativeId = call.arguments['creativeId'] ?? '';
         listener?.onAdReceived?.call(this);
         break;
       case AdropMethod.didClickAd:

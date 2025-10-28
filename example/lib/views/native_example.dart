@@ -39,7 +39,7 @@ class _NativeExampleState extends State<NativeExample> {
         unitId: unitId,
         listener: AdropNativeListener(onAdReceived: (ad) {
           debugPrint(
-              'nativeAd received $unitId, ${ad.creativeId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
+              'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
           String base64Data =
               base64Encode(utf8.encode(ad.properties.creative ?? ''));
           webViewController
@@ -56,6 +56,8 @@ class _NativeExampleState extends State<NativeExample> {
           });
         }, onAdClicked: (_) {
           debugPrint("nativeAd clicked $unitId");
+        }, onAdImpression: (_) {
+          debugPrint("nativeAd impressed $unitId");
         }));
     setState(() {
       isLoaded = false;

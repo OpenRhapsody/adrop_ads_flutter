@@ -1,3 +1,11 @@
+## 1.2.0
+- Added `close()` method to `AdropPopupAd` for programmatic ad dismissal
+- Enhanced ad metadata with `txId` and `campaignId` for all ad types (`AdropBannerView`, `AdropInterstitialAd`, `AdropNativeAd`, `AdropPopupAd`, `AdropRewardedAd`)
+- **Breaking Change**: Updated `AdropAdEventCallback` signature to provide comprehensive metadata instead of just `creativeId`
+  - Before: `void Function(String unitId, String? creativeId)`
+  - After: `void Function(String unitId, Map<String, dynamic>? metadata)`
+  - Metadata includes: `creativeId`, `txId`, `campaignId`, `requestId`, `destinationURL`, `creativeSizeWidth`, `creativeSizeHeight`
+
 ## 1.1.8
 - Improved gesture handling for `AdropBannerView` to prevent touch event conflicts with scrollable parent views
 - Fixed iOS banner scroll interference issue by implementing proper gesture recognizers

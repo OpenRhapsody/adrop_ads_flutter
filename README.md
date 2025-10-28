@@ -31,7 +31,7 @@ Prerequisites
 
 
 ### Step 1: Create a Adrop project
-Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://help.adrop.io/publisher-guide/start-ads-platform) to connect to your app.
+Before you can add Adrop to your Flutter app, you need to [create a Adrop project](https://help.adrop.io/adcontrol/appdeveloper-guide/quick-start/start-ads-platform) to connect to your app.
 
 ### Step 2: Register your app with Adrop
 To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.
@@ -155,12 +155,112 @@ end
 
 &nbsp;
 
+## Migration Guide for v1.2.0
+
+### Breaking Change: Banner Event Callbacks
+
+In version 1.2.0, we've enhanced the `AdropBannerListener` callbacks to provide comprehensive ad metadata instead of just the creative ID. This change affects the `onAdReceived` and `onAdClicked` callbacks.
+
+#### What Changed
+
+The signature of `AdropAdEventCallback` has been updated:
+
+**Before (v1.1.x):**
+```dart
+typedef AdropAdEventCallback = void Function(String unitId, String? creativeId);
+```
+
+**After (v1.2.0):**
+```dart
+typedef AdropAdEventCallback = void Function(String unitId, Map<String, dynamic>? metadata);
+```
+
+#### Available Metadata Fields
+
+The metadata map now includes:
+- `creativeId`: The creative identifier
+- `txId`: Transaction identifier for tracking
+- `campaignId`: Campaign identifier
+- `destinationURL`: The destination URL of the ad
+- `creativeSizeWidth`: Width of the creative (Banner only)
+- `creativeSizeHeight`: Height of the creative (Banner only)
+
+#### Migration Steps
+
+Update your `AdropBannerListener` implementations:
+
+**Before:**
+```dart
+AdropBannerView(
+  unitId: unitId,
+  listener: AdropBannerListener(
+    onAdReceived: (unitId, creativeId) {
+      debugPrint("Ad received: $creativeId");
+    },
+    onAdClicked: (unitId, creativeId) {
+      debugPrint("Ad clicked: $creativeId");
+    },
+  ),
+);
+```
+
+**After:**
+```dart
+AdropBannerView(
+  unitId: unitId,
+  listener: AdropBannerListener(
+    onAdReceived: (unitId, metadata) {
+      debugPrint("Ad received: ${metadata?['creativeId']}");
+      debugPrint("Transaction ID: ${metadata?['txId']}");
+      debugPrint("Campaign ID: ${metadata?['campaignId']}");
+    },
+    onAdClicked: (unitId, metadata) {
+      debugPrint("Ad clicked: ${metadata?['creativeId']}");
+      debugPrint("Destination: ${metadata?['destinationURL']}");
+    },
+  ),
+);
+```
+
+#### Enhanced Metadata for All Ad Types
+
+All ad types now provide additional metadata through their properties:
+
+```dart
+// Interstitial, Rewarded, Popup, and Native ads
+AdropInterstitialListener(
+  onAdReceived: (ad) {
+    debugPrint('Creative ID: ${ad.creativeId}');
+    debugPrint('Transaction ID: ${ad.txId}');
+    debugPrint('Campaign ID: ${ad.campaignId}');
+    debugPrint('Destination URL: ${ad.destinationURL}');
+  },
+);
+```
+
+#### New Feature: Close Popup Ad Programmatically
+
+v1.2.0 also introduces the ability to close popup ads programmatically:
+
+```dart
+final popupAd = AdropPopupAd(unitId: 'YOUR_UNIT_ID');
+await popupAd.load();
+await popupAd.show();
+
+// Close the ad programmatically
+await popupAd.close();
+```
+
+---
+
+&nbsp;
+
 Create your Ad unit
 ---
 
 ### 
 
-From the [Adrop console](https://adrop.io/projects), go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).
+From the [Adrop console](https://adrop.io), go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).
 
 ---
 
@@ -169,7 +269,7 @@ From the [Adrop console](https://adrop.io/projects), go to project, then select 
 To create a new Ad unit:
 1. From the left navigation menu, select **Ad Units**.
 2. Select **Create Ad unit** to bring up the ad unit builder.
-3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://help.adrop.io/publisher-guide/ads-builder) (Banner, Interstitial, Rewarded, Native, Popup, or Splash).
+3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://help.adrop.io/adcontrol/appdeveloper-guide/ad-unit/kinds) (Banner, Interstitial, Rewarded, Native, Popup, or Splash).
 4. Select **Create** to save your Ad unit.
 
 ### Ad unit ID
@@ -205,10 +305,14 @@ class YourComponentState extends State<YourComponent> {
     bannerView = AdropBannerView(
       unitId: unitId,
       listener: AdropBannerListener(
-        onAdReceived: (unitId) {
+        onAdReceived: (unitId, metadata) {
+          debugPrint("Ad received: ${metadata}");
           setState(() {
             isLoaded = true;
           });
+        },
+        onAdClicked: (unitId, metadata) {
+          debugPrint("Ad clicked: ${metadata}");
         },
         onAdFailedToReceive: (unitId, error) {
           setState(() {

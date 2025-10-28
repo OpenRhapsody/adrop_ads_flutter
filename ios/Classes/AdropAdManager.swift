@@ -38,6 +38,17 @@ class AdropAdManager: NSObject {
         }
     }
 
+    func close(adType: AdType, requestId: String) {
+        switch adType {
+        case AdType.popup:
+            guard let ad = self.ads[self.keyOf(adType, requestId)] as? FlutterAdropPopupAd else { return }
+
+            ad.close()
+        default:
+            return
+        }
+    }
+
     func destroy(adType: AdType, requestId: String) {
         let key = keyOf(adType, requestId)
 

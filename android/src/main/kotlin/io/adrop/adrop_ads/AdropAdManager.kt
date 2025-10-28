@@ -25,6 +25,18 @@ class AdropAdManager {
         getAd(adType, requestId)?.show(activity)
     }
 
+    fun close(adType: AdType, requestId: String) {
+        when (adType) {
+            AdType.Popup -> {
+                val popupAd = ads[keyOf(adType, requestId)] as? FlutterAdropPopupAd
+                popupAd?: return
+
+                popupAd.close()
+            }
+            else -> return
+        }
+    }
+
     fun customize(adType: AdType, requestId: String, data: Map<String, Any>) {
         when (adType) {
             AdType.Popup -> {

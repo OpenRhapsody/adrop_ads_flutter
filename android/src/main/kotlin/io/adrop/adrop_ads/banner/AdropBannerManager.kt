@@ -57,8 +57,7 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf("unitId" to unitId, "creativeId" to banner.creativeId, "requestId" to requestIdMap[banner])
-        adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, args)
+        adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(banner))
     }
 
     override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
@@ -73,17 +72,23 @@ class AdropBannerManager(
         val unitId = banner.getUnitId()
         ads[unitId] = banner
 
-        val args = mapOf(
-            "unitId" to unitId,
-            "creativeId" to banner.creativeId,
-            "requestId" to requestIdMap[banner],
-            "creativeSizeWidth" to banner.creativeSize.width,
-            "creativeSizeHeight" to banner.creativeSize.height
-        )
-
-        adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, args)
+        adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(banner))
     }
 
     override fun onAdImpression(banner: AdropBanner) {
+        adropChannel.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(banner))
+    }
+
+    private fun metadataOf(banner: AdropBanner): Map<String, Any?> {
+        return mapOf(
+            "unitId" to banner.getUnitId(),
+            "creativeId" to banner.creativeId,
+            "txId" to banner.txId,
+            "campaignId" to banner.campaignId,
+            "requestId" to requestIdMap[banner],
+            "destinationURL" to banner.destinationURL,
+            "creativeSizeWidth" to banner.creativeSize.width,
+            "creativeSizeHeight" to banner.creativeSize.height
+        )
     }
 }

@@ -40,6 +40,10 @@ class FlutterAdropPopupAd(
         popupAd.show(activity)
     }
 
+    fun close() {
+        popupAd.close()
+    }
+
     fun customize(data: Map<String, Any>) {
         data["closeTextColor"]?.let { popupAd.closeTextColor = colorOf(it) }
         data["hideForTodayTextColor"]?.let { popupAd.hideForTodayTextColor = colorOf(it) }
@@ -66,15 +70,15 @@ class FlutterAdropPopupAd(
     }
 
     override fun onAdReceived(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, mapOf("creativeId" to ad.creativeIds.joinToString(",")))
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(ad))
     }
 
     override fun onAdClicked(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(ad))
     }
 
     override fun onAdImpression(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(ad))
     }
 
     override fun onAdFailedToShowFullScreen(ad: AdropPopupAd, errorCode: AdropErrorCode) {
@@ -85,10 +89,19 @@ class FlutterAdropPopupAd(
     }
 
     override fun onAdDidPresentFullScreen(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdDidDismissFullScreen(ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, metadataOf(ad))
+    }
+
+    private fun metadataOf(ad: AdropPopupAd): Map<String, Any?> {
+        return mapOf(
+            "creativeId" to ad.creativeId,
+            "txId" to ad.txId,
+            "campaignId" to ad.campaignId,
+            "destinationURL" to ad.destinationURL
+        )
     }
 }

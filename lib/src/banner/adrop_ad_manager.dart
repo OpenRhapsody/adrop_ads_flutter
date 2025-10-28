@@ -20,6 +20,9 @@ class AdropAdManager {
       var unitId = args["unitId"] ?? "";
       var creativeId = args["creativeId"] ?? "";
       var requestId = args["requestId"] ?? "";
+      var txId = args["txId"] ?? "";
+      var campaignId = args["campaignId"] ?? "";
+      var destinationURL = args["destinationURL"] ?? "";
       var key = "${unitId}_$requestId";
 
       if (args['creativeSizeWidth'] != null &&
@@ -30,12 +33,22 @@ class AdropAdManager {
         );
       }
 
+      var metadata = {
+        'creativeId': creativeId,
+        'txId': txId,
+        'campaignId': campaignId,
+        'destinationURL': destinationURL,
+      };
+
       switch (call.method) {
         case AdropMethod.didReceiveAd:
-          _loadedAds[key]?.listener?.onAdReceived?.call(unitId, creativeId);
+          _loadedAds[key]?.listener?.onAdReceived?.call(unitId, metadata);
           break;
         case AdropMethod.didClickAd:
-          _loadedAds[key]?.listener?.onAdClicked?.call(unitId, creativeId);
+          _loadedAds[key]?.listener?.onAdClicked?.call(unitId, metadata);
+          break;
+        case AdropMethod.didImpression:
+          _loadedAds[key]?.listener?.onAdImpression?.call(unitId, metadata);
           break;
         case AdropMethod.didFailToReceiveAd:
           _loadedAds[key]

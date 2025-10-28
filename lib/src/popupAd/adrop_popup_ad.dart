@@ -46,8 +46,14 @@ class AdropPopupAd extends AdropAd {
     });
   }
 
+  Future<void> close() async {
+    closeAd();
+  }
+
   /// Returns an Adrop ad's creativeIds.
+  @Deprecated(
+      "This method is deprecated and will be removed in the next version. Use creativeId instead.")
   List<String> get creativeIds {
-    return creativeId.split(",");
+    return [];
   }
 }

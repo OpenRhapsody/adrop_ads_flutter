@@ -33,28 +33,19 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     }
 
     func onAdClicked(_ ad: AdropNativeAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: metadataOf(ad))
     }
 
     func onAdReceived(_ ad: AdropNativeAd) {
-        let arguments: [String: Any] = [
-            "creativeId": ad.creativeId,
-            "headline": ad.headline,
-            "body": ad.body,
-            "displayLogo": ad.profile.displayLogo,
-            "displayName": ad.profile.displayName,
-            "extra": dictionaryToJSONString(ad.extra),
-            "asset": ad.asset,
-            "destinationURL": ad.destinationURL,
-            "creative": ad.creative,
-            "creativeSizeWidth": ad.creativeSize.width,
-            "creativeSizeHeight": ad.creativeSize.height
-        ]
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: arguments)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(ad))
     }
 
     func onAdFailedToReceive(_ ad: AdropNativeAd, _ errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAILED_TO_RECEIVE, arguments: ["errorCode":AdropErrorCodeToString(code: errorCode)])
+    }
+
+    func onAdImpression(_ ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(ad))
     }
 
     func dictionaryToJSONString(_ dictionary: [String: Any]) -> String? {
@@ -65,5 +56,23 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
         } catch {
             return "{}"
         }
+    }
+
+    private func metadataOf(_ ad: AdropNativeAd) -> [String: Any] {
+        return [
+            "creativeId": ad.creativeId,
+            "headline": ad.headline,
+            "body": ad.body,
+            "displayLogo": ad.profile.displayLogo,
+            "displayName": ad.profile.displayName,
+            "extra": dictionaryToJSONString(ad.extra),
+            "asset": ad.asset,
+            "destinationURL": ad.destinationURL,
+            "creative": ad.creative,
+            "creativeSizeWidth": ad.creativeSize.width,
+            "creativeSizeHeight": ad.creativeSize.height,
+            "txId": ad.txId,
+            "campaignId": ad.campaignId
+        ]
     }
 }

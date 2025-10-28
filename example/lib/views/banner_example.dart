@@ -24,16 +24,19 @@ class _BannerExampleState extends State<BannerExample> {
     bannerView = AdropBannerView(
       unitId: testUnitId_80,
       listener: AdropBannerListener(
-        onAdReceived: (unitId, creativeId) {
+        onAdReceived: (unitId, metadata) {
           debugPrint(
-              "ad received $unitId, $creativeId ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height}");
+              "ad received $unitId, $metadata ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height}");
           setState(() {
             isLoaded = true;
             errorCode = null;
           });
         },
-        onAdClicked: (unitId, creativeId) {
-          debugPrint("ad clicked $unitId, $creativeId");
+        onAdClicked: (unitId, metadata) {
+          debugPrint("ad clicked $unitId, $metadata");
+        },
+        onAdImpression: (unitId, metadata) {
+          debugPrint("ad impressed $unitId, $metadata");
         },
         onAdFailedToReceive: (unitId, error) {
           debugPrint("ad onAdFailedToReceive $unitId, $error");
@@ -47,8 +50,8 @@ class _BannerExampleState extends State<BannerExample> {
     emptyBannerView = AdropBannerView(
       unitId: testUnitId,
       listener: AdropBannerListener(
-        onAdReceived: (unitId, creativeId) {
-          debugPrint("ad received $unitId $creativeId");
+        onAdReceived: (unitId, metadata) {
+          debugPrint("ad received $unitId $metadata");
         },
         onAdFailedToReceive: (unitId, error) {
           debugPrint("ad onAdFailedToReceive $unitId, $error");

@@ -30,17 +30,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
@@ -204,6 +201,81 @@ end
 </code></pre>
 <hr>
 <p></p>
+<h2 id="migration-guide-for-v120">Migration Guide for v1.2.0</h2>
+<h3 id="breaking-change-banner-event-callbacks">Breaking Change: Banner Event Callbacks</h3>
+<p>In version 1.2.0, we've enhanced the <code>AdropBannerListener</code> callbacks to provide comprehensive ad metadata instead of just the creative ID. This change affects the <code>onAdReceived</code> and <code>onAdClicked</code> callbacks.</p>
+<h4 id="what-changed">What Changed</h4>
+<p>The signature of <code>AdropAdEventCallback</code> has been updated:</p>
+<p><strong>Before (v1.1.x):</strong></p>
+<pre class="language-dart"><code class="language-dart">typedef AdropAdEventCallback = void Function(String unitId, String? creativeId);
+</code></pre>
+<p><strong>After (v1.2.0):</strong></p>
+<pre class="language-dart"><code class="language-dart">typedef AdropAdEventCallback = void Function(String unitId, Map&lt;String, dynamic&gt;? metadata);
+</code></pre>
+<h4 id="available-metadata-fields">Available Metadata Fields</h4>
+<p>The metadata map now includes:</p>
+<ul>
+<li><code>creativeId</code>: The creative identifier</li>
+<li><code>txId</code>: Transaction identifier for tracking</li>
+<li><code>campaignId</code>: Campaign identifier</li>
+<li><code>destinationURL</code>: The destination URL of the ad</li>
+<li><code>creativeSizeWidth</code>: Width of the creative (Banner only)</li>
+<li><code>creativeSizeHeight</code>: Height of the creative (Banner only)</li>
+</ul>
+<h4 id="migration-steps">Migration Steps</h4>
+<p>Update your <code>AdropBannerListener</code> implementations:</p>
+<p><strong>Before:</strong></p>
+<pre class="language-dart"><code class="language-dart">AdropBannerView(
+  unitId: unitId,
+  listener: AdropBannerListener(
+    onAdReceived: (unitId, creativeId) {
+      debugPrint("Ad received: $creativeId");
+    },
+    onAdClicked: (unitId, creativeId) {
+      debugPrint("Ad clicked: $creativeId");
+    },
+  ),
+);
+</code></pre>
+<p><strong>After:</strong></p>
+<pre class="language-dart"><code class="language-dart">AdropBannerView(
+  unitId: unitId,
+  listener: AdropBannerListener(
+    onAdReceived: (unitId, metadata) {
+      debugPrint("Ad received: ${metadata?['creativeId']}");
+      debugPrint("Transaction ID: ${metadata?['txId']}");
+      debugPrint("Campaign ID: ${metadata?['campaignId']}");
+    },
+    onAdClicked: (unitId, metadata) {
+      debugPrint("Ad clicked: ${metadata?['creativeId']}");
+      debugPrint("Destination: ${metadata?['destinationURL']}");
+    },
+  ),
+);
+</code></pre>
+<h4 id="enhanced-metadata-for-all-ad-types">Enhanced Metadata for All Ad Types</h4>
+<p>All ad types now provide additional metadata through their properties:</p>
+<pre class="language-dart"><code class="language-dart">// Interstitial, Rewarded, Popup, and Native ads
+AdropInterstitialListener(
+  onAdReceived: (ad) {
+    debugPrint('Creative ID: ${ad.creativeId}');
+    debugPrint('Transaction ID: ${ad.txId}');
+    debugPrint('Campaign ID: ${ad.campaignId}');
+    debugPrint('Destination URL: ${ad.destinationURL}');
+  },
+);
+</code></pre>
+<h4 id="new-feature-close-popup-ad-programmatically">New Feature: Close Popup Ad Programmatically</h4>
+<p>v1.2.0 also introduces the ability to close popup ads programmatically:</p>
+<pre class="language-dart"><code class="language-dart">final popupAd = AdropPopupAd(unitId: 'YOUR_UNIT_ID');
+await popupAd.load();
+await popupAd.show();
+
+// Close the ad programmatically
+await popupAd.close();
+</code></pre>
+<hr>
+<p></p>
 <h2 id="create-your-ad-unit">Create your Ad unit</h2>
 <h3 id=""></h3>
 <p>From the <a href="https://adrop.io/projects">Adrop console</a>, go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).</p>
@@ -249,10 +321,14 @@ end
     bannerView = AdropBannerView(
       unitId: unitId,
       listener: AdropBannerListener(
-        onAdReceived: (unitId) {
+        onAdReceived: (unitId, metadata) {
+          debugPrint("Ad received: ${metadata?['creativeId']}");
           setState(() {
             isLoaded = true;
           });
+        },
+        onAdClicked: (unitId, metadata) {
+          debugPrint("Ad clicked: ${metadata?['creativeId']}");
         },
         onAdFailedToReceive: (unitId, error) {
           setState(() {
@@ -567,7 +643,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
           <h2>Libraries</h2>
         <dl>
           <dt id="adrop_ads_flutter">
-  <span class="name"><a href="adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></span> 
+  <span class="name"><a href="adrop_ads_flutter/">adrop_ads_flutter</a></span> 
 
 </dt>
 <dd>
@@ -590,7 +666,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
     <h5 class="hidden-xs"><span class="package-name">adrop_ads_flutter</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
+      <li><a href="adrop_ads_flutter/">adrop_ads_flutter</a></li>
 </ol>
 
   </div>
@@ -600,7 +676,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.8
+      1.2.0
   </span>
   
 </footer>

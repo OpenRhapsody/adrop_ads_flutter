@@ -14,11 +14,13 @@ typedef AdropNativeAdErrorCallback = void Function(
 class AdropNativeListener {
   final AdropNativeAdCallback? onAdReceived;
   final AdropNativeAdCallback? onAdClicked;
+  final AdropNativeAdCallback? onAdImpression;
   final AdropNativeAdErrorCallback? onAdFailedToReceive;
 
   AdropNativeListener({
     this.onAdReceived,
     this.onAdClicked,
+    this.onAdImpression,
     this.onAdFailedToReceive,
   });
 }

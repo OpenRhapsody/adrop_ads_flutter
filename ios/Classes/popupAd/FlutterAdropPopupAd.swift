@@ -38,6 +38,10 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
         popupAd.show(fromRootViewController: rootViewController)
     }
 
+    func close() {
+        popupAd.close()
+    }
+
     func customize(_ data: [String:Any]) {
         if let closeTextColor = data["closeTextColor"] as? UInt32 {
             popupAd.closeTextColor = UIColor(fromFlutterColor: closeTextColor)
@@ -49,13 +53,13 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
             popupAd.backgroundColor = UIColor(fromFlutterColor: backgroundColor)
         }
     }
-    
+
     func destroy() {
         popupAd.close()
     }
 
     func onAdReceived(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: ["creativeId": ad.creativeIds.joined(separator: ",")])
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(ad))
     }
 
     func onAdFailedToReceive(_ ad: AdropPopupAd, _ errorCode: AdropErrorCode) {
@@ -64,30 +68,40 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
 
 
     func onAdImpression(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(ad))
     }
 
     func onAdClicked(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: metadataOf(ad))
     }
 
     func onAdWillPresentFullScreen(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_PRESENT_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdDidPresentFullScreen(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdWillDismissFullScreen(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_DISMISS_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdDidDismissFullScreen(_ ad: AdropPopupAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdFailedToShowFullScreen(_ ad: AdropPopupAd, _ errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, arguments: ["errorCode": AdropErrorCodeToString(code: errorCode)])
+    }
+
+    private func metadataOf(_ ad: AdropPopupAd) -> [String: Any] {
+        return [
+            "unitId": ad.unitId,
+            "creativeId": ad.creativeId,
+            "txId": ad.txId,
+            "campaignId": ad.campaignId,
+            "destinationURL": ad.destinationURL
+        ]
     }
 }

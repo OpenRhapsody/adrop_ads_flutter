@@ -43,7 +43,7 @@ class FlutterAdropNativeAd(
     }
 
     override fun onAdClick(ad: AdropNativeAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(ad))
     }
 
     override fun onAdFailedToReceive(ad: AdropNativeAd, errorCode: AdropErrorCode) {
@@ -54,7 +54,15 @@ class FlutterAdropNativeAd(
     }
 
     override fun onAdReceived(ad: AdropNativeAd) {
-        val properties = mapOf(
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(ad))
+    }
+
+    override fun onAdImpression(ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(ad))
+    }
+
+    private fun metadataOf(ad: AdropNativeAd): Map<String, Any> {
+        return mapOf(
             "creativeId" to ad.creativeId,
             "headline" to ad.headline,
             "body" to ad.body,
@@ -66,8 +74,8 @@ class FlutterAdropNativeAd(
             "creative" to ad.creative,
             "creativeSizeWidth" to ad.creativeSize.width,
             "creativeSizeHeight" to ad.creativeSize.height,
+            "txId" to ad.txId,
+            "campaignId" to ad.campaignId
         )
-
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, properties)
     }
 }

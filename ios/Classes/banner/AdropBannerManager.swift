@@ -54,8 +54,7 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     }
 
     func onAdClicked(_ banner: AdropAds.AdropBanner) {
-        let args: [String: Any] = ["unitId": banner.unitId, "creativeId": banner.creativeId, "requestId": requestIdMap[banner]]
-        adropChannel().invokeMethod(AdropMethod.DID_CLICK_AD, arguments: args)
+        adropChannel().invokeMethod(AdropMethod.DID_CLICK_AD, arguments: metadataOf(banner))
     }
 
     func onAdFailedToReceive(_ banner: AdropBanner, _ error: AdropErrorCode) {
@@ -65,13 +64,23 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     }
 
     func onAdReceived(_ banner: AdropBanner) {
-        let args: [String: Any] = [
+        adropChannel().invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(banner))
+    }
+
+    func onAdImpression(_ banner: AdropBanner) {
+        adropChannel().invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(banner))
+    }
+
+    private func metadataOf(_ banner: AdropBanner) -> [String: Any] {
+        return [
             "unitId": banner.unitId,
             "creativeId": banner.creativeId,
             "requestId": requestIdMap[banner],
+            "txId": banner.txId,
+            "campaignId": banner.campaignId,
+            "destinationURL": banner.destinationURL,
             "creativeSizeWidth": banner.creativeSize.width,
             "creativeSizeHeight": banner.creativeSize.height
         ]
-        adropChannel().invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: args)
     }
 }

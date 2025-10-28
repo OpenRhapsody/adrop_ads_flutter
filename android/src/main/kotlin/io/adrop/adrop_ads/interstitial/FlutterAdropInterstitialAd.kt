@@ -48,26 +48,34 @@ class FlutterAdropInterstitialAd(
     }
 
     override fun onAdReceived(ad: AdropInterstitialAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, mapOf("creativeId" to ad.creativeId))
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(ad))
     }
 
     override fun onAdClicked(ad: AdropInterstitialAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(ad))
     }
 
     override fun onAdImpression(ad: AdropInterstitialAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(ad))
     }
 
     override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, null)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, mapOf("errorCode" to errorCode.name))
+    }
+
+    private fun metadataOf(ad: AdropInterstitialAd): Map<String, Any?> {
+        return mapOf(
+            "creativeId" to ad.creativeId,
+            "txId" to ad.txId,
+            "campaignId" to ad.campaignId
+        )
     }
 }

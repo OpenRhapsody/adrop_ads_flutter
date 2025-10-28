@@ -44,7 +44,7 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
     }
 
     func onAdReceived(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: ["creativeId": ad.creativeId])
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(ad))
     }
 
     func onAdFailedToReceive(_ ad: AdropRewardedAd, _ errorCode: AdropErrorCode) {
@@ -53,30 +53,39 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
 
 
     func onAdImpression(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(ad))
     }
 
     func onAdClicked(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: metadataOf(ad))
     }
 
     func onAdWillPresentFullScreen(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_PRESENT_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdDidPresentFullScreen(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdWillDismissFullScreen(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_DISMISS_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdDidDismissFullScreen(_ ad: AdropRewardedAd) {
-        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, arguments: nil)
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
     func onAdFailedToShowFullScreen(_ ad: AdropRewardedAd, _ errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, arguments: ["errorCode": AdropErrorCodeToString(code: errorCode)])
+    }
+
+    private func metadataOf(_ ad: AdropRewardedAd) -> [String: Any] {
+        return [
+            "unitId": ad.unitId,
+            "creativeId": ad.creativeId,
+            "txId": ad.txId,
+            "campaignId": ad.campaignId,
+        ]
     }
 }

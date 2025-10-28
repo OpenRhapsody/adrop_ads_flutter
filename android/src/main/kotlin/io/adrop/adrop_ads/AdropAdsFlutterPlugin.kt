@@ -172,6 +172,17 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                AdropMethod.CLOSE_AD -> {
+                    val adTypeIndex = call.argument("adType") as Int? ?: 0
+                    if (adTypeIndex == AdType.Undefined.ordinal) {
+                        result.error(AdropErrorCode.ERROR_CODE_INTERNAL.name, "AdType is undefined", "Expected adType enum index larger than 0")
+                        return
+                    }
+
+                    adManager.close(AdType.values()[adTypeIndex], call.argument("requestId") as String? ?: "")
+                    result.success(null)
+                }
+
                 AdropMethod.CUSTOMIZE_AD -> {
                     val adTypeIndex = call.argument("adType") as Int? ?: 0
                     if (adTypeIndex == AdType.Undefined.ordinal) {

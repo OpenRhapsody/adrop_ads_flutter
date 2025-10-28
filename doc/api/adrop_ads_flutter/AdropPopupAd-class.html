@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">adrop_ads_flutter</a></li>
-    <li><a href="../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter.dart</a></li>
+    <li><a href="../adrop_ads_flutter/">adrop_ads_flutter.dart</a></li>
     <li class="self-crumb">AdropPopupAd class</li>
   </ol>
   <div class="self-name">AdropPopupAd</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -71,8 +68,8 @@
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="AdropPopupAd" class="callable">
-          <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/AdropPopupAd.html">AdropPopupAd</a></span><span class="signature">({<span class="parameter" id="-param-unitId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="-param-listener"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropPopupListener-class.html">AdropPopupListener</a>?</span> <span class="parameter-name">listener</span>, </span><span class="parameter" id="-param-closeTextColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span> <span class="parameter-name">closeTextColor</span>, </span><span class="parameter" id="-param-hideForTodayTextColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span> <span class="parameter-name">hideForTodayTextColor</span>, </span><span class="parameter" id="-param-backgroundColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span> <span class="parameter-name">backgroundColor</span></span>})</span>
+        <dt id="AdropPopupAd.new" class="callable">
+          <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/AdropPopupAd.html">AdropPopupAd.new</a></span><span class="signature">({<span class="parameter" id="-param-unitId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="-param-listener"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropPopupListener-class.html">AdropPopupListener</a>?</span> <span class="parameter-name">listener</span>, </span><span class="parameter" id="-param-closeTextColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">closeTextColor</span>, </span><span class="parameter" id="-param-hideForTodayTextColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">hideForTodayTextColor</span>, </span><span class="parameter" id="-param-backgroundColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">backgroundColor</span></span>})</span>
         </dt>
         <dd>
           
@@ -87,7 +84,7 @@
     <dl class="properties">
         <dt id="backgroundColor" class="property">
   <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/backgroundColor.html">backgroundColor</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span>
   
 
 </dt>
@@ -97,9 +94,21 @@
 
 </dd>
 
+        <dt id="campaignId" class="property inherited">
+  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/campaignId.html">campaignId</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  Returns an Adrop ad's campaign id.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
         <dt id="closeTextColor" class="property">
   <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/closeTextColor.html">closeTextColor</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span>
   
 
 </dt>
@@ -122,7 +131,7 @@
 </dd>
 
         <dt id="creativeIds" class="property">
-  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/creativeIds.html">creativeIds</a></span>
+  <span class="name"><a class="deprecated" href="../adrop_ads_flutter/AdropPopupAd/creativeIds.html">creativeIds</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
   
 
@@ -130,6 +139,18 @@
 <dd>
   Returns an Adrop ad's creativeIds.
   <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="destinationURL" class="property inherited">
+  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/destinationURL.html">destinationURL</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  Returns an Adrop ad's destination url.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -147,7 +168,7 @@
 
         <dt id="hideForTodayTextColor" class="property">
   <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/hideForTodayTextColor.html">hideForTodayTextColor</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a>?</span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span>
   
 
 </dt>
@@ -193,6 +214,18 @@
 
 </dd>
 
+        <dt id="txId" class="property inherited">
+  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/txId.html">txId</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  Returns an Adrop ad's transaction id.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
         <dt id="unitId" class="property inherited">
   <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/unitId.html">unitId</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
@@ -214,6 +247,32 @@
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
+        <dt id="close" class="callable">
+  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/close.html">close</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="closeAd" class="callable inherited">
+  <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/closeAd.html">closeAd</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Requests to close a popup ad.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
         <dt id="customize" class="callable inherited">
   <span class="name"><a href="../adrop_ads_flutter/AdropPopupAd/customize.html">customize</a></span><span class="signature">(<wbr>[<span class="parameter" id="customize-param-data"><span class="type-annotation">dynamic</span> <span class="parameter-name">data</span></span>])
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
@@ -222,7 +281,7 @@
 
 </dt>
 <dd class="inherited">
-  Requests to customize an ad from Adrop using the Ad unit ID of the Adrop ad.
+  Requests to customize a popup ad.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
@@ -329,7 +388,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">adrop_ads_flutter</a></li>
-    <li><a href="../adrop_ads_flutter/adrop_ads_flutter-library.html">adrop_ads_flutter</a></li>
+    <li><a href="../adrop_ads_flutter/">adrop_ads_flutter</a></li>
     <li class="self-crumb">AdropPopupAd class</li>
 </ol>
 
@@ -342,7 +401,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.1.8
+      1.2.0
   </span>
   
 </footer>

@@ -24,9 +24,4 @@ class AdropInterstitialAd extends AdropAd {
             onAdFailedToShowFullScreen: listener?.onAdFailedToShowFullScreen,
           ),
         );
-
-  @override
-  String get creativeId {
-    return super.creativeId;
-  }
 }

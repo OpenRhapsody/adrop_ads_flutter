@@ -28,10 +28,10 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
         instance.bannerManager = bannerManager
         registrar.register(AdropBannerViewFactory(messenger: messenger, bannerManager: bannerManager), withId: AdropChannel.bannerEventListenerChannel)
-        
+
         instance.nativeViewFactory = AdropNativeAdViewFactory(messenger: messenger, adManager: adManager)
         guard let nativeViewFactory = instance.nativeViewFactory else { return }
-        
+
         registrar.register(nativeViewFactory, withId: AdropChannel.nativeEventListenerChannel)
     }
 
@@ -109,6 +109,17 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 return
             }
             adropAdManager?.show(
+                adType: AdType.allCases[adTypeIndex],
+                requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+            )
+            result(nil)
+        case AdropMethod.CLOSE_AD:
+            let adTypeIndex = (call.arguments as? [String: Any?])?["adType"] as? Int ?? 0
+            if (adTypeIndex == AdType.allCases.firstIndex(of: .undefined)!) {
+                result(ModuleError)
+                return
+            }
+            adropAdManager?.close(
                 adType: AdType.allCases[adTypeIndex],
                 requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
             )
