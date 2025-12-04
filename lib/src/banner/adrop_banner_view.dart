@@ -15,6 +15,11 @@ class AdropBannerView extends StatelessWidget {
 
   final AdropBannerListener? listener;
 
+  /// Optional fixed size for the banner view (width, height)
+  Size? _adSize;
+  Size? get adSize => _adSize;
+  set adSize(Size? size) => _adSize = size;
+
   final String _requestId;
 
   CreativeSize? get creativeSize =>

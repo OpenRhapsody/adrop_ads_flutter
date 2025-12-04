@@ -24,4 +24,8 @@ abstract class AdropPlatform extends PlatformInterface {
   Future<void> setUID(String uid) async {
     throw UnimplementedError('setUID() has not been implemented.');
   }
+
+  Future<void> setTheme(String theme) async {
+    throw UnimplementedError('setTheme() has not been implemented.');
+  }
 }

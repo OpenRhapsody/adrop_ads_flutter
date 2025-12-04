@@ -65,14 +65,16 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "body": ad.body,
             "displayLogo": ad.profile.displayLogo,
             "displayName": ad.profile.displayName,
-            "extra": dictionaryToJSONString(ad.extra),
+            "extra": dictionaryToJSONString(ad.extra) ?? "",
             "asset": ad.asset,
-            "destinationURL": ad.destinationURL,
+            "destinationURL": ad.destinationURL ?? "",
             "creative": ad.creative,
             "creativeSizeWidth": ad.creativeSize.width,
             "creativeSizeHeight": ad.creativeSize.height,
             "txId": ad.txId,
-            "campaignId": ad.campaignId
+            "campaignId": ad.campaignId,
+            "isBackfilled": ad.isBackfilled,
+            "callToAction": ad.callToAction
         ]
     }
 }

@@ -12,6 +12,9 @@ class MockAdropAdsFlutterPlatform
 
   @override
   Future<void> setUID(String uid) async {}
+
+  @override
+  Future<void> setTheme(String theme) async {}
 }
 
 void main() {

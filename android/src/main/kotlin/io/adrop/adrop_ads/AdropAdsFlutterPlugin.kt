@@ -15,6 +15,7 @@ import io.adrop.ads.Adrop
 import io.adrop.ads.metrics.AdropEventParam
 import io.adrop.ads.metrics.AdropMetrics
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.ads.model.AdropTheme
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -83,6 +84,18 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                AdropMethod.SET_THEME -> {
+                    val theme = call.argument("theme") as String? ?: "auto"
+                    val converted = when (theme.lowercase()) {
+                        "light" -> AdropTheme.LIGHT
+                        "dark" -> AdropTheme.DARK
+                        else -> AdropTheme.AUTO
+                    }
+
+                    Adrop.setTheme(converted)
+                    result.success(null)
+                }
+
                 AdropMethod.SET_PROPERTY -> {
                     val key = call.argument("key") as String? ?: ""
                     val value = call.argument("value") as Any? ?: arrayOf<Int>()
@@ -119,7 +132,9 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 AdropMethod.LOAD_BANNER -> {
                     val unitId = call.argument("unitId") as String? ?: ""
                     val requestId = call.argument("requestId") as String? ?: ""
-                    bannerManager.load(unitId, requestId)
+                    val width = call.argument("width") as Double? ?: 0.0
+                    val height = call.argument("height") as Double? ?: 0.0
+                    bannerManager.load(unitId, requestId, width, height)
                     result.success(null)
                 }
 

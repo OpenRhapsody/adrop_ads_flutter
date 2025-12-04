@@ -62,8 +62,12 @@ class AdropAdManager {
 
   Future<void> load(AdropBannerView banner, String requestId) async {
     _loadedAds["${banner.unitId}_$requestId"] = banner;
-    return await _invokeChannel.invokeMethod(AdropMethod.loadBanner,
-        {'unitId': banner.unitId, 'requestId': requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.loadBanner, {
+      'unitId': banner.unitId,
+      'requestId': requestId,
+      'width': banner.adSize?.width,
+      'height': banner.adSize?.height,
+    });
   }
 
   Future<void> dispose(AdropBannerView banner, String requestId) async {

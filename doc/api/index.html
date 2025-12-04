@@ -86,7 +86,7 @@
 </ul>
 <p></p>
 <h3 id="step-1-create-a-adrop-project">Step 1: Create a Adrop project</h3>
-<p>Before you can add Adrop to your Flutter app, you need to <a href="https://help.adrop.io/publisher-guide/start-ads-platform">create a Adrop project</a> to connect to your app.</p>
+<p>Before you can add Adrop to your Flutter app, you need to <a href="https://help.adrop.io/adcontrol/appdeveloper-guide/quick-start/start-ads-platform">create a Adrop project</a> to connect to your app.</p>
 <h3 id="step-2-register-your-app-with-adrop">Step 2: Register your app with Adrop</h3>
 <p>To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.</p>
 <blockquote>
@@ -278,14 +278,14 @@ await popupAd.close();
 <p></p>
 <h2 id="create-your-ad-unit">Create your Ad unit</h2>
 <h3 id=""></h3>
-<p>From the <a href="https://adrop.io/projects">Adrop console</a>, go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).</p>
+<p>From the <a href="https://adrop.io">Adrop console</a>, go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).</p>
 <hr>
 <h3 id="creating-ad-units">Creating Ad units</h3>
 <p>To create a new Ad unit:</p>
 <ol>
 <li>From the left navigation menu, select <strong>Ad Units</strong>.</li>
 <li>Select <strong>Create Ad unit</strong> to bring up the ad unit builder.</li>
-<li>Enter an Ad unit name, then select your app (iOS or Android) and <a href="https://help.adrop.io/publisher-guide/ads-builder">Ad format</a> (Banner, Interstitial, Rewarded, Native, Popup, or Splash).</li>
+<li>Enter an Ad unit name, then select your app (iOS or Android) and <a href="https://help.adrop.io/adcontrol/appdeveloper-guide/ad-unit/kinds">Ad format</a> (Banner, Interstitial, Rewarded, Native, Popup, or Splash).</li>
 <li>Select <strong>Create</strong> to save your Ad unit.</li>
 </ol>
 <h3 id="ad-unit-id">Ad unit ID</h3>
@@ -322,13 +322,13 @@ await popupAd.close();
       unitId: unitId,
       listener: AdropBannerListener(
         onAdReceived: (unitId, metadata) {
-          debugPrint("Ad received: ${metadata?['creativeId']}");
+          debugPrint("Ad received: ${metadata}");
           setState(() {
             isLoaded = true;
           });
         },
         onAdClicked: (unitId, metadata) {
-          debugPrint("Ad clicked: ${metadata?['creativeId']}");
+          debugPrint("Ad clicked: ${metadata}");
         },
         onAdFailedToReceive: (unitId, error) {
           setState(() {
@@ -676,7 +676,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.2.0
+      1.7.0
   </span>
   
 </footer>

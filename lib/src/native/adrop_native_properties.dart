@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 class AdropNativeProfile {
   String? displayName;
   String? displayLogo;
-
   AdropNativeProfile({this.displayName, this.displayLogo});
 }
 
@@ -15,8 +14,10 @@ class AdropNativeProperties {
   String? creative;
   String? asset;
   String? destinationURL;
+  String? callToAction;
   AdropNativeProfile? profile;
   late Map<String, String> extra;
+  bool isBackfilled;
 
   AdropNativeProperties.from(dynamic arguments)
       : headline = arguments != null ? arguments['headline'] ?? '' : '',
@@ -25,11 +26,14 @@ class AdropNativeProperties {
         asset = arguments != null ? arguments['asset'] ?? '' : '',
         destinationURL =
             arguments != null ? arguments['destinationURL'] ?? '' : '',
+        callToAction = arguments != null ? arguments['callToAction'] ?? '' : '',
         profile = arguments != null
             ? AdropNativeProfile(
                 displayLogo: arguments['displayLogo'],
                 displayName: arguments['displayName'])
-            : null {
+            : null,
+        isBackfilled =
+            arguments != null ? arguments['isBackfilled'] ?? false : false {
     extra = _extraToMap(arguments?['extra']);
   }
 

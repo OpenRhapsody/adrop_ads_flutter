@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'adrop_platform_interface.dart';
+import 'model/adrop_theme.dart';
 
 class Adrop {
   /// Initializes Adrop
@@ -20,6 +21,17 @@ class Adrop {
   static Future<void> setUID(String uid) async {
     try {
       return await AdropPlatform.instance.setUID(uid);
+    } catch (e) {
+      log('Error: $e', name: 'Adrop');
+    }
+  }
+
+  /// Set Theme
+  ///
+  /// [theme] Theme for ad display
+  static Future<void> setTheme(AdropTheme theme) async {
+    try {
+      return await AdropPlatform.instance.setTheme(theme.value);
     } catch (e) {
       log('Error: $e', name: 'Adrop');
     }

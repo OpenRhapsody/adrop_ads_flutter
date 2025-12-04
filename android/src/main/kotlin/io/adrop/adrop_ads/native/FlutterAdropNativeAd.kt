@@ -75,7 +75,9 @@ class FlutterAdropNativeAd(
             "creativeSizeWidth" to ad.creativeSize.width,
             "creativeSizeHeight" to ad.creativeSize.height,
             "txId" to ad.txId,
-            "campaignId" to ad.campaignId
+            "campaignId" to ad.campaignId,
+            "isBackfilled" to ad.isBackfilled,
+            "callToAction" to ad.callToAction
         )
     }
 }

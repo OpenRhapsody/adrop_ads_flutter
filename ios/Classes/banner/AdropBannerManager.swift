@@ -24,8 +24,12 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
         return banner
     }
 
-    func load(unitId: String, requestId: String) {
-        create(unitId: unitId, requestId: requestId).load()
+    func load(unitId: String, requestId: String, width: CGFloat? = nil, height: CGFloat? = nil) {
+        let banner = create(unitId: unitId, requestId: requestId)
+        if let width = width, let height = height {
+            banner.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        }
+        banner.load()
     }
 
     func getAd(unitId: String, requestId: String) -> AdropBanner? {

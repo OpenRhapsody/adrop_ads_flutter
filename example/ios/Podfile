@@ -29,7 +29,10 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
+
   use_modular_headers!
+
+  pod 'adrop-ads-backfill', '>= 1.7.1', '< 1.8.0'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do

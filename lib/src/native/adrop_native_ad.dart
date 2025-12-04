@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:adrop_ads_flutter/src/adrop_ad.dart';
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
@@ -73,6 +75,9 @@ class AdropNativeAd {
 
   /// Returns an Adrop native ad's properties.
   AdropNativeProperties get properties => _properties;
+
+  /// Returns `true` if the ad is a backfill ad.
+  bool get isBackfilled => _properties.isBackfilled;
 
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {

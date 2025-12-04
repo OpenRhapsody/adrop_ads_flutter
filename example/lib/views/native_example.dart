@@ -131,6 +131,17 @@ class _NativeExampleState extends State<NativeExample> {
                 ),
                 creativeView(context),
               ]),
+              if (nativeAd?.properties.callToAction != null &&
+                  nativeAd!.properties.callToAction!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      debugPrint('CallToAction tapped');
+                    },
+                    child: Text(nativeAd?.properties.callToAction ?? ''),
+                  ),
+                ),
               if (nativeAd?.properties.extra['sampleExtraId'] != null)
                 Column(
                   children: [
@@ -155,7 +166,20 @@ class _NativeExampleState extends State<NativeExample> {
   Widget creativeView(BuildContext context) {
     if (!isLoaded) return Container();
 
-    if (isWebviewUsed && nativeAd?.properties.creative != null) {
+    if (nativeAd?.isBackfilled == true) {
+      return Image.network(
+        nativeAd?.properties.asset ?? '',
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return const CupertinoActivityIndicator();
+        },
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(Icons.error);
+        },
+        width: MediaQuery.of(context).size.width,
+        height: 300,
+      );
+    } else if (isWebviewUsed && nativeAd?.properties.creative != null) {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Platform.isIOS ? 420 : 330,
@@ -170,19 +194,6 @@ class _NativeExampleState extends State<NativeExample> {
             child: WebViewWidget(controller: webViewController),
           ),
         ),
-      );
-    } else if (nativeAd?.properties.asset != null) {
-      return Image.network(
-        nativeAd?.properties.asset ?? '',
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return const CupertinoActivityIndicator();
-        },
-        errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.error);
-        },
-        width: MediaQuery.of(context).size.width,
-        height: 300,
       );
     } else {
       return Container();

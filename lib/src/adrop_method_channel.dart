@@ -21,4 +21,9 @@ class AdropMethodChannel extends AdropPlatform {
   Future<void> setUID(String uid) async {
     await _methodChannel.invokeMethod(AdropMethod.setUID, {"uid": uid});
   }
+
+  @override
+  Future<void> setTheme(String theme) async {
+    await _methodChannel.invokeMethod(AdropMethod.setTheme, {"theme": theme});
+  }
 }

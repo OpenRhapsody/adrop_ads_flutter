@@ -7,6 +7,7 @@ import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.banner.AdropBanner
 import io.adrop.ads.banner.AdropBannerListener
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.ads.model.CreativeSize
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
@@ -20,7 +21,7 @@ class AdropBannerManager(
     private val ads: MutableMap<String, AdropBanner?> = mutableMapOf()
     private val requestIdMap: MutableMap<AdropBanner, String> = mutableMapOf()
 
-    private fun create(unitId: String, requestId: String): AdropBanner? {
+    private fun create(unitId: String, requestId: String, width: Double, height: Double): AdropBanner? {
         if (context == null) return null
 
         val key = keyOf(unitId, requestId)
@@ -29,12 +30,14 @@ class AdropBannerManager(
             banner.listener = this
             ads[key] = banner
             requestIdMap[banner] = requestId
+            if (width > 0 && height > 0) banner.adSize = CreativeSize(width, height)
+
             banner
         }
     }
 
-    fun load(unitId: String, requestId: String) {
-        create(unitId, requestId)?.load()
+    fun load(unitId: String, requestId: String, width: Double, height: Double) {
+        create(unitId, requestId, width, height)?.load()
     }
 
     fun getAd(unitId: String, requestId: String): AdropBanner? {

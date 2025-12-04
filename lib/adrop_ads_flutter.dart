@@ -9,6 +9,7 @@ export 'src/interstitial/adrop_interstitial_listener.dart';
 export 'src/metrics/adrop_metrics.dart';
 export 'src/model/adrop_property.dart';
 export 'src/model/creative_size.dart';
+export 'src/model/adrop_theme.dart';
 export 'src/popupAd/adrop_popup_ad.dart';
 export 'src/popupAd/adrop_popup_listener.dart';
 export 'src/observer/adrop_navigator_observer.dart';

@@ -1,3 +1,8 @@
+## 1.7.0
+- Added backfill ad support: Automatically serves network ads when Adrop direct ads fail to load
+- Added `Adrop.setTheme()` method to control ad display theme (light, dark, auto)
+- Support for performance template in `AdropPopupAd`
+
 ## 1.2.0
 - Added `close()` method to `AdropPopupAd` for programmatic ad dismissal
 - Enhanced ad metadata with `txId` and `campaignId` for all ad types (`AdropBannerView`, `AdropInterstitialAd`, `AdropNativeAd`, `AdropPopupAd`, `AdropRewardedAd`)

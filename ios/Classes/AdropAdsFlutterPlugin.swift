@@ -57,6 +57,20 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
             Adrop.setUID(uid)
             result(nil)
+        case AdropMethod.SET_THEME:
+            let theme = (call.arguments as? [String: Any?])?["theme"] as? String ?? "auto"
+            let converted: AdropTheme
+            switch theme.lowercased() {
+            case "light":
+                converted = .light
+            case "dark":
+                converted = .dark
+            default:
+                converted = .auto
+            }
+
+            Adrop.setTheme(converted)
+            result(nil)
         case AdropMethod.SET_PROPERTY:
             let key = (call.arguments as? [String: Any?])?["key"] as? String ?? ""
             let value = (call.arguments as? [String: Any?])?["value"] as? Any ?? [:]
@@ -78,10 +92,13 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             result(nil)
 
         case AdropMethod.LOAD_BANNER:
-            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
-            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+            let args = call.arguments as? [String: Any?]
+            let unitId = args?["unitId"] as? String ?? ""
+            let requestId = args?["requestId"] as? String ?? ""
+            let width = args?["width"] as? CGFloat
+            let height = args?["height"] as? CGFloat
 
-            bannerManager?.load(unitId: unitId, requestId: requestId)
+            bannerManager?.load(unitId: unitId, requestId: requestId, width: width, height: height)
             result(nil)
         case AdropMethod.DISPOSE_BANNER:
             let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""

@@ -11,6 +11,8 @@ class BannerExample extends StatefulWidget {
 }
 
 class _BannerExampleState extends State<BannerExample> {
+  static const double _horizontalPadding = 16;
+
   bool isLoaded = false;
   AdropErrorCode? errorCode;
   AdropErrorCode? emptyErrorCode;
@@ -21,6 +23,7 @@ class _BannerExampleState extends State<BannerExample> {
   @override
   void initState() {
     super.initState();
+
     bannerView = AdropBannerView(
       unitId: testUnitId_80,
       listener: AdropBannerListener(
@@ -47,20 +50,24 @@ class _BannerExampleState extends State<BannerExample> {
         },
       ),
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bannerView.adSize =
+          Size(MediaQuery.of(context).size.width - _horizontalPadding * 2, 80);
+    });
+
     emptyBannerView = AdropBannerView(
-      unitId: testUnitId,
-      listener: AdropBannerListener(
-        onAdReceived: (unitId, metadata) {
-          debugPrint("ad received $unitId $metadata");
-        },
-        onAdFailedToReceive: (unitId, error) {
-          debugPrint("ad onAdFailedToReceive $unitId, $error");
-          setState(() {
-            emptyErrorCode = error;
-          });
-        },
-      ),
-    );
+        unitId: testUnitId,
+        listener: AdropBannerListener(
+          onAdReceived: (unitId, metadata) {
+            debugPrint("ad received $unitId $metadata");
+          },
+          onAdFailedToReceive: (unitId, error) {
+            debugPrint("ad onAdFailedToReceive $unitId, $error");
+            setState(() {
+              emptyErrorCode = error;
+            });
+          },
+        ));
   }
 
   void loadEmptyBanner() {
@@ -89,7 +96,7 @@ class _BannerExampleState extends State<BannerExample> {
         ),
         body: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
             child: Column(
               children: [
                 SizedBox(

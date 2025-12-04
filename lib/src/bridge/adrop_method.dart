@@ -1,6 +1,7 @@
 class AdropMethod {
   static const initialize = "initialize";
   static const setUID = "setUid";
+  static const setTheme = "setTheme";
   static const loadBanner = "loadBanner";
   static const disposeBanner = "disposeBanner";
 
