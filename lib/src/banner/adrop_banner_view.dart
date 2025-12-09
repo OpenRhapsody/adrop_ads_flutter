@@ -10,15 +10,14 @@ import '../bridge/adrop_channel.dart';
 import '../model/call_create_ad.dart';
 import 'adrop_ad_manager.dart';
 
+// ignore: must_be_immutable
 class AdropBannerView extends StatelessWidget {
   final String unitId;
 
   final AdropBannerListener? listener;
 
   /// Optional fixed size for the banner view (width, height)
-  Size? _adSize;
-  Size? get adSize => _adSize;
-  set adSize(Size? size) => _adSize = size;
+  Size? adSize;
 
   final String _requestId;
 

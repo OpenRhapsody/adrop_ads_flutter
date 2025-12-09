@@ -1,3 +1,10 @@
+## 1.7.1
+- Support video ad
+- Update dependencies
+- Add gesture recognizers to UIKitView
+- Fix Android and iOS useCustomClick functionality
+- Added error code for backfill ad load failures
+
 ## 1.7.0
 - Added backfill ad support: Automatically serves network ads when Adrop direct ads fail to load
 - Added `Adrop.setTheme()` method to control ad display theme (light, dark, auto)

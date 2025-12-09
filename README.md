@@ -635,8 +635,10 @@ class _YourComponentState extends State<YourComponent> {
               Text(nativeAd.properties.headline),
             if (nativeAd.properties.body != null)
               Text(nativeAd.properties.body),
-            if (nativeAd.properties.asset != null)
+            if (nativeAd.properties.asset != null && nativeAd.isBackfilled)
               Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
+            if (nativeAd.properties.creative != null && !nativeAd.isBackfilled)
+              WebViewWidget(controller: webViewController),
             if (nativeAd.properties.extra['sampleExtraId'] != null)
               Text(nativeAd.properties.extra['sampleExtraId']),
           ],

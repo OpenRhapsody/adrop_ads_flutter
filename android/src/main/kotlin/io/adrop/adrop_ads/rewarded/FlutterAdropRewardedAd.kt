@@ -2,6 +2,7 @@ package io.adrop.adrop_ads.rewarded
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.bridge.AdropChannel
@@ -20,6 +21,8 @@ class FlutterAdropRewardedAd(
 ): AdropAd(), AdropRewardedAdListener {
     private var rewardedAd: AdropRewardedAd = AdropRewardedAd(context, unitId)
     private var adropEventListenerChannel: MethodChannel?
+    private var originalStatusBarColor: Int = 0
+    private var showActivity: Activity? = null
 
     init {
         rewardedAd.rewardedAdListener = this
@@ -36,6 +39,8 @@ class FlutterAdropRewardedAd(
     }
 
     override fun show(activity: Activity) {
+        showActivity = activity
+        originalStatusBarColor = activity.window.statusBarColor
         rewardedAd.show(activity) { type, amount ->
             val args = mapOf("type" to type, "amount" to amount)
             adropEventListenerChannel?.invokeMethod(AdropMethod.HANDLE_EARN_REWARD, args)
@@ -63,14 +68,21 @@ class FlutterAdropRewardedAd(
     }
 
     override fun onAdDidPresentFullScreen(ad: AdropRewardedAd) {
+        if (ad.isBackfilled) {
+            showActivity?.window?.statusBarColor = Color.BLACK
+        }
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdDidDismissFullScreen(ad: AdropRewardedAd) {
+        showActivity?.window?.statusBarColor = originalStatusBarColor
+        showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdFailedToShowFullScreen(ad: AdropRewardedAd, errorCode: AdropErrorCode) {
+        showActivity?.window?.statusBarColor = originalStatusBarColor
+        showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, mapOf("errorCode" to errorCode.name))
     }
 

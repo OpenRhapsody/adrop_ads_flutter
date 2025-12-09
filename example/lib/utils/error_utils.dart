@@ -31,6 +31,8 @@ class ErrorUtils {
         return "Account Usage Limit Exceeded";
       case AdropErrorCode.adLandscapeUnsupported:
         return "Unable to display ad in landscape mode";
+      case AdropErrorCode.backfillNoFill:
+        return "Unable to receive backfill ads";
       case AdropErrorCode.undefined:
         return "undefined error";
       default:

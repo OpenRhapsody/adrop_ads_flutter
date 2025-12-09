@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:adrop_ads_flutter/src/adrop_ad.dart';
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';

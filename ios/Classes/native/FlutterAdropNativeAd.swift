@@ -59,6 +59,12 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     }
 
     private func metadataOf(_ ad: AdropNativeAd) -> [String: Any] {
+        var creative = ad.creative
+        let adPlayerCallback = "window.adPlayerVisibilityCallback"
+        if creative.contains(adPlayerCallback) {
+            creative = creative.replacingOccurrences(of: adPlayerCallback, with: "callback(true);\(adPlayerCallback)")
+        }
+
         return [
             "creativeId": ad.creativeId,
             "headline": ad.headline,
@@ -68,7 +74,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "extra": dictionaryToJSONString(ad.extra) ?? "",
             "asset": ad.asset,
             "destinationURL": ad.destinationURL ?? "",
-            "creative": ad.creative,
+            "creative": creative,
             "creativeSizeWidth": ad.creativeSize.width,
             "creativeSizeHeight": ad.creativeSize.height,
             "txId": ad.txId,

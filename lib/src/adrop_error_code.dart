@@ -41,6 +41,9 @@ enum AdropErrorCode {
   /// Unable to display ad in landscape mode
   adLandscapeUnsupported("ERROR_CODE_LANDSCAPE_UNSUPPORTED"),
 
+  /// Unable to receive ads that meet the criteria from backfill. Please retry.
+  backfillNoFill("ERROR_CODE_AD_BACKFILL_NO_FILL"),
+
   /// undefined code
   undefined("UNDEFINED");
 

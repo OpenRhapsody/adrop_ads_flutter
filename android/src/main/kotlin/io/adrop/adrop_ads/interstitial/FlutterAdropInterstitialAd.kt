@@ -2,6 +2,7 @@ package io.adrop.adrop_ads.interstitial
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.bridge.AdropChannel
@@ -20,6 +21,8 @@ class FlutterAdropInterstitialAd(
 ): AdropAd(), AdropInterstitialAdListener {
     private var interstitialAd: AdropInterstitialAd = AdropInterstitialAd(context, unitId)
     private var adropEventListenerChannel: MethodChannel?
+    private var originalStatusBarColor: Int = 0
+    private var showActivity: Activity? = null
 
     init {
         interstitialAd.interstitialAdListener = this
@@ -36,6 +39,8 @@ class FlutterAdropInterstitialAd(
     }
 
     override fun show(activity: Activity) {
+        showActivity = activity
+        originalStatusBarColor = activity.window.statusBarColor
         interstitialAd.show(activity)
     }
 
@@ -60,14 +65,21 @@ class FlutterAdropInterstitialAd(
     }
 
     override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {
+        if (ad.isBackfilled) {
+            showActivity?.window?.statusBarColor = Color.BLACK
+        }
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {
+        showActivity?.window?.statusBarColor = originalStatusBarColor
+        showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, metadataOf(ad))
     }
 
     override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
+        showActivity?.window?.statusBarColor = originalStatusBarColor
+        showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, mapOf("errorCode" to errorCode.name))
     }
 

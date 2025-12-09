@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +21,17 @@ class _InterstitialExampleState extends State<InterstitialExample> {
 
   bool disabledReset() => !(errorCode != null || isShown);
 
+  String unit() {
+    // Use your actual interstitial ad unit IDs here
+    return Platform.isAndroid
+        ? testUnitIdInterstitialAd
+        : testUnitIdInterstitialAd;
+  }
+
   @override
   void initState() {
     super.initState();
-    reset(testUnitIdInterstitialAd);
+    reset(unit());
   }
 
   void reset(String unitId) {
@@ -103,7 +112,7 @@ class _InterstitialExampleState extends State<InterstitialExample> {
                         onPressed: disabledReset()
                             ? null
                             : () {
-                                reset(testUnitIdInterstitialAd);
+                                reset(unit());
                               },
                         child: const Text('reset (test ad)')),
                     const Text(

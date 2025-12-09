@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
@@ -7,6 +6,7 @@ import 'package:adrop_ads_flutter_example/utils/error_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class NativeExample extends StatefulWidget {
   const NativeExample({Key? key}) : super(key: key);
@@ -25,25 +25,53 @@ class _NativeExampleState extends State<NativeExample> {
 
   bool disabledReset() => !(errorCode != null || isLoaded);
 
+  String unit() {
+    // Use your actual native ad unit IDs here
+    return Platform.isAndroid ? testUnitIdNative : testUnitIdNative;
+  }
+
   @override
   void initState() {
     super.initState();
-    webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
-    reset(testUnitIdNative);
+    final PlatformWebViewControllerCreationParams params;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+
+    webViewController = WebViewController.fromPlatformCreationParams(params)
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: (NavigationRequest request) {
+            // Handle the URL in Flutter instead of navigating
+            if (request.url != 'about:blank' &&
+                !request.url.contains('data:')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      );
+
+    reset(unit());
   }
 
   void reset(String unitId) {
     nativeAd = AdropNativeAd(
         unitId: unitId,
+        useCustomClick:
+            true, // set to true when using video creative or handling custom click
         listener: AdropNativeListener(onAdReceived: (ad) {
           debugPrint(
               'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
-          String base64Data =
-              base64Encode(utf8.encode(ad.properties.creative ?? ''));
-          webViewController
-              .loadRequest(Uri.parse('data:text/html;base64,$base64Data'));
+          debugPrint('nativeAd properties: ${ad.properties.creative}');
+          webViewController.loadHtmlString(ad.properties.creative ?? '');
 
           setState(() {
             isLoaded = true;
@@ -59,6 +87,7 @@ class _NativeExampleState extends State<NativeExample> {
         }, onAdImpression: (_) {
           debugPrint("nativeAd impressed $unitId");
         }));
+
     setState(() {
       isLoaded = false;
       errorCode = null;
@@ -190,9 +219,9 @@ class _NativeExampleState extends State<NativeExample> {
           onLongPress: () {
             debugPrint('Creative long pressed');
           },
-          child: IgnorePointer(
-            child: WebViewWidget(controller: webViewController),
-          ),
+          // child: IgnorePointer(
+          child: WebViewWidget(controller: webViewController),
+          // ),
         ),
       );
     } else {
@@ -228,7 +257,7 @@ class _NativeExampleState extends State<NativeExample> {
                             onPressed: disabledReset()
                                 ? null
                                 : () {
-                                    reset(testUnitIdNative);
+                                    reset(unit());
                                   },
                             child: const Text('reset (test ad)')),
                         const Text(

@@ -4,7 +4,7 @@ import AdropAds
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-    
+
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -29,11 +29,11 @@ extension AppDelegate: AdropSplashAdDelegate {
     func onAdReceived(_ ad: AdropAds.AdropSplashAd) {
         print("onAdReceived \(ad.unitId)")
     }
-    
+
     func onAdFailedToReceive(_ ad: AdropAds.AdropSplashAd, _ errorCode: AdropAds.AdropErrorCode) {
         print("onAdFailedToReceive: \(ad.unitId) error: \(AdropErrorCodeToString(code: errorCode))")
     }
-    
+
     func onAdImpression(_ ad: AdropSplashAd) {
         print("onAdImpression: \(ad.unitId)")
     }

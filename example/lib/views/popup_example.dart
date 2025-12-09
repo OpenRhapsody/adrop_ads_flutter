@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
@@ -20,6 +21,20 @@ class _PopupExampleState extends State<PopupExample> {
   AdropErrorCode? errorCode;
 
   bool disabledReset() => !(errorCode != null || isShown);
+
+  String unitCenter() {
+    // Use your actual popup ad unit IDs here
+    return Platform.isAndroid
+        ? testUnitIdPopupAdCenter
+        : testUnitIdPopupAdCenter;
+  }
+
+  String unitBottom() {
+    // Use your actual popup ad unit IDs here
+    return Platform.isAndroid
+        ? testUnitIdPopupAdBottom
+        : testUnitIdPopupAdBottom;
+  }
 
   @override
   void initState() {
@@ -108,7 +123,7 @@ class _PopupExampleState extends State<PopupExample> {
                     onPressed: disabledReset()
                         ? null
                         : () {
-                            reset(testUnitIdPopupAdBottom);
+                            reset(unitBottom());
                           },
                     child: const Text('reset (test ad)')),
                 const Text(
@@ -119,7 +134,7 @@ class _PopupExampleState extends State<PopupExample> {
                     onPressed: disabledReset()
                         ? null
                         : () {
-                            reset(testUnitIdPopupAdCenter);
+                            reset(unitCenter());
                           },
                     child: const Text('reset (test ad)')),
                 const Text(

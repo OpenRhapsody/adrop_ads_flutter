@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:adrop_ads_flutter_example/utils/error_utils.dart';
@@ -12,6 +14,7 @@ class BannerExample extends StatefulWidget {
 
 class _BannerExampleState extends State<BannerExample> {
   static const double _horizontalPadding = 16;
+  static const double bannerHeight = 80;
 
   bool isLoaded = false;
   AdropErrorCode? errorCode;
@@ -20,12 +23,17 @@ class _BannerExampleState extends State<BannerExample> {
   late AdropBannerView bannerView;
   late AdropBannerView emptyBannerView;
 
+  String unit() {
+    // Use your actual banner ad unit IDs here
+    return Platform.isAndroid ? testUnitId_80 : testUnitId_80;
+  }
+
   @override
   void initState() {
     super.initState();
 
     bannerView = AdropBannerView(
-      unitId: testUnitId_80,
+      unitId: unit(),
       listener: AdropBannerListener(
         onAdReceived: (unitId, metadata) {
           debugPrint(
@@ -51,8 +59,9 @@ class _BannerExampleState extends State<BannerExample> {
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      bannerView.adSize =
-          Size(MediaQuery.of(context).size.width - _horizontalPadding * 2, 80);
+      bannerView.adSize = Size(
+          MediaQuery.of(context).size.width - _horizontalPadding * 2,
+          bannerHeight);
     });
 
     emptyBannerView = AdropBannerView(
@@ -112,7 +121,7 @@ class _BannerExampleState extends State<BannerExample> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 80,
+                  height: bannerHeight,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: isLoaded ? bannerView : Container(),
                 ),

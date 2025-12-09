@@ -62,6 +62,13 @@ class FlutterAdropNativeAd(
     }
 
     private fun metadataOf(ad: AdropNativeAd): Map<String, Any> {
+        var creative = ad.creative
+        val adPlayerCallback = "window.adPlayerVisibilityCallback"
+
+        if (creative?.contains(adPlayerCallback) == true) {
+            creative = creative.replace(adPlayerCallback, "callback(true);$adPlayerCallback")
+        }
+
         return mapOf(
             "creativeId" to ad.creativeId,
             "headline" to ad.headline,
@@ -71,7 +78,7 @@ class FlutterAdropNativeAd(
             "extra" to ad.extra.toString(),
             "asset" to ad.asset,
             "destinationURL" to ad.destinationURL,
-            "creative" to ad.creative,
+            "creative" to creative,
             "creativeSizeWidth" to ad.creativeSize.width,
             "creativeSizeHeight" to ad.creativeSize.height,
             "txId" to ad.txId,
