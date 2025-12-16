@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 
 import '../utils/error_utils.dart';
 
+/// Interstitial Ad Example
+///
+/// This example demonstrates how to integrate and display full-screen
+/// interstitial ads using the Adrop Ads SDK in Flutter.
 class InterstitialExample extends StatefulWidget {
   const InterstitialExample({super.key});
 
@@ -21,8 +25,9 @@ class _InterstitialExampleState extends State<InterstitialExample> {
 
   bool disabledReset() => !(errorCode != null || isShown);
 
+  /// Returns the ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    // Use your actual interstitial ad unit IDs here
     return Platform.isAndroid
         ? testUnitIdInterstitialAd
         : testUnitIdInterstitialAd;
@@ -34,39 +39,58 @@ class _InterstitialExampleState extends State<InterstitialExample> {
     reset(unit());
   }
 
+  /// Initialize or reset the interstitial ad instance
   void reset(String unitId) {
+    // Dispose previous ad instance before creating a new one
     interstitialAd?.dispose();
+
+    // Create AdropInterstitialAd with unit ID and listener
     interstitialAd = AdropInterstitialAd(
         unitId: unitId,
-        listener: AdropInterstitialListener(onAdReceived: (ad) {
-          debugPrint(
-              "interstitialAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
-          setState(() {
-            isLoaded = true;
-            errorCode = null;
-          });
-        }, onAdFailedToReceive: (_, error) {
-          setState(() {
-            debugPrint("interstitialAd failed to receive $unitId, $errorCode");
-            errorCode = error;
-          });
-        }, onAdClicked: (_) {
-          debugPrint("interstitialAd clicked $unitId");
-        }, onAdDidPresentFullScreen: (_) {
-          debugPrint("interstitialAd did present full screen $unitId");
-          setState(() {
-            isShown = true;
-            errorCode = null;
-          });
-        }, onAdDidDismissFullScreen: (_) {
-          debugPrint("interstitialAd did dismiss full screen $unitId");
-        }, onAdFailedToShowFullScreen: (_, error) {
-          debugPrint(
-              "interstitialAd failed to show full screen $unitId, $errorCode");
-          setState(() {
-            errorCode = error;
-          });
-        }));
+        listener: AdropInterstitialListener(
+          // Callback: Called when the ad is successfully loaded
+          onAdReceived: (ad) {
+            debugPrint(
+                "interstitialAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
+            setState(() {
+              isLoaded = true;
+              errorCode = null;
+            });
+          },
+          // Callback: Called when the ad fails to load
+          onAdFailedToReceive: (_, error) {
+            setState(() {
+              debugPrint(
+                  "interstitialAd failed to receive $unitId, $errorCode");
+              errorCode = error;
+            });
+          },
+          // Callback: Called when the ad is clicked
+          onAdClicked: (_) {
+            debugPrint("interstitialAd clicked $unitId");
+          },
+          // Callback: Called when the full-screen ad is presented
+          onAdDidPresentFullScreen: (_) {
+            debugPrint("interstitialAd did present full screen $unitId");
+            setState(() {
+              isShown = true;
+              errorCode = null;
+            });
+          },
+          // Callback: Called when the full-screen ad is dismissed
+          onAdDidDismissFullScreen: (_) {
+            debugPrint("interstitialAd did dismiss full screen $unitId");
+          },
+          // Callback: Called when the ad fails to show
+          onAdFailedToShowFullScreen: (_, error) {
+            debugPrint(
+                "interstitialAd failed to show full screen $unitId, $errorCode");
+            setState(() {
+              errorCode = error;
+            });
+          },
+        ));
+
     setState(() {
       isLoaded = false;
       isShown = false;
@@ -98,10 +122,13 @@ class _InterstitialExampleState extends State<InterstitialExample> {
                       width: MediaQuery.of(context).size.width,
                       height: 24,
                     ),
+                    // Button to load the interstitial ad - calls interstitialAd.load()
                     TextButton(
                       onPressed: interstitialAd?.load,
                       child: const Text('interstitial load'),
                     ),
+                    // Button to show the ad - only enabled when ad is loaded
+                    // calls interstitialAd.show()
                     TextButton(
                         onPressed: isLoaded ? interstitialAd?.show : null,
                         child: const Text('interstitial show')),
@@ -154,6 +181,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
     );
   }
 
+  /// Dispose interstitial ad when the widget is removed from the tree
+  /// Always dispose AdropInterstitialAd to prevent memory leaks
   @override
   void dispose() {
     super.dispose();

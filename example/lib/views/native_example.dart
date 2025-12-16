@@ -8,6 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+/// Native Ad Example
+///
+/// This example demonstrates how to integrate and display native ads
+/// using the Adrop Ads SDK in Flutter. Native ads allow you to customize
+/// the ad's appearance to match your app's design.
 class NativeExample extends StatefulWidget {
   const NativeExample({Key? key}) : super(key: key);
 
@@ -25,8 +30,9 @@ class _NativeExampleState extends State<NativeExample> {
 
   bool disabledReset() => !(errorCode != null || isLoaded);
 
+  /// Returns the ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    // Use your actual native ad unit IDs here
     return Platform.isAndroid ? testUnitIdNative : testUnitIdNative;
   }
 
@@ -34,6 +40,7 @@ class _NativeExampleState extends State<NativeExample> {
   void initState() {
     super.initState();
 
+    // Initialize WebViewController for displaying video/HTML creative content
     final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
@@ -62,31 +69,44 @@ class _NativeExampleState extends State<NativeExample> {
     reset(unit());
   }
 
+  /// Initialize or reset the native ad instance
   void reset(String unitId) {
+    // Create AdropNativeAd with unit ID, custom click option, and listener
     nativeAd = AdropNativeAd(
         unitId: unitId,
-        useCustomClick:
-            true, // set to true when using video creative or handling custom click
-        listener: AdropNativeListener(onAdReceived: (ad) {
-          debugPrint(
-              'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
-          debugPrint('nativeAd properties: ${ad.properties.creative}');
-          webViewController.loadHtmlString(ad.properties.creative ?? '');
+        // Set to true when using video creative or handling custom click
+        useCustomClick: true,
+        listener: AdropNativeListener(
+          // Callback: Called when the ad is successfully loaded
+          // Access ad properties like profile, headline, body, asset, etc.
+          onAdReceived: (ad) {
+            debugPrint(
+                'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
+            debugPrint('nativeAd properties: ${ad.properties.creative}');
+            // Load HTML creative content into WebView
+            webViewController.loadHtmlString(ad.properties.creative ?? '');
 
-          setState(() {
-            isLoaded = true;
-            errorCode = null;
-          });
-        }, onAdFailedToReceive: (_, error) {
-          setState(() {
-            debugPrint("nativeAd failed to receive $unitId, $errorCode");
-            errorCode = error;
-          });
-        }, onAdClicked: (_) {
-          debugPrint("nativeAd clicked $unitId");
-        }, onAdImpression: (_) {
-          debugPrint("nativeAd impressed $unitId");
-        }));
+            setState(() {
+              isLoaded = true;
+              errorCode = null;
+            });
+          },
+          // Callback: Called when the ad fails to load
+          onAdFailedToReceive: (_, error) {
+            setState(() {
+              debugPrint("nativeAd failed to receive $unitId, $errorCode");
+              errorCode = error;
+            });
+          },
+          // Callback: Called when the ad is clicked
+          onAdClicked: (_) {
+            debugPrint("nativeAd clicked $unitId");
+          },
+          // Callback: Called when the ad impression is recorded
+          onAdImpression: (_) {
+            debugPrint("nativeAd impressed $unitId");
+          },
+        ));
 
     setState(() {
       isLoaded = false;
@@ -94,6 +114,8 @@ class _NativeExampleState extends State<NativeExample> {
     });
   }
 
+  /// Build native ad view with customized layout
+  /// Wrap your custom UI in AdropNativeAdView to properly track impressions
   Widget nativeAdView(BuildContext context) {
     if (!isLoaded) return Container();
 
@@ -103,8 +125,10 @@ class _NativeExampleState extends State<NativeExample> {
         border: Border.all(color: Colors.black),
       ),
       width: MediaQuery.of(context).size.width,
+      // AdropNativeAdView wrapper is required for impression tracking
       child: AdropNativeAdView(
         ad: nativeAd,
+        // Build your custom native ad layout here
         child: Container(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -126,6 +150,7 @@ class _NativeExampleState extends State<NativeExample> {
                   const SizedBox(
                     width: 4,
                   ),
+                  // Display profile name from nativeAd.properties.profile.displayName
                   Text(
                     nativeAd?.properties.profile?.displayName ?? '',
                   )
@@ -134,6 +159,7 @@ class _NativeExampleState extends State<NativeExample> {
               const SizedBox(
                 height: 8,
               ),
+              // Display headline text from nativeAd.properties.headline
               if (nativeAd?.properties.headline != null)
                 InkWell(
                   onTap: () {
@@ -147,6 +173,7 @@ class _NativeExampleState extends State<NativeExample> {
                     ),
                   ),
                 ),
+              // Display body text from nativeAd.properties.body
               if (nativeAd?.properties.body != null)
                 Text(
                   nativeAd?.properties.body ?? '',
@@ -160,6 +187,7 @@ class _NativeExampleState extends State<NativeExample> {
                 ),
                 creativeView(context),
               ]),
+              // Display call-to-action button from nativeAd.properties.callToAction
               if (nativeAd?.properties.callToAction != null &&
                   nativeAd!.properties.callToAction!.isNotEmpty)
                 Padding(
@@ -171,6 +199,7 @@ class _NativeExampleState extends State<NativeExample> {
                     child: Text(nativeAd?.properties.callToAction ?? ''),
                   ),
                 ),
+              // Display extra properties from nativeAd.properties.extra
               if (nativeAd?.properties.extra['sampleExtraId'] != null)
                 Column(
                   children: [
@@ -192,9 +221,12 @@ class _NativeExampleState extends State<NativeExample> {
     );
   }
 
+  /// Build creative view based on ad type
+  /// Supports both backfilled image ads and video/HTML creative content
   Widget creativeView(BuildContext context) {
     if (!isLoaded) return Container();
 
+    // Display backfilled image asset from nativeAd.properties.asset
     if (nativeAd?.isBackfilled == true) {
       return Image.network(
         nativeAd?.properties.asset ?? '',
@@ -208,6 +240,7 @@ class _NativeExampleState extends State<NativeExample> {
         width: MediaQuery.of(context).size.width,
         height: 300,
       );
+      // Display video/HTML creative content using WebView
     } else if (isWebviewUsed && nativeAd?.properties.creative != null) {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -248,6 +281,7 @@ class _NativeExampleState extends State<NativeExample> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        // Button to load the native ad - calls nativeAd.load()
                         TextButton(
                           onPressed: nativeAd?.load,
                           child: const Text('native ad load'),

@@ -5,6 +5,10 @@ import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:adrop_ads_flutter_example/utils/error_utils.dart';
 import 'package:flutter/material.dart';
 
+/// Banner Ad Example
+///
+/// This example demonstrates how to integrate and display banner ads
+/// using the Adrop Ads SDK in Flutter.
 class BannerExample extends StatefulWidget {
   const BannerExample({super.key});
 
@@ -23,8 +27,9 @@ class _BannerExampleState extends State<BannerExample> {
   late AdropBannerView bannerView;
   late AdropBannerView emptyBannerView;
 
+  /// Returns the ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    // Use your actual banner ad unit IDs here
     return Platform.isAndroid ? testUnitId_80 : testUnitId_80;
   }
 
@@ -32,9 +37,11 @@ class _BannerExampleState extends State<BannerExample> {
   void initState() {
     super.initState();
 
+    // Create AdropBannerView with unit ID and listener
     bannerView = AdropBannerView(
       unitId: unit(),
       listener: AdropBannerListener(
+        // Callback: Called when the ad is successfully received
         onAdReceived: (unitId, metadata) {
           debugPrint(
               "ad received $unitId, $metadata ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height}");
@@ -43,12 +50,15 @@ class _BannerExampleState extends State<BannerExample> {
             errorCode = null;
           });
         },
+        // Callback: Called when the ad is clicked
         onAdClicked: (unitId, metadata) {
           debugPrint("ad clicked $unitId, $metadata");
         },
+        // Callback: Called when the ad impression is recorded
         onAdImpression: (unitId, metadata) {
           debugPrint("ad impressed $unitId, $metadata");
         },
+        // Callback: Called when the ad fails to load
         onAdFailedToReceive: (unitId, error) {
           debugPrint("ad onAdFailedToReceive $unitId, $error");
           setState(() {
@@ -58,12 +68,15 @@ class _BannerExampleState extends State<BannerExample> {
         },
       ),
     );
+
+    // Set banner ad size after the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       bannerView.adSize = Size(
           MediaQuery.of(context).size.width - _horizontalPadding * 2,
           bannerHeight);
     });
 
+    // Example: Banner view with empty/invalid unit ID to demonstrate error handling
     emptyBannerView = AdropBannerView(
         unitId: testUnitId,
         listener: AdropBannerListener(
@@ -79,11 +92,13 @@ class _BannerExampleState extends State<BannerExample> {
         ));
   }
 
+  /// Load banner ad with empty unit ID to test error callback
   void loadEmptyBanner() {
     setState(() {
       emptyErrorCode = null;
     });
 
+    // Call load() to request an ad
     emptyBannerView.load();
   }
 
@@ -112,6 +127,7 @@ class _BannerExampleState extends State<BannerExample> {
                   width: MediaQuery.of(context).size.width,
                   height: 24,
                 ),
+                // Button to load the banner ad - calls bannerView.load()
                 TextButton(
                     onPressed: bannerView.load,
                     child: const Text('load banner! (test ad)')),
@@ -179,6 +195,8 @@ class _BannerExampleState extends State<BannerExample> {
     );
   }
 
+  /// Dispose banner views when the widget is removed from the tree
+  /// Always dispose AdropBannerView to prevent memory leaks
   @override
   void dispose() {
     super.dispose();

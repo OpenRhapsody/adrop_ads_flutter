@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import '../test_unit_ids.dart';
 import '../utils/error_utils.dart';
 
+/// Popup Ad Example
+///
+/// This example demonstrates how to integrate and display popup ads
+/// using the Adrop Ads SDK in Flutter. Popup ads can be positioned
+/// at the center or bottom of the screen.
 class PopupExample extends StatefulWidget {
   const PopupExample({super.key});
 
@@ -22,15 +27,17 @@ class _PopupExampleState extends State<PopupExample> {
 
   bool disabledReset() => !(errorCode != null || isShown);
 
+  /// Returns the center popup ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unitCenter() {
-    // Use your actual popup ad unit IDs here
     return Platform.isAndroid
         ? testUnitIdPopupAdCenter
         : testUnitIdPopupAdCenter;
   }
 
+  /// Returns the bottom popup ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unitBottom() {
-    // Use your actual popup ad unit IDs here
     return Platform.isAndroid
         ? testUnitIdPopupAdBottom
         : testUnitIdPopupAdBottom;
@@ -50,34 +57,50 @@ class _PopupExampleState extends State<PopupExample> {
     return Color.fromRGBO(r, g, b, 1);
   }
 
+  /// Initialize or reset the popup ad instance
   void reset(String uniId) {
+    // Dispose previous ad instance before creating a new one
     popupAd?.dispose();
+
+    // Create AdropPopupAd with unit ID, listener, and optional background color
     popupAd = AdropPopupAd(
       unitId: uniId,
-      listener: AdropPopupListener(onAdReceived: (ad) {
-        debugPrint("PopupAd received ${ad.unitId}");
-        setState(() {
-          isLoaded = true;
-          errorCode = null;
-        });
-      }, onAdDidDismissFullScreen: (ad) {
-        setState(() {
-          isShown = true;
-        });
-      }, onAdFailedToReceive: (_, errorCode) {
-        debugPrint("PopupAd failed to receive $errorCode");
-        setState(() {
-          this.errorCode = errorCode;
-        });
-      }, onAdFailedToShowFullScreen: (_, errorCode) {
-        debugPrint("PopupAd failed to show full screen $errorCode");
-        setState(() {
-          this.errorCode = errorCode;
-        });
-      }, onAdImpression: (ad) {
-        debugPrint(
-            "PopupAd impression ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.destinationURL}");
-      }),
+      listener: AdropPopupListener(
+        // Callback: Called when the ad is successfully loaded
+        onAdReceived: (ad) {
+          debugPrint("PopupAd received ${ad.unitId}");
+          setState(() {
+            isLoaded = true;
+            errorCode = null;
+          });
+        },
+        // Callback: Called when the full-screen ad is dismissed
+        onAdDidDismissFullScreen: (ad) {
+          setState(() {
+            isShown = true;
+          });
+        },
+        // Callback: Called when the ad fails to load
+        onAdFailedToReceive: (_, errorCode) {
+          debugPrint("PopupAd failed to receive $errorCode");
+          setState(() {
+            this.errorCode = errorCode;
+          });
+        },
+        // Callback: Called when the ad fails to show
+        onAdFailedToShowFullScreen: (_, errorCode) {
+          debugPrint("PopupAd failed to show full screen $errorCode");
+          setState(() {
+            this.errorCode = errorCode;
+          });
+        },
+        // Callback: Called when the ad impression is recorded
+        onAdImpression: (ad) {
+          debugPrint(
+              "PopupAd impression ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.destinationURL}");
+        },
+      ),
+      // Optional: Set custom background color for the popup
       backgroundColor: getRandomColor(),
     );
 
@@ -111,10 +134,13 @@ class _PopupExampleState extends State<PopupExample> {
                   width: MediaQuery.of(context).size.width,
                   height: 24,
                 ),
+                // Button to load the popup ad - calls popupAd.load()
                 TextButton(
                   onPressed: popupAd?.load,
                   child: const Text('popup ad load'),
                 ),
+                // Button to show the ad - only enabled when ad is loaded
+                // calls popupAd.show()
                 TextButton(
                   onPressed: isLoaded ? popupAd?.show : null,
                   child: const Text('popup ad show'),
@@ -176,6 +202,8 @@ class _PopupExampleState extends State<PopupExample> {
     );
   }
 
+  /// Dispose popup ad when the widget is removed from the tree
+  /// Always dispose AdropPopupAd to prevent memory leaks
   @override
   void dispose() {
     super.dispose();

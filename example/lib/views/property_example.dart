@@ -1,37 +1,53 @@
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:flutter/material.dart';
 
+/// Property & Event Example
+///
+/// This example demonstrates how to use AdropMetrics to set user properties
+/// and log custom events for ad targeting purposes.
 class PropertyExample extends StatelessWidget {
   PropertyExample({super.key});
 
   final _keyController = TextEditingController();
   final _valueController = TextEditingController();
 
+  /// Set user gender property using predefined AdropProperties
+  /// Call AdropMetrics.setProperty() with predefined property codes
   void setGender(AdropGender gender) {
     AdropMetrics.setProperty(AdropProperties.gender.code, gender.code);
   }
 
+  /// Set user age property using predefined AdropProperties
   void setAge(int age) {
     AdropMetrics.setProperty(AdropProperties.age.code, age.toString());
   }
 
+  /// Set user birth date property using predefined AdropProperties
   void setBirth(String birth) {
     AdropMetrics.setProperty(AdropProperties.birth.code, birth);
   }
 
+  /// Set custom user property
+  /// Supports various value types: bool, int, double, String
   void sendProperty(String value) {
     var key = _keyController.text;
 
+    // AdropMetrics.setProperty() accepts different value types
     if (value.toLowerCase() == 'true' || value.toLowerCase() == 'false') {
+      // Set boolean property
       AdropMetrics.setProperty(key, value.toLowerCase() == 'true');
     } else if (int.tryParse(value) != null) {
+      // Set integer property
       AdropMetrics.setProperty(key, int.parse(value));
     } else if (double.tryParse(value) != null) {
+      // Set double property
       AdropMetrics.setProperty(key, double.parse(value));
     } else {
+      // Set string property
       AdropMetrics.setProperty(key, value);
     }
 
+    // Retrieve all properties for verification
     Future.delayed(const Duration(seconds: 1), () async {
       debugPrint("properties: ${await AdropMetrics.properties()}");
     });
@@ -106,8 +122,11 @@ class PropertyExample extends StatelessWidget {
                       const Text("Event"),
                       Column(
                         children: [
+                          // Log custom event with AdropMetrics.logEvent()
+                          // Event name and parameters map for tracking user actions
                           TextButton(
                               onPressed: () {
+                                // Create event parameters map with various value types
                                 var params = {
                                   "key1": true,
                                   "key2": 123,
@@ -120,6 +139,7 @@ class PropertyExample extends StatelessWidget {
                                 };
                                 debugPrint(
                                     "event key: CustomKey, value: $params");
+                                // Call AdropMetrics.logEvent() to track the event
                                 AdropMetrics.logEvent("CustomKey", params);
                               },
                               child: const Text(

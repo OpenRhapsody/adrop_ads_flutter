@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 
 import '../utils/error_utils.dart';
 
+/// Rewarded Ad Example
+///
+/// This example demonstrates how to integrate and display rewarded ads
+/// using the Adrop Ads SDK in Flutter. Users watch the ad and receive
+/// rewards upon completion.
 class RewardedExample extends StatefulWidget {
   const RewardedExample({super.key});
 
@@ -21,8 +26,9 @@ class _RewardedExampleState extends State<RewardedExample> {
 
   bool disabledReset() => !(errorCode != null || isShown);
 
+  /// Returns the ad unit ID for the current platform
+  /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    // Use your actual rewarded ad unit IDs here
     return Platform.isAndroid ? testUnitIdRewardedAd : testUnitIdRewardedAd;
   }
 
@@ -32,41 +38,62 @@ class _RewardedExampleState extends State<RewardedExample> {
     reset(unit());
   }
 
+  /// Initialize or reset the rewarded ad instance
   void reset(String unitId) {
+    // Dispose previous ad instance before creating a new one
     rewardedAd?.dispose();
+
+    // Create AdropRewardedAd with unit ID and listener
     rewardedAd = AdropRewardedAd(
         unitId: unitId,
-        listener: AdropRewardedListener(onAdReceived: (ad) {
-          debugPrint(
-              "rewardedAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
-          setState(() {
-            isLoaded = true;
-            errorCode = null;
-          });
-        }, onAdFailedToReceive: (_, error) {
-          setState(() {
-            debugPrint("rewardedAd failed to receive $unitId, $errorCode");
-            errorCode = error;
-          });
-        }, onAdClicked: (_) {
-          debugPrint("rewardedAd clicked $unitId");
-        }, onAdDidPresentFullScreen: (_) {
-          debugPrint("rewardedAd did present full screen $unitId");
-          setState(() {
-            isShown = true;
-            errorCode = null;
-          });
-        }, onAdDidDismissFullScreen: (_) {
-          debugPrint("rewardedAd did dismiss full screen $unitId");
-        }, onAdFailedToShowFullScreen: (_, error) {
-          debugPrint(
-              "rewardedAd failed to show full screen $unitId, $errorCode");
-          setState(() {
-            errorCode = error;
-          });
-        }, onAdEarnRewardHandler: (_, type, amount) {
-          debugPrint("rewardedAd earn rewards: $unitId, $type, $amount");
-        }));
+        listener: AdropRewardedListener(
+          // Callback: Called when the ad is successfully loaded
+          onAdReceived: (ad) {
+            debugPrint(
+                "rewardedAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
+            setState(() {
+              isLoaded = true;
+              errorCode = null;
+            });
+          },
+          // Callback: Called when the ad fails to load
+          onAdFailedToReceive: (_, error) {
+            setState(() {
+              debugPrint("rewardedAd failed to receive $unitId, $errorCode");
+              errorCode = error;
+            });
+          },
+          // Callback: Called when the ad is clicked
+          onAdClicked: (_) {
+            debugPrint("rewardedAd clicked $unitId");
+          },
+          // Callback: Called when the full-screen ad is presented
+          onAdDidPresentFullScreen: (_) {
+            debugPrint("rewardedAd did present full screen $unitId");
+            setState(() {
+              isShown = true;
+              errorCode = null;
+            });
+          },
+          // Callback: Called when the full-screen ad is dismissed
+          onAdDidDismissFullScreen: (_) {
+            debugPrint("rewardedAd did dismiss full screen $unitId");
+          },
+          // Callback: Called when the ad fails to show
+          onAdFailedToShowFullScreen: (_, error) {
+            debugPrint(
+                "rewardedAd failed to show full screen $unitId, $errorCode");
+            setState(() {
+              errorCode = error;
+            });
+          },
+          // Callback: Called when the user earns a reward after watching the ad
+          // Implement your reward logic here (e.g., grant coins, unlock content)
+          onAdEarnRewardHandler: (_, type, amount) {
+            debugPrint("rewardedAd earn rewards: $unitId, $type, $amount");
+          },
+        ));
+
     setState(() {
       isLoaded = false;
       isShown = false;
@@ -98,10 +125,13 @@ class _RewardedExampleState extends State<RewardedExample> {
                       width: MediaQuery.of(context).size.width,
                       height: 24,
                     ),
+                    // Button to load the rewarded ad - calls rewardedAd.load()
                     TextButton(
                       onPressed: rewardedAd?.load,
                       child: const Text('RewardedAd load'),
                     ),
+                    // Button to show the ad - only enabled when ad is loaded
+                    // calls rewardedAd.show()
                     TextButton(
                         onPressed: isLoaded ? rewardedAd?.show : null,
                         child: const Text('RewardedAd show')),
@@ -154,6 +184,8 @@ class _RewardedExampleState extends State<RewardedExample> {
     );
   }
 
+  /// Dispose rewarded ad when the widget is removed from the tree
+  /// Always dispose AdropRewardedAd to prevent memory leaks
   @override
   void dispose() {
     super.dispose();

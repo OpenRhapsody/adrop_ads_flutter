@@ -40,8 +40,11 @@ class AdropPopupAd extends AdropAd {
   Future<void> load() async {
     super.load();
     customize({
+      // ignore: deprecated_member_use
       "closeTextColor": closeTextColor?.value,
+      // ignore: deprecated_member_use
       "hideForTodayTextColor": hideForTodayTextColor?.value,
+      // ignore: deprecated_member_use
       "backgroundColor": backgroundColor?.value,
     });
   }

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+  // Initialize Adrop SDK
+  // Pass 'true' for production, 'false' for development/testing
   Adrop.initialize(false);
 }
 
