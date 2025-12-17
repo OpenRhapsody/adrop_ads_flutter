@@ -11,9 +11,9 @@ Language: [English](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/maste
 
 ## 시작하기
 
-- [Adrop 개발자 문서](https://help.adrop.io/adcontrol/developer-guide/adrop-sdk/flutter-sdk) - SDK 연동 및 고급 기능
-- [Adrop 콘솔](https://adrop.io) - 앱 등록 및 광고 단위 ID 발급
-- [테스트 광고 단위 ID](https://help.adrop.io/adcontrol/developer-guide/test-environment#test-unit-id) - 개발 중 테스트용 ID
+- [Adrop 콘솔](https://console.adrop.io) - 앱 등록 및 광고 단위 ID 발급
+- [Adrop 개발자 문서](https://docs.adrop.io/ko/sdk/flutter) - SDK 연동 및 고급 기능
+- [테스트 광고 단위 ID](https://docs.adrop.io/ko/sdk#테스트-환경) - 개발 중 테스트용 ID
 
 ## 예제
 

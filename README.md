@@ -11,9 +11,9 @@ Language: English | [한국어](https://github.com/OpenRhapsody/adrop_ads_flutte
 
 ## Getting Started
 
-- [Adrop Developer Docs](https://help.adrop.io/adcontrol/developer-guide/adrop-sdk/flutter-sdk) - SDK integration and advanced features
-- [Adrop Console](https://adrop.io) - Register your app and issue ad unit IDs
-- [Test Ad Unit IDs](https://help.adrop.io/adcontrol/developer-guide/test-environment#test-unit-id) - Use test IDs during development
+- [Adrop Console](https://console.adrop.io) - Register your app and issue ad unit IDs
+- [Adrop Developer Docs](https://docs.adrop.io/ko/sdk/flutter) - SDK integration and advanced features
+- [Test Ad Unit IDs](https://docs.adrop.io/sdk#test-environment) - Use test IDs during development
 
 ## Examples
 
