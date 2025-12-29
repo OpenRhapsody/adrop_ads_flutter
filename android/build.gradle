@@ -68,5 +68,5 @@ android {
 }
 
 dependencies {
-    api 'io.adrop:adrop-ads:[1.7.1, 1.8)'
+    api 'io.adrop:adrop-ads:[1.7.3, 1.8)'
 }

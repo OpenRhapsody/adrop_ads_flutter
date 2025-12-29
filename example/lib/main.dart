@@ -1,5 +1,6 @@
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:adrop_ads_flutter_example/views/banner_example.dart';
+import 'package:adrop_ads_flutter_example/views/consent_example.dart';
 import 'package:adrop_ads_flutter_example/views/home.dart';
 import 'package:adrop_ads_flutter_example/views/interstitial_example.dart';
 import 'package:adrop_ads_flutter_example/views/native_example.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         '/popupExample': (_) => const PopupExample(),
         '/nativeExample': (_) => const NativeExample(),
         '/propertyExample': (_) => PropertyExample(),
+        '/consentExample': (_) => const ConsentExample(),
         // Add more routes as needed
       },
     );

@@ -19,19 +19,27 @@ Language: [English](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/maste
 
 ### Adrop Ads
 
-| 광고 형식 | 예제 |
-|----------|------|
-| 배너 | [banner_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/banner_example.dart) |
-| 전면 | [interstitial_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/interstitial_example.dart) |
-| 보상형 | [rewarded_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/rewarded_example.dart) |
-| 팝업 | [popup_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/popup_example.dart) |
-| 네이티브 | [native_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/native_example.dart) |
+| 광고 형식   | 예제 |
+|---------|------|
+| 배너      | [banner_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/banner_example.dart) |
+| 전면      | [interstitial_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/interstitial_example.dart) |
+| 보상형     | [rewarded_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/rewarded_example.dart) |
+| 팝업      | [popup_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/popup_example.dart) |
+| 네이티브    | [native_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/native_example.dart) |
 
 ### 타겟팅
 
-| 기능 | 예제 |
-|------|------|
+|          | 예제 |
+|----------|------|
 | 속성 & 이벤트 | [property_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/property_example.dart) |
+
+### 개인정보 & 동의
+
+> **참고**: 동의 관리 기능은 [AdropAdsBackfill](https://docs.adrop.io/ko/sdk/flutter/backfill) 모듈이 필요합니다.
+
+|                   | 예제 |
+|-------------------|------|
+| 동의 관리 (GDPR/CCPA) | [consent_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/consent_example.dart) |
 
 ## 실행 방법
 

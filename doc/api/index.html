@@ -8,15 +8,15 @@
   <title>adrop_ads_flutter - Dart API docs</title>
 
 
-
+  
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-
+  
   <link rel="stylesheet" href="static-assets/github.css?v1">
   <link rel="stylesheet" href="static-assets/styles.css?v1">
   <link rel="icon" href="static-assets/favicon.png?v1">
-
+  
 </head>
 
 <body data-base-href="" data-using-base-href="false" class="light-theme">
@@ -41,601 +41,117 @@
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
-
+      
 <section class="desc markdown">
-  <h1 id="adropads">AdropAds</h1>
-<p>Adrop ads plugin for flutter</p>
-<p><a href="https://pub.dev/packages/adrop_ads_flutter"><img src="https://img.shields.io/pub/v/adrop_ads_flutter" alt="pub package"></a></p>
-<h2 id="prerequisites">Prerequisites</h2>
+  <h1 id="adrop-ads---flutter">Adrop Ads - Flutter</h1>
+<p>Adrop ads plugin for Flutter</p>
+<p><a href="https://pub.dev/packages/adrop_ads_flutter"><img src="https://img.shields.io/pub/v/adrop_ads_flutter" alt="pub package"></a>
+<a href="https://pub.dev/packages/adrop_ads_flutter/score"><img src="https://img.shields.io/pub/points/adrop_ads_flutter" alt="pub points"></a>
+<a href="https://pub.dev/packages/adrop_ads_flutter"><img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-blue" alt="Platform"></a>
+<a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/LICENSE"><img src="https://img.shields.io/github/license/OpenRhapsody/adrop_ads_flutter" alt="License"></a></p>
+<p>Language: English | <a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/README.ko.md">한국어</a></p>
+<h2 id="getting-started">Getting Started</h2>
 <ul>
-<li>Install your preferred <a href="https://flutter.io/get-started/editor/">editor or IDE</a>.</li>
-<li>Make sure that your app meets the following requirements:
-<ul>
-<li><strong>Android</strong>
-<ul>
-<li>Targets API level 23 (M) or higher</li>
-<li>Uses Android 6.0 or higher
-<ul>
-<li>minSdkVersion 23</li>
+<li><a href="https://console.adrop.io">Adrop Console</a> - Register your app and issue ad unit IDs</li>
+<li><a href="https://docs.adrop.io/sdk/flutter">Adrop Developer Docs</a> - SDK integration and advanced features</li>
+<li><a href="https://docs.adrop.io/sdk#test-environment">Test Ad Unit IDs</a> - Use test IDs during development</li>
 </ul>
-</li>
-<li>Uses <a href="https://developer.android.com/jetpack/androidx/migrate">Jetpack (AndroidX)</a>, which includes meeting these version requirements:
-<ul>
-<li><code>com.android.tools.build:gradle</code> v7.6.3 or later</li>
-<li><code>compileSdkVersion</code> 33</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>iOS</strong>
-<ul>
-<li>ios 13.0</li>
-<li>swift 5.0</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Install Flutter for your specific operating system, including the following:
-<ul>
-<li>Flutter SDK</li>
-<li>Supporting libraries</li>
-<li>Platform-specific software and SDKs</li>
-</ul>
-</li>
-<li><a href="https://adrop.io">Sign into Adrop</a> using your email or Google account.</li>
-</ul>
-<p></p>
-<h3 id="step-1-create-a-adrop-project">Step 1: Create a Adrop project</h3>
-<p>Before you can add Adrop to your Flutter app, you need to <a href="https://docs.adrop.io/ad-platform/quickstart">create a Adrop project</a> to connect to your app.</p>
-<h3 id="step-2-register-your-app-with-adrop">Step 2: Register your app with Adrop</h3>
-<p>To use Adrop in your Flutter app, you need to register your app with your Adrop project. Registering your app is often called "adding" your app to your project.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="adrop-ads">Adrop Ads</h3>
+<table>
+<thead>
+<tr>
+<th>Ad Format</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Banner</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/banner_example.dart">banner_example.dart</a></td>
+</tr>
+<tr>
+<td>Interstitial</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/interstitial_example.dart">interstitial_example.dart</a></td>
+</tr>
+<tr>
+<td>Rewarded</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/rewarded_example.dart">rewarded_example.dart</a></td>
+</tr>
+<tr>
+<td>Popup</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/popup_example.dart">popup_example.dart</a></td>
+</tr>
+<tr>
+<td>Native</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/native_example.dart">native_example.dart</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="targeting">Targeting</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Property &amp; Event</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/property_example.dart">property_example.dart</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="privacy--consent">Privacy &amp; Consent</h3>
 <blockquote>
-<p><strong>Note</strong></p>
-<p>Make sure to enter the package name that your app is actually using. The package name value is case-sensitive, and it cannot be changed for this Adrop Android app after it's registered with your Adrop project.</p>
+<p><strong>Note</strong>: Consent features require <a href="https://docs.adrop.io/sdk/flutter/backfill">AdropAdsBackfill</a> module.</p>
 </blockquote>
-<ol>
-<li>Go to the Adrop console.</li>
-<li>In the center of the project app page, click the <strong>Flutter</strong> icon button to launch the setup workflow.</li>
-<li>Enter your app's package name in the <strong>Flutter package name</strong> field.
-<ul>
-<li>A <a href="https://developer.android.com/studio/build/application-id">package name</a> uniquely identifies your app on the device and in the Google Play Store or App Store.</li>
-<li>A package name is often referred to as an application ID.</li>
-<li>Be aware that the package name value is case-sensitive, and it cannot be changed for this Adrop Flutter app after it's registered with your Adrop project.</li>
-</ul>
-</li>
-<li>Enter other app information: <strong>App nickname</strong>.
-<ul>
-<li><strong>App nickname</strong>: An internal, convenience identifier that is only visible to you in the Adrop console</li>
-</ul>
-</li>
-<li>Click <strong>Register app</strong> and then Android and Apple apps will be created respectively.</li>
-</ol>
-<h3 id="step-3-add-a-adrop-configuration-file">Step 3: Add a Adrop configuration file</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consent (GDPR/CCPA)</td>
+<td><a href="https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/consent_example.dart">consent_example.dart</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-run-examples">How to Run Examples</h2>
+<h3 id="1-clone-the-repository">1. Clone the repository</h3>
+<pre class="language-bash"><code class="language-bash">git clone https://github.com/OpenRhapsody/adrop_ads_flutter.git
+</code></pre>
+<h3 id="2-navigate-to-the-example-directory">2. Navigate to the example directory</h3>
+<pre class="language-bash"><code class="language-bash">cd adrop_ads_flutter/example
+</code></pre>
+<h3 id="3-install-dependencies">3. Install dependencies</h3>
+<pre class="language-bash"><code class="language-bash">flutter pub get
+</code></pre>
+<h3 id="4-add-configuration-file">4. Add configuration file</h3>
+<p>Download <code>adrop_service.json</code> from <a href="https://adrop.io">Adrop Console</a> and place it in:</p>
 <h4 id="android">Android</h4>
-<ol>
-<li>Download <strong>adrop_service.json</strong> to obtain your Adrop Android platforms config file.</li>
-<li>Move your config file into your assets directory.
-<code>android/app/src/main/assets/adrop_service.json</code></li>
-</ol>
+<pre class="language-dart"><code>android/app/src/main/assets/adrop_service.json
+</code></pre>
 <h4 id="ios">iOS</h4>
-<ol>
-<li>Download <strong>adrop_service.json</strong> to obtain your Adrop Apple platforms config file.</li>
-<li>Move your config file into the root of your Xcode project. If prompted, select to add the config file to all targets.</li>
-</ol>
-<h3 id="step-4-add-adrop-plugin-to-your-app">Step 4: Add Adrop plugin to your app</h3>
-<p>From your Flutter project directory, run the following command to install the plugin.</p>
-<pre class="language-shell"><code class="language-shell">flutter pub add adrop_ads_flutter
-</code></pre>
-<p>Install the pods, then open your .xcworkspace file to see the project in Xcode:</p>
-<pre class="language-shell"><code class="language-shell">pod install --repo-update
-</code></pre>
-<h3 id="step-5-initialize-adrop-in-your-app">Step 5: Initialize Adrop in your app</h3>
-<p>The final step is to add initialization code to your application.</p>
-<ol>
-<li>Import the Adrop plugin.</li>
-</ol>
-<pre class="language-dart"><code class="language-dart">import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-</code></pre>
-<ol start="2">
-<li>Also in your <code>lib/main.dart</code> file, initialize Adrop.</li>
-</ol>
-<pre class="language-dart"><code class="language-dart">void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State&lt;MyApp&gt; createState() =&gt; _MyAppState();
-}
-
-class MyAppState extends State&lt;MyApp&gt; {
-  @override
-  void initState() {
-    super.initState();
-    initialize();
-  }
-
-  Future&lt;void&gt; initialize() async {
-    // ..
-    // true for production
-    // If you are using this SDK in specific countries,
-    // pass an array of ISO 3166 alpha-2 country codes.
-    await Adrop.initialize(false);
-  }
-}
-
-
-</code></pre>
-<ol start="3">
-<li>Add <strong>AdropNavigatorObserver</strong> to measure the frequency of ad impressions</li>
-</ol>
-<pre class="language-dart"><code class="language-dart">  @override
-  Widget build(BuildContext context) {
-  return MaterialApp(
-      navigatorObservers: [AdropNavigatorObserver()],
-      ...
-  );
-</code></pre>
-<ol start="4">
-<li>Rebuild your Flutter application.</li>
-</ol>
-<pre class="language-shell"><code class="language-shell">flutter run
-</code></pre>
-<h3 id="optional-troubleshooting">(Optional) Troubleshooting</h3>
-<pre class="language-shell"><code class="language-shell"># Add this line to your Podfile
-use_frameworks!
-
-# ...
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-
-    #...
-    # Add this line to your Podfile
-    config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-    end
-  end
-end
-</code></pre>
-<hr>
-<p></p>
-<h2 id="migration-guide-for-v120">Migration Guide for v1.2.0</h2>
-<h3 id="breaking-change-banner-event-callbacks">Breaking Change: Banner Event Callbacks</h3>
-<p>In version 1.2.0, we've enhanced the <code>AdropBannerListener</code> callbacks to provide comprehensive ad metadata instead of just the creative ID. This change affects the <code>onAdReceived</code> and <code>onAdClicked</code> callbacks.</p>
-<h4 id="what-changed">What Changed</h4>
-<p>The signature of <code>AdropAdEventCallback</code> has been updated:</p>
-<p><strong>Before (v1.1.x):</strong></p>
-<pre class="language-dart"><code class="language-dart">typedef AdropAdEventCallback = void Function(String unitId, String? creativeId);
-</code></pre>
-<p><strong>After (v1.2.0):</strong></p>
-<pre class="language-dart"><code class="language-dart">typedef AdropAdEventCallback = void Function(String unitId, Map&lt;String, dynamic&gt;? metadata);
-</code></pre>
-<h4 id="available-metadata-fields">Available Metadata Fields</h4>
-<p>The metadata map now includes:</p>
-<ul>
-<li><code>creativeId</code>: The creative identifier</li>
-<li><code>txId</code>: Transaction identifier for tracking</li>
-<li><code>campaignId</code>: Campaign identifier</li>
-<li><code>destinationURL</code>: The destination URL of the ad</li>
-<li><code>creativeSizeWidth</code>: Width of the creative (Banner only)</li>
-<li><code>creativeSizeHeight</code>: Height of the creative (Banner only)</li>
-</ul>
-<h4 id="migration-steps">Migration Steps</h4>
-<p>Update your <code>AdropBannerListener</code> implementations:</p>
-<p><strong>Before:</strong></p>
-<pre class="language-dart"><code class="language-dart">AdropBannerView(
-  unitId: unitId,
-  listener: AdropBannerListener(
-    onAdReceived: (unitId, creativeId) {
-      debugPrint("Ad received: $creativeId");
-    },
-    onAdClicked: (unitId, creativeId) {
-      debugPrint("Ad clicked: $creativeId");
-    },
-  ),
-);
-</code></pre>
-<p><strong>After:</strong></p>
-<pre class="language-dart"><code class="language-dart">AdropBannerView(
-  unitId: unitId,
-  listener: AdropBannerListener(
-    onAdReceived: (unitId, metadata) {
-      debugPrint("Ad received: ${metadata?['creativeId']}");
-      debugPrint("Transaction ID: ${metadata?['txId']}");
-      debugPrint("Campaign ID: ${metadata?['campaignId']}");
-    },
-    onAdClicked: (unitId, metadata) {
-      debugPrint("Ad clicked: ${metadata?['creativeId']}");
-      debugPrint("Destination: ${metadata?['destinationURL']}");
-    },
-  ),
-);
-</code></pre>
-<h4 id="enhanced-metadata-for-all-ad-types">Enhanced Metadata for All Ad Types</h4>
-<p>All ad types now provide additional metadata through their properties:</p>
-<pre class="language-dart"><code class="language-dart">// Interstitial, Rewarded, Popup, and Native ads
-AdropInterstitialListener(
-  onAdReceived: (ad) {
-    debugPrint('Creative ID: ${ad.creativeId}');
-    debugPrint('Transaction ID: ${ad.txId}');
-    debugPrint('Campaign ID: ${ad.campaignId}');
-    debugPrint('Destination URL: ${ad.destinationURL}');
-  },
-);
-</code></pre>
-<h4 id="new-feature-close-popup-ad-programmatically">New Feature: Close Popup Ad Programmatically</h4>
-<p>v1.2.0 also introduces the ability to close popup ads programmatically:</p>
-<pre class="language-dart"><code class="language-dart">final popupAd = AdropPopupAd(unitId: 'YOUR_UNIT_ID');
-await popupAd.load();
-await popupAd.show();
-
-// Close the ad programmatically
-await popupAd.close();
-</code></pre>
-<hr>
-<p></p>
-<h2 id="create-your-ad-unit">Create your Ad unit</h2>
-<h3 id=""></h3>
-<p>From the <a href="https://adrop.io">Adrop console</a>, go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).</p>
-<hr>
-<h3 id="creating-ad-units">Creating Ad units</h3>
-<p>To create a new Ad unit:</p>
-<ol>
-<li>From the left navigation menu, select <strong>Ad Units</strong>.</li>
-<li>Select <strong>Create Ad unit</strong> to bring up the ad unit builder.</li>
-<li>Enter an Ad unit name, then select your app (iOS or Android) and <a href="https://docs.adrop.io/ad-unit/formats">Ad format</a> (Banner, Interstitial, Rewarded, Native, Popup, or Splash).</li>
-<li>Select <strong>Create</strong> to save your Ad unit.</li>
-</ol>
-<h3 id="ad-unit-id">Ad unit ID</h3>
-<p>The Ad unit’s unique identifier to reference in your code. This setting is read-only.</p>
 <blockquote>
-<p><strong>Note</strong> These are unit ids for test</p>
-<ul>
-<li>PUBLIC_TEST_UNIT_ID_320_50</li>
-<li>PUBLIC_TEST_UNIT_ID_375_80</li>
-<li>PUBLIC_TEST_UNIT_ID_320_100</li>
-<li>PUBLIC_TEST_UNIT_ID_INTERSTITIAL</li>
-<li>PUBLIC_TEST_UNIT_ID_REWARDED</li>
-<li>PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM</li>
-<li>PUBLIC_TEST_UNIT_ID_POPUP_CENTER</li>
-<li>PUBLIC_TEST_UNIT_ID_SPLASH</li>
-<li>PUBLIC_TEST_UNIT_ID_NATIVE</li>
-</ul>
+<p><strong>Important</strong>: For iOS, you must add <code>adrop_service.json</code> through Xcode.</p>
+<ol>
+<li>Open <code>ios/Runner.xcworkspace</code> in Xcode</li>
+<li>Right-click on the <code>Runner</code> folder and select "Add Files to Runner..."</li>
+<li>Select <code>adrop_service.json</code> and ensure "Copy items if needed" is checked</li>
+<li>Make sure the file is added to the Runner target</li>
+</ol>
 </blockquote>
-<h3 id="display-ads">Display Ads</h3>
-<details>
-<summary style="font-size: 16px; font-weight: bold;">Banner</summary>
-<p>Initialize AdropBannerView with Ad unit ID, then load ad.</p>
-<pre class="language-dart"><code class="language-dart">class YourComponentState extends State&lt;YourComponent&gt; {
-
-  final unitId = "";
-  bool isLoaded = false;
-  AdropBannerView? bannerView;
-
-  @override
-  void initState() {
-    super.initState();
-
-    bannerView = AdropBannerView(
-      unitId: unitId,
-      listener: AdropBannerListener(
-        onAdReceived: (unitId, metadata) {
-          debugPrint("Ad received: ${metadata}");
-          setState(() {
-            isLoaded = true;
-          });
-        },
-        onAdClicked: (unitId, metadata) {
-          debugPrint("Ad clicked: ${metadata}");
-        },
-        onAdFailedToReceive: (unitId, error) {
-          setState(() {
-            isLoaded = false;
-          });
-        },
-      ),
-    );
-    bannerView!.load();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextButton(
-            onPressed: bannerView.load,
-            child: const Text('Reload Ad!')),
-        bannerView != null &amp;&amp; isLoaded ?
-        SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 80,
-            child: bannerView) : Container(),
-      ],
-    );
-  }
-}
+<h3 id="5-install-ios-dependencies">5. Install iOS dependencies</h3>
+<pre class="language-bash"><code class="language-bash">cd ios &amp;&amp; pod install &amp;&amp; cd ..
 </code></pre>
-<p>AdropBannerView must be disposed of when access to it is no longer needed.</p>
-<pre class="language-dart"><code class="language-dart">@override
-void dispose() {
-  super.dispose();
-  bannerView?.dispose();
-}
+<h3 id="6-build-and-run">6. Build and run</h3>
+<pre class="language-bash"><code class="language-bash">flutter run
 </code></pre>
-</details>
-<br>
-<details>
-<summary style="font-size: 16px; font-weight: bold;">Interstitial Ad</summary>
-<p>Step 1: (Optional) Construct event listener</p>
-<pre class="language-dart"><code class="language-dart">final AdropInterstitialListener listener = AdropInterstitialListener(
-    onAdReceived: (ad) =&gt;
-        debugPrint('Adrop Interstitial Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
-    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
-    ...
-);
-</code></pre>
-<p>Step 2: Display an interstitial ad</p>
-<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
-  const YourComponent({super.key});
-
-  @override
-  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
-}
-
-class _YourComponentState extends State&lt;YourComponent&gt; {
-  final AdropInterstitialAd interstitialAd = AdropInterstitialAd(
-    unitId: 'YOUR_UNIT_ID',
-    listener: listener,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    interstitialAd.load();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            final isLoaded = interstitialAd.isLoaded ?? false;
-            if (isLoaded) {
-              interstitialAd.show();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('interstitial ad is loading...'))
-              );
-            }
-          },
-          child: const Text('display ad'),
-        ),
-      ),
-    );
-  }
-}
-</code></pre>
-<p>AdropInterstitialAd must be disposed of when access to it is no longer needed.</p>
-<pre class="language-dart"><code class="language-dart">@override
-void dispose() {
-  super.dispose();
-  interstitialAd.dispose();
-}
-</code></pre>
-</details>
-<br>
-<details>
-<summary style="font-size: 16px; font-weight: bold;">Rewarded Ad</summary>
-<p>Step 1: (Optional) Construct event listener</p>
-<pre class="language-dart"><code class="language-dart">final AdropRewardedListener listener = AdropRewardedListener(
-    onAdReceived: (ad) =&gt;
-        debugPrint('Adrop Rewarded Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
-    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
-    onAdEarnRewardHandler: (ad, type, amount) {
-      debugPrint('Adrop Rewarded Ad earn rewards: ${ad.unitId}, $type, $amount');
-      // implement your actions with rewards
-    },
-    ...
-);
-</code></pre>
-<p>Step 2: Display a rewarded ad</p>
-<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
-  const YourComponent({super.key});
-
-  @override
-  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
-}
-
-class _YourComponentState extends State&lt;YourComponent&gt; {
-  final AdropRewardedAd rewardedAd = AdropRewardedAd(
-    unitId: 'YOUR_UNIT_ID',
-    listener: listener,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    rewardedAd.load();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            final isLoaded = rewardedAd.isLoaded ?? false;
-            if (isLoaded) {
-              rewardedAd.show();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('rewarded ad is loading...'))
-              );
-            }
-          },
-          child: const Text('display ad'),
-        ),
-      ),
-    );
-  }
-}
-</code></pre>
-<p>AdropRewardedAd must be disposed of when access to it is no longer needed.</p>
-<pre class="language-dart"><code class="language-dart">@override
-void dispose() {
-  super.dispose();
-  rewardedAd.dispose();
-}
-</code></pre>
-</details>
-<br>
-<details>
-<summary style="font-size: 16px; font-weight: bold;">Popup Ad</summary>
-<p>Step 1: (Optional) Construct event listener</p>
-<pre class="language-dart"><code class="language-dart">final AdropPopupListener listener = AdropPopupListener(
-    onAdReceived: (ad) =&gt;
-        debugPrint('Adrop Popup Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
-    onAdFailedToShowFullScreen: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while showing: $errorCode'),
-    ...
-);
-</code></pre>
-<p>Step 2: Display a popup ad</p>
-<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
-  const YourComponent({super.key});
-
-  @override
-  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
-}
-
-class _YourComponentState extends State&lt;YourComponent&gt; {
-  final AdropPopupAd popupAd = AdropPopupAd(
-    unitId: 'YOUR_UNIT_ID',
-    listener: listener,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    popupAd.load();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            final isLoaded = popupAd.isLoaded ?? false;
-            if (isLoaded) {
-              popupAd.show();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('popup ad is loading...'))
-              );
-            }
-          },
-          child: const Text('display ad'),
-        ),
-      ),
-    );
-  }
-}
-</code></pre>
-<p>AdropPopupAd must be disposed of when access to it is no longer needed.</p>
-<pre class="language-dart"><code class="language-dart">@override
-void dispose() {
-  super.dispose();
-  popupAd.dispose();
-}
-</code></pre>
-</details>
-<br>
-<details>
-<summary style="font-size: 16px; font-weight: bold;">Native Ad</summary>
-<p>Step 1: (Optional) Construct event listener</p>
-<pre class="language-dart"><code class="language-dart">final AdropNativeListener listener = AdropNativeListener(
-    onAdReceived: (ad) =&gt;
-        debugPrint('Adrop Native Ad loaded with unitId ${ad.unitId}!'),
-    onAdFailedToReceive: (ad, errorCode) =&gt;
-        debugPrint('error in ${ad.unitId} while loading: $errorCode'),
-    ...
-);
-</code></pre>
-<p>Step 2: Display a native ad</p>
-<pre class="language-dart"><code class="language-dart">class YourComponent extends StatefulWidget {
-  const YourComponent({super.key});
-
-  @override
-  State&lt;StatefulWidget&gt; createState() =&gt; _YourComponentState();
-}
-
-class _YourComponentState extends State&lt;YourComponent&gt; {
-  final AdropNativeAd nativeAd = AdropNativeAd(
-    unitId: 'YOUR_UNIT_ID',
-    listener: listener,
-  );
-
-  bool isLoaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    nativeAd.load();
-  }
-
-  Widget nativeAdView(BuildContext context) {
-    if (!isLoaded) return Container();
-
-    return AdropNativeView(
-        ad: nativeAd,
-        child: Column(
-          children: [
-            if (nativeAd.properties.profile?.displayLogo)
-              Image.network(
-                nativeAd.properties.profile?.displayLogo,
-                width: 24,
-                height: 24,
-              ),
-            if (nativeAd.properties.profile?.displayName)
-              Text(
-                nativeAd.properties.profile?.displayName,
-              ),
-            if (nativeAd.properties.headline != null)
-              Text(nativeAd.properties.headline),
-            if (nativeAd.properties.body != null)
-              Text(nativeAd.properties.body),
-            if (nativeAd.properties.asset != null)
-              Image.network(nativeAd.properties.asset, width: {{yourWidth}}, height: {{yourHeight}}),
-            if (nativeAd.properties.extra['sampleExtraId'] != null)
-              Text(nativeAd.properties.extra['sampleExtraId']),
-          ],
-        )
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: nativeAdView(context),
-      ),
-    );
-  }
-}
-</code></pre>
-</details>
 </section>
 
 
@@ -643,7 +159,7 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
           <h2>Libraries</h2>
         <dl>
           <dt id="adrop_ads_flutter">
-  <span class="name"><a href="adrop_ads_flutter/">adrop_ads_flutter</a></span>
+  <span class="name"><a href="adrop_ads_flutter/">adrop_ads_flutter</a></span> 
 
 </dt>
 <dd>
@@ -676,9 +192,9 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.7.1
+      1.7.2
   </span>
-
+  
 </footer>
 
 
@@ -687,3 +203,4 @@ class _YourComponentState extends State&lt;YourComponent&gt; {
 
 </body>
 </html>
+

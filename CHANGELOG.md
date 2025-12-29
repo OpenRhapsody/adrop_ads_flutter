@@ -1,3 +1,6 @@
+## 1.7.2
+- Added User Messaging Platform (UMP) support for GDPR consent management on Android and iOS
+
 ## 1.7.1
 - Support video ad
 - Update dependencies

@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-3141837772329875~8069495778</string>
+    <string>ca-app-pub-1007661712122174~4365557314</string>
+    <key>GADIntegrationManager</key>
+            <string>webview</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

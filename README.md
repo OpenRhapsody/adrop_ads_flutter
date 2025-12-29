@@ -19,19 +19,27 @@ Language: English | [한국어](https://github.com/OpenRhapsody/adrop_ads_flutte
 
 ### Adrop Ads
 
-| Ad Format | Example |
-|-----------|---------|
-| Banner | [banner_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/banner_example.dart) |
+| Ad Format    | Example |
+|--------------|---------|
+| Banner       | [banner_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/banner_example.dart) |
 | Interstitial | [interstitial_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/interstitial_example.dart) |
-| Rewarded | [rewarded_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/rewarded_example.dart) |
-| Popup | [popup_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/popup_example.dart) |
-| Native | [native_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/native_example.dart) |
+| Rewarded     | [rewarded_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/rewarded_example.dart) |
+| Popup        | [popup_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/popup_example.dart) |
+| Native       | [native_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/native_example.dart) |
 
 ### Targeting
 
-| Feature | Example |
-|---------|---------|
+|                  | Example |
+|------------------|---------|
 | Property & Event | [property_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/property_example.dart) |
+
+### Privacy & Consent
+
+> **Note**: Consent features require [AdropAdsBackfill](https://docs.adrop.io/sdk/flutter/backfill) module.
+
+|                     | Example |
+|---------------------|---------|
+| Consent (GDPR/CCPA) | [consent_example.dart](https://github.com/OpenRhapsody/adrop_ads_flutter/blob/master/example/lib/views/consent_example.dart) |
 
 ## How to Run Examples
 

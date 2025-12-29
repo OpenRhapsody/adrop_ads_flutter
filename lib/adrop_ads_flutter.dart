@@ -19,3 +19,8 @@ export 'src/rewarded/adrop_rewarded_listener.dart';
 export 'src/native/adrop_native_ad.dart';
 export 'src/native/adrop_native_ad_view.dart';
 export 'src/native/adrop_native_listener.dart';
+
+export 'src/consent/adrop_consent_manager.dart';
+export 'src/consent/adrop_consent_status.dart';
+export 'src/consent/adrop_consent_result.dart';
+export 'src/consent/adrop_consent_debug_geography.dart';

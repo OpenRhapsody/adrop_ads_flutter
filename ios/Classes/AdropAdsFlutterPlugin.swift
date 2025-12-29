@@ -7,6 +7,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
     private var adropAdManager : AdropAdManager?
     private var messenger: FlutterBinaryMessenger?
     private var nativeViewFactory: AdropNativeAdViewFactory?
+    private let consentManager = FlutterAdropConsentManager()
 
     private let ModuleError = FlutterError(
         code: "ERROR_CODE_INTERNAL",
@@ -167,6 +168,23 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
             nativeViewFactory?.performClick(requestId)
             result(nil)
+
+        case AdropMethod.REQUEST_CONSENT_INFO_UPDATE:
+            consentManager.requestConsentInfoUpdate(result: result)
+
+        case AdropMethod.GET_CONSENT_STATUS:
+            consentManager.getConsentStatus(result: result)
+
+        case AdropMethod.CAN_REQUEST_ADS:
+            consentManager.canRequestAds(result: result)
+
+        case AdropMethod.RESET_CONSENT:
+            consentManager.reset(result: result)
+
+        case AdropMethod.SET_CONSENT_DEBUG_SETTINGS:
+            let geographyValue = (call.arguments as? [String: Any?])?["geography"] as? Int ?? 0
+            consentManager.setDebugSettings(geographyValue: geographyValue, result: result)
+
         default:
             result(FlutterMethodNotImplemented)
         }

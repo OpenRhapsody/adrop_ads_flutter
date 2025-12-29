@@ -47,6 +47,11 @@ class Home extends StatelessWidget {
                   Navigator.pushNamed(context, '/propertyExample');
                 },
                 child: const Text('Property Example')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/consentExample');
+                },
+                child: const Text('Consent Example')),
           ],
         ),
       ),

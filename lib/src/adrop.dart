@@ -1,9 +1,15 @@
 import 'dart:developer';
 
 import 'adrop_platform_interface.dart';
+import 'consent/adrop_consent_manager.dart';
 import 'model/adrop_theme.dart';
 
 class Adrop {
+  /// Consent Manager for managing user consent (GDPR, CCPA, etc.)
+  ///
+  /// Use this to request consent info updates and check consent status.
+  static final AdropConsentManager consentManager = AdropConsentManager();
+
   /// Initializes Adrop
   ///
   /// [production] When false, display error log in sdk

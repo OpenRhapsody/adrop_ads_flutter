@@ -9,6 +9,7 @@ import io.adrop.adrop_ads.banner.AdropBannerViewFactory
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropError
 import io.adrop.adrop_ads.bridge.AdropMethod
+import io.adrop.adrop_ads.consent.FlutterAdropConsentManager
 import io.adrop.adrop_ads.metrics.FlutterAdropMetrics
 import io.adrop.adrop_ads.native.AdropNativeAdViewFactory
 import io.adrop.ads.Adrop
@@ -34,6 +35,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var bannerManager: AdropBannerManager
     private lateinit var messenger: BinaryMessenger
     private val adManager = AdropAdManager()
+    private val consentManager = FlutterAdropConsentManager()
 
     private lateinit var nativeAdViewFactory: AdropNativeAdViewFactory
 
@@ -229,14 +231,38 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     nativeAdViewFactory.performClick(call.argument("requestId") as String? ?: "")
                     result.success(null)
                 }
+
+                AdropMethod.REQUEST_CONSENT_INFO_UPDATE -> {
+                    consentManager.requestConsentInfoUpdate(activity, result)
+                }
+
+                AdropMethod.GET_CONSENT_STATUS -> {
+                    consentManager.getConsentStatus(context, result)
+                }
+
+                AdropMethod.CAN_REQUEST_ADS -> {
+                    consentManager.canRequestAds(context, result)
+                }
+
+                AdropMethod.RESET_CONSENT -> {
+                    consentManager.reset(context, result)
+                }
+
+                AdropMethod.SET_CONSENT_DEBUG_SETTINGS -> {
+                    val geographyValue = call.argument("geography") as Int? ?: 0
+                    consentManager.setDebugSettings(context, geographyValue, result)
+                }
+
                 else -> result.notImplemented()
             }
         } catch (e: AdropError) {
             result.error(e.code, e.message, null)
         } catch (e: Exception) {
             e.printStackTrace()
+            result.error("EXCEPTION", e.message, e.stackTraceToString())
         } catch (e: Error) {
             e.printStackTrace()
+            result.error("ERROR", e.message, e.stackTraceToString())
         }
     }
 

@@ -19,6 +19,13 @@ class AdropMethod {
 
   static const performClick = "performClick";
 
+  // Consent methods
+  static const requestConsentInfoUpdate = "requestConsentInfoUpdate";
+  static const getConsentStatus = "getConsentStatus";
+  static const canRequestAds = "canRequestAds";
+  static const resetConsent = "resetConsent";
+  static const setConsentDebugSettings = "setConsentDebugSettings";
+
   static const didReceiveAd = "onAdReceived";
   static const didClickAd = "onAdClicked";
   static const didFailToReceiveAd = "onAdFailedToReceive";

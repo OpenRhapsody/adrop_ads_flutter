@@ -1,6 +1,6 @@
 name: adrop_ads_flutter
 description: AdropAds flutter plugin that shows ads using native platform views
-version: 1.7.1
+version: 1.7.2
 publisher: dev@openrhapsody.com
 homepage: https://adrop.io
 repository: https://github.com/OpenRhapsody/adrop_ads_flutter
@@ -12,13 +12,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mocktail: ^1.0.2
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  mocktail: ^1.0.2
   test: ^1.21.4
 
 flutter:

@@ -16,6 +16,13 @@ object AdropMethod {
     const val LOG_EVENT = "logEvent"
     const val PERFORM_CLICK = "performClick"
 
+    // Consent methods
+    const val REQUEST_CONSENT_INFO_UPDATE = "requestConsentInfoUpdate"
+    const val GET_CONSENT_STATUS = "getConsentStatus"
+    const val CAN_REQUEST_ADS = "canRequestAds"
+    const val RESET_CONSENT = "resetConsent"
+    const val SET_CONSENT_DEBUG_SETTINGS = "setConsentDebugSettings"
+
     const val DID_RECEIVE_AD = "onAdReceived"
     const val DID_CLICK_AD = "onAdClicked"
     const val DID_FAIL_TO_RECEIVE_AD = "onAdFailedToReceive"

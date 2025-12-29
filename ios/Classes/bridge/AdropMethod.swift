@@ -17,6 +17,13 @@ struct AdropMethod {
     static let LOG_EVENT = "logEvent"
     static let PERFORM_CLICK = "performClick"
 
+    // Consent methods
+    static let REQUEST_CONSENT_INFO_UPDATE = "requestConsentInfoUpdate"
+    static let GET_CONSENT_STATUS = "getConsentStatus"
+    static let CAN_REQUEST_ADS = "canRequestAds"
+    static let RESET_CONSENT = "resetConsent"
+    static let SET_CONSENT_DEBUG_SETTINGS = "setConsentDebugSettings"
+
     static let DID_RECEIVE_AD = "onAdReceived"
     static let DID_CLICK_AD = "onAdClicked"
     static let DID_FAILED_TO_RECEIVE = "onAdFailedToReceive"
