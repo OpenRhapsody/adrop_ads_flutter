@@ -2,6 +2,7 @@ import 'package:adrop_ads_flutter/src/adrop_ad.dart';
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_method.dart';
+import 'package:adrop_ads_flutter/src/model/browser_target.dart';
 import 'package:adrop_ads_flutter/src/model/creative_size.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_event.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_listener.dart';
@@ -29,6 +30,7 @@ class AdropNativeAd {
   String _txId = '';
   String _campaignId = '';
   String _destinationURL = '';
+  int? _browserTarget;
   bool _loaded;
   AdropNativeProperties _properties = AdropNativeProperties.from(null);
   CreativeSize _creativeSize = const CreativeSize(width: 0.0, height: 0.0);
@@ -71,6 +73,11 @@ class AdropNativeAd {
   /// Returns an Adrop ad's destination url.
   String get destinationURL => _destinationURL;
 
+  /// Returns an Adrop ad's browser target.
+  BrowserTarget? get browserTarget {
+    return BrowserTarget.fromOrdinal(_browserTarget);
+  }
+
   /// Returns an Adrop native ad's properties.
   AdropNativeProperties get properties => _properties;
 
@@ -97,6 +104,7 @@ class AdropNativeAd {
     _txId = call.arguments['txId'] ?? '';
     _campaignId = call.arguments['campaignId'] ?? '';
     _destinationURL = call.arguments['destinationURL'] ?? '';
+    _browserTarget = call.arguments['browserTarget'];
 
     if (args['creativeSizeWidth'] != null &&
         args['creativeSizeHeight'] != null) {

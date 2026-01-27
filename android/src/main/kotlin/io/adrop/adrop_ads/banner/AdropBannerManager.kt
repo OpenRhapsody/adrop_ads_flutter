@@ -91,7 +91,8 @@ class AdropBannerManager(
             "requestId" to requestIdMap[banner],
             "destinationURL" to banner.destinationURL,
             "creativeSizeWidth" to banner.creativeSize.width,
-            "creativeSizeHeight" to banner.creativeSize.height
+            "creativeSizeHeight" to banner.creativeSize.height,
+            "browserTarget" to banner.browserTarget
         )
     }
 }

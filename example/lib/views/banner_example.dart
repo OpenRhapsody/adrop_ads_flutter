@@ -44,7 +44,7 @@ class _BannerExampleState extends State<BannerExample> {
         // Callback: Called when the ad is successfully received
         onAdReceived: (unitId, metadata) {
           debugPrint(
-              "ad received $unitId, $metadata ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height}");
+              "ad received $unitId, $metadata ${bannerView.creativeSize?.width}x${bannerView.creativeSize?.height} browserTarget: ${metadata?['browserTarget']}");
           setState(() {
             isLoaded = true;
             errorCode = null;
@@ -52,11 +52,13 @@ class _BannerExampleState extends State<BannerExample> {
         },
         // Callback: Called when the ad is clicked
         onAdClicked: (unitId, metadata) {
-          debugPrint("ad clicked $unitId, $metadata");
+          debugPrint(
+              "ad clicked $unitId, $metadata browserTarget: ${metadata?['browserTarget']}");
         },
         // Callback: Called when the ad impression is recorded
         onAdImpression: (unitId, metadata) {
-          debugPrint("ad impressed $unitId, $metadata");
+          debugPrint(
+              "ad impressed $unitId, $metadata browserTarget: ${metadata?['browserTarget']}");
         },
         // Callback: Called when the ad fails to load
         onAdFailedToReceive: (unitId, error) {

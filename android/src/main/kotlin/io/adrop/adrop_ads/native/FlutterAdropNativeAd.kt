@@ -84,7 +84,8 @@ class FlutterAdropNativeAd(
             "txId" to ad.txId,
             "campaignId" to ad.campaignId,
             "isBackfilled" to ad.isBackfilled,
-            "callToAction" to ad.callToAction
+            "callToAction" to ad.callToAction,
+            "browserTarget" to ad.browserTarget
         )
     }
 }

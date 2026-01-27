@@ -84,7 +84,8 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
             "campaignId": banner.campaignId,
             "destinationURL": banner.destinationURL,
             "creativeSizeWidth": banner.creativeSize.width,
-            "creativeSizeHeight": banner.creativeSize.height
+            "creativeSizeHeight": banner.creativeSize.height,
+            "browserTarget": banner.browserTargetValue.rawValue
         ]
     }
 }

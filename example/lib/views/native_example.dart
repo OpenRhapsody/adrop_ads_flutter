@@ -81,7 +81,7 @@ class _NativeExampleState extends State<NativeExample> {
           // Access ad properties like profile, headline, body, asset, etc.
           onAdReceived: (ad) {
             debugPrint(
-                'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height}');
+                'nativeAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.creativeSize.width}x${ad.creativeSize.height} browserTarget: ${ad.browserTarget}');
             debugPrint('nativeAd properties: ${ad.properties.creative}');
             // Load HTML creative content into WebView
             webViewController.loadHtmlString(ad.properties.creative ?? '');
@@ -99,12 +99,14 @@ class _NativeExampleState extends State<NativeExample> {
             });
           },
           // Callback: Called when the ad is clicked
-          onAdClicked: (_) {
-            debugPrint("nativeAd clicked $unitId");
+          onAdClicked: (ad) {
+            debugPrint(
+                "nativeAd clicked $unitId browserTarget: ${ad.browserTarget}");
           },
           // Callback: Called when the ad impression is recorded
-          onAdImpression: (_) {
-            debugPrint("nativeAd impressed $unitId");
+          onAdImpression: (ad) {
+            debugPrint(
+                "nativeAd impressed $unitId browserTarget: ${ad.browserTarget}");
           },
         ));
 

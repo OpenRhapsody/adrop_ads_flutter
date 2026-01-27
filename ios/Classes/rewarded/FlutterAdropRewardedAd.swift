@@ -86,6 +86,7 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
             "creativeId": ad.creativeId,
             "txId": ad.txId,
             "campaignId": ad.campaignId,
+            "browserTarget": ad.browserTargetValue.rawValue
         ]
     }
 }

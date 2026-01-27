@@ -1,3 +1,7 @@
+## 1.7.3
+- Added `BrowserTarget` support to control how ad destination URLs open (`external` for system browser, `internal` for in-app browser)
+- Added `browserTarget` property to all ad types (`AdropBannerView`, `AdropInterstitialAd`, `AdropNativeAd`, `AdropPopupAd`, `AdropRewardedAd`)
+
 ## 1.7.2
 - Added User Messaging Platform (UMP) support for GDPR consent management on Android and iOS
 

@@ -101,7 +101,8 @@ class FlutterAdropPopupAd(
             "creativeId" to ad.creativeId,
             "txId" to ad.txId,
             "campaignId" to ad.campaignId,
-            "destinationURL" to ad.destinationURL
+            "destinationURL" to ad.destinationURL,
+            "browserTarget" to ad.browserTarget
         )
     }
 }

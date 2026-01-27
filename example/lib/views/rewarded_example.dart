@@ -50,7 +50,7 @@ class _RewardedExampleState extends State<RewardedExample> {
           // Callback: Called when the ad is successfully loaded
           onAdReceived: (ad) {
             debugPrint(
-                "rewardedAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId}");
+                "rewardedAd received $unitId, ${ad.creativeId} ${ad.txId} ${ad.campaignId} browserTarget: ${ad.browserTarget}");
             setState(() {
               isLoaded = true;
               errorCode = null;
@@ -64,8 +64,9 @@ class _RewardedExampleState extends State<RewardedExample> {
             });
           },
           // Callback: Called when the ad is clicked
-          onAdClicked: (_) {
-            debugPrint("rewardedAd clicked $unitId");
+          onAdClicked: (ad) {
+            debugPrint(
+                "rewardedAd clicked $unitId browserTarget: ${ad.browserTarget}");
           },
           // Callback: Called when the full-screen ad is presented
           onAdDidPresentFullScreen: (_) {

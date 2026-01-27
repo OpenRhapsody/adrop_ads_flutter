@@ -80,7 +80,8 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "txId": ad.txId,
             "campaignId": ad.campaignId,
             "isBackfilled": ad.isBackfilled,
-            "callToAction": ad.callToAction
+            "callToAction": ad.callToAction,
+            "browserTarget": ad.browserTargetValue.rawValue
         ]
     }
 }

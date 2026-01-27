@@ -62,6 +62,7 @@ abstract class AdropAd {
   String _txId = '';
   String _destinationURL = '';
   String _campaignId = '';
+  int? _browserTarget;
   bool _loaded;
   final AdropAdListener? listener;
   late final String _requestId;
@@ -115,6 +116,11 @@ abstract class AdropAd {
     return _destinationURL;
   }
 
+  /// Returns an Adrop ad's browser target.
+  BrowserTarget? get browserTarget {
+    return BrowserTarget.fromOrdinal(_browserTarget);
+  }
+
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
     return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
@@ -156,6 +162,7 @@ abstract class AdropAd {
       _txId = call.arguments['txId'] ?? '';
       _campaignId = call.arguments['campaignId'] ?? '';
       _destinationURL = call.arguments['destinationURL'] ?? '';
+      _browserTarget = call.arguments['browserTarget'];
     }
 
     switch (call.method) {

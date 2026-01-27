@@ -68,7 +68,8 @@ class _PopupExampleState extends State<PopupExample> {
       listener: AdropPopupListener(
         // Callback: Called when the ad is successfully loaded
         onAdReceived: (ad) {
-          debugPrint("PopupAd received ${ad.unitId}");
+          debugPrint(
+              "PopupAd received ${ad.unitId} browserTarget: ${ad.browserTarget}");
           setState(() {
             isLoaded = true;
             errorCode = null;
@@ -97,7 +98,7 @@ class _PopupExampleState extends State<PopupExample> {
         // Callback: Called when the ad impression is recorded
         onAdImpression: (ad) {
           debugPrint(
-              "PopupAd impression ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.destinationURL}");
+              "PopupAd impression ${ad.creativeId} ${ad.txId} ${ad.campaignId} ${ad.destinationURL} browserTarget: ${ad.browserTarget}");
         },
       ),
       // Optional: Set custom background color for the popup

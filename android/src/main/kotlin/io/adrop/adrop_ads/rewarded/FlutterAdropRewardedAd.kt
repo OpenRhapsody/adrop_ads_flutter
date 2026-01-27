@@ -90,7 +90,8 @@ class FlutterAdropRewardedAd(
         return mapOf(
             "creativeId" to ad.creativeId,
             "txId" to ad.txId,
-            "campaignId" to ad.campaignId
+            "campaignId" to ad.campaignId,
+            "browserTarget" to ad.browserTarget
         )
     }
 }

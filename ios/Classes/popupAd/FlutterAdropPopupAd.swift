@@ -101,7 +101,8 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
             "creativeId": ad.creativeId,
             "txId": ad.txId,
             "campaignId": ad.campaignId,
-            "destinationURL": ad.destinationURL
+            "destinationURL": ad.destinationURL,
+            "browserTarget": ad.browserTargetValue.rawValue
         ]
     }
 }

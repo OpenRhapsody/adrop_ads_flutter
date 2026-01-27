@@ -81,7 +81,8 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
             "unitId": ad.unitId,
             "creativeId": ad.creativeId,
             "txId": ad.txId,
-            "campaignId": ad.campaignId
+            "campaignId": ad.campaignId,
+            "browserTarget": ad.browserTargetValue.rawValue
         ]
     }
 }

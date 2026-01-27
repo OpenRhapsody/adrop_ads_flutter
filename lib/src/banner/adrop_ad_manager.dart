@@ -38,6 +38,7 @@ class AdropAdManager {
         'txId': txId,
         'campaignId': campaignId,
         'destinationURL': destinationURL,
+        'browserTarget': args['browserTarget'],
       };
 
       switch (call.method) {
