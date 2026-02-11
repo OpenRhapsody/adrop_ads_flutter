@@ -18,6 +18,7 @@ typedef AdropAdErrorCallback = void Function(
 /// [onAdDidDismissFullScreen] Gets invoked when the interstitial ad disappeared.
 /// [onAdFailedToReceive] Gets invoked with [AdropErrorCode] when the interstitial ad fails to be received.
 /// [onAdFailedToShowFullScreen] Gets invoked with [AdropErrorCode] when the interstitial ad fails to be shown.
+/// [onAdBackButtonPressed] Gets invoked when the user presses the back button while the interstitial ad is displayed. (Android only)
 class AdropInterstitialListener {
   final AdropAdCallback? onAdReceived;
   final AdropAdCallback? onAdClicked;
@@ -28,6 +29,7 @@ class AdropInterstitialListener {
   final AdropAdCallback? onAdDidDismissFullScreen;
   final AdropAdErrorCallback? onAdFailedToReceive;
   final AdropAdErrorCallback? onAdFailedToShowFullScreen;
+  final AdropAdCallback? onAdBackButtonPressed;
 
   const AdropInterstitialListener(
       {this.onAdReceived,
@@ -38,5 +40,6 @@ class AdropInterstitialListener {
       this.onAdWillDismissFullScreen,
       this.onAdDidDismissFullScreen,
       this.onAdFailedToReceive,
-      this.onAdFailedToShowFullScreen});
+      this.onAdFailedToShowFullScreen,
+      this.onAdBackButtonPressed});
 }

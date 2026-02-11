@@ -27,6 +27,12 @@ class AdropAdManager {
 
     fun close(adType: AdType, requestId: String) {
         when (adType) {
+            AdType.Interstitial -> {
+                val interstitialAd = ads[keyOf(adType, requestId)] as? FlutterAdropInterstitialAd
+                interstitialAd?: return
+
+                interstitialAd.close()
+            }
             AdType.Popup -> {
                 val popupAd = ads[keyOf(adType, requestId)] as? FlutterAdropPopupAd
                 popupAd?: return

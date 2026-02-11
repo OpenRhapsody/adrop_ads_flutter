@@ -9,6 +9,7 @@ import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.interstitial.AdropInterstitialAd
+import io.adrop.ads.interstitial.AdropInterstitialAdCloseListener
 import io.adrop.ads.interstitial.AdropInterstitialAdListener
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
@@ -18,7 +19,7 @@ class FlutterAdropInterstitialAd(
     unitId: String,
     requestId: String,
     messenger: BinaryMessenger
-): AdropAd(), AdropInterstitialAdListener {
+): AdropAd(), AdropInterstitialAdListener, AdropInterstitialAdCloseListener {
     private var interstitialAd: AdropInterstitialAd = AdropInterstitialAd(context, unitId)
     private var adropEventListenerChannel: MethodChannel?
     private var originalStatusBarColor: Int = 0
@@ -26,6 +27,7 @@ class FlutterAdropInterstitialAd(
 
     init {
         interstitialAd.interstitialAdListener = this
+        interstitialAd.closeListener = this
         val channelName = AdropChannel.adropEventListenerChannelOf(AdType.Interstitial, requestId)
         adropEventListenerChannel = if (channelName != null) {
             MethodChannel(messenger, channelName)
@@ -81,6 +83,14 @@ class FlutterAdropInterstitialAd(
         showActivity?.window?.statusBarColor = originalStatusBarColor
         showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, mapOf("errorCode" to errorCode.name))
+    }
+
+    override fun onBackPressed(ad: AdropInterstitialAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_BACK_BUTTON_PRESSED, metadataOf(ad))
+    }
+
+    fun close() {
+        interstitialAd.close()
     }
 
     private fun metadataOf(ad: AdropInterstitialAd): Map<String, Any?> {

@@ -63,7 +63,8 @@
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdWillDismissFullScreen.html">onAdWillDismissFullScreen</a> Gets invoked when the interstitial ad is about to disappear. (iOS only)
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdDidDismissFullScreen.html">onAdDidDismissFullScreen</a> Gets invoked when the interstitial ad disappeared.
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdFailedToReceive.html">onAdFailedToReceive</a> Gets invoked with <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a> when the interstitial ad fails to be received.
-<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdFailedToShowFullScreen.html">onAdFailedToShowFullScreen</a> Gets invoked with <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a> when the interstitial ad fails to be shown.</p>
+<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdFailedToShowFullScreen.html">onAdFailedToShowFullScreen</a> Gets invoked with <a href="../adrop_ads_flutter/AdropErrorCode.html">AdropErrorCode</a> when the interstitial ad fails to be shown.
+<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdBackButtonPressed.html">onAdBackButtonPressed</a> Gets invoked when the user presses the back button while the interstitial ad is displayed. (Android only)</p>
 </section>
 
 
@@ -92,7 +93,7 @@
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="AdropInterstitialListener.new" class="callable">
-          <span class="name"><a href="../adrop_ads_flutter/AdropInterstitialListener/AdropInterstitialListener.html">AdropInterstitialListener.new</a></span><span class="signature">({<span class="parameter" id="-param-onAdReceived"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdReceived</span>, </span><span class="parameter" id="-param-onAdClicked"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdClicked</span>, </span><span class="parameter" id="-param-onAdImpression"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdImpression</span>, </span><span class="parameter" id="-param-onAdWillPresentFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdWillPresentFullScreen</span>, </span><span class="parameter" id="-param-onAdDidPresentFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdDidPresentFullScreen</span>, </span><span class="parameter" id="-param-onAdWillDismissFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdWillDismissFullScreen</span>, </span><span class="parameter" id="-param-onAdDidDismissFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdDidDismissFullScreen</span>, </span><span class="parameter" id="-param-onAdFailedToReceive"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToReceive</span>, </span><span class="parameter" id="-param-onAdFailedToShowFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToShowFullScreen</span></span>})</span>
+          <span class="name"><a href="../adrop_ads_flutter/AdropInterstitialListener/AdropInterstitialListener.html">AdropInterstitialListener.new</a></span><span class="signature">({<span class="parameter" id="-param-onAdReceived"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdReceived</span>, </span><span class="parameter" id="-param-onAdClicked"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdClicked</span>, </span><span class="parameter" id="-param-onAdImpression"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdImpression</span>, </span><span class="parameter" id="-param-onAdWillPresentFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdWillPresentFullScreen</span>, </span><span class="parameter" id="-param-onAdDidPresentFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdDidPresentFullScreen</span>, </span><span class="parameter" id="-param-onAdWillDismissFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdWillDismissFullScreen</span>, </span><span class="parameter" id="-param-onAdDidDismissFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdDidDismissFullScreen</span>, </span><span class="parameter" id="-param-onAdFailedToReceive"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToReceive</span>, </span><span class="parameter" id="-param-onAdFailedToShowFullScreen"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToShowFullScreen</span>, </span><span class="parameter" id="-param-onAdBackButtonPressed"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdBackButtonPressed</span></span>})</span>
         </dt>
         <dd>
           
@@ -115,6 +116,18 @@
 <dd class="inherited">
   The hash code for this object.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="onAdBackButtonPressed" class="property">
+  <span class="name"><a href="../adrop_ads_flutter/AdropInterstitialListener/onAdBackButtonPressed.html">onAdBackButtonPressed</a></span>
+  <span class="signature">&#8594; <a href="../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -323,7 +336,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.7.3
+      1.7.4
   </span>
   
 </footer>

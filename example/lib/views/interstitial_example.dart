@@ -90,6 +90,11 @@ class _InterstitialExampleState extends State<InterstitialExample> {
               errorCode = error;
             });
           },
+          // Callback: Called when the user presses the back button (Android only)
+          onAdBackButtonPressed: (ad) {
+            debugPrint("interstitialAd back button pressed $unitId");
+            (ad as AdropInterstitialAd).close();
+          },
         ));
 
     setState(() {

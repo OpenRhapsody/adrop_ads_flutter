@@ -37,4 +37,5 @@ class AdropMethod {
   static const willDismissFullScreen = "onAdWillDismissFullScreen";
   static const willPresentFullScreen = "onAdWillPresentFullScreen";
   static const didHandleEarnReward = "handleEarnReward";
+  static const didBackButtonPressed = "onAdBackButtonPressed";
 }

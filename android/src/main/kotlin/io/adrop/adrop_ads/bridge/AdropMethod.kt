@@ -32,4 +32,5 @@ object AdropMethod {
     const val DID_FAIL_TO_SHOW_FULL_SCREEN = "onAdFailedToShowFullScreen"
     const val DID_IMPRESSION = "onAdImpression"
     const val HANDLE_EARN_REWARD = "handleEarnReward"
+    const val DID_BACK_BUTTON_PRESSED = "onAdBackButtonPressed"
 }

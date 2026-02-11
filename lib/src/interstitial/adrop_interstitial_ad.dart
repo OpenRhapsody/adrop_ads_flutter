@@ -22,6 +22,12 @@ class AdropInterstitialAd extends AdropAd {
             onAdDidDismissFullScreen: listener?.onAdDidDismissFullScreen,
             onAdWillDismissFullScreen: listener?.onAdWillDismissFullScreen,
             onAdFailedToShowFullScreen: listener?.onAdFailedToShowFullScreen,
+            onAdBackButtonPressed: listener?.onAdBackButtonPressed,
           ),
         );
+
+  /// Closes the interstitial ad. (Android only)
+  Future<void> close() async {
+    return closeAd();
+  }
 }

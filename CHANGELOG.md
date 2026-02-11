@@ -1,3 +1,6 @@
+## 1.7.4
+- [Android] Added `close()` method and back button support for `AdropInterstitialAd`
+
 ## 1.7.3
 - Added `BrowserTarget` support to control how ad destination URLs open (`external` for system browser, `internal` for in-app browser)
 - Added `browserTarget` property to all ad types (`AdropBannerView`, `AdropInterstitialAd`, `AdropNativeAd`, `AdropPopupAd`, `AdropRewardedAd`)

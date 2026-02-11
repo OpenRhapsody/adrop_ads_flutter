@@ -37,6 +37,7 @@ class AdropAdListener {
   final AdropAdErrorCallback? onAdFailedToReceive;
   final AdropAdErrorCallback? onAdFailedToShowFullScreen;
   final AdropAdRewardEventCallback? onAdEarnRewardHandler;
+  final AdropAdCallback? onAdBackButtonPressed;
 
   AdropAdListener({
     this.onAdReceived,
@@ -49,6 +50,7 @@ class AdropAdListener {
     this.onAdWillDismissFullScreen,
     this.onAdFailedToShowFullScreen,
     this.onAdEarnRewardHandler,
+    this.onAdBackButtonPressed,
   });
 }
 
@@ -199,6 +201,9 @@ abstract class AdropAd {
       case AdropMethod.didHandleEarnReward:
         listener?.onAdEarnRewardHandler
             ?.call(this, event.type ?? 0, event.amount ?? 0);
+        break;
+      case AdropMethod.didBackButtonPressed:
+        listener?.onAdBackButtonPressed?.call(this);
         break;
     }
   }
