@@ -14,6 +14,7 @@ object AdropMethod {
     const val SET_PROPERTY = "setProperty"
     const val GET_PROPERTY = "getProperty"
     const val LOG_EVENT = "logEvent"
+    const val SEND_EVENT = "sendEvent"
     const val PERFORM_CLICK = "performClick"
 
     // Consent methods

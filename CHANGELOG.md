@@ -1,3 +1,7 @@
+## 1.8.0
+- Added `AdropMetrics.sendEvent()` method with typed `Map<String, dynamic>` params support
+- Deprecated `AdropMetrics.logEvent()` in favor of `sendEvent()`
+
 ## 1.7.4
 - [Android] Added `close()` method and back button support for `AdropInterstitialAd`
 

@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:adrop_ads_flutter_example/utils/error_utils.dart';
+
+import '../constants/adrop_unit_id.dart';
 import 'package:flutter/material.dart';
 
 /// Banner Ad Example
@@ -30,7 +31,9 @@ class _BannerExampleState extends State<BannerExample> {
   /// Returns the ad unit ID for the current platform
   /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    return Platform.isAndroid ? testUnitId_80 : testUnitId_80;
+    return Platform.isAndroid
+        ? AdropUnitId.bannerImage320x50
+        : AdropUnitId.bannerImage320x50;
   }
 
   @override
@@ -80,7 +83,7 @@ class _BannerExampleState extends State<BannerExample> {
 
     // Example: Banner view with empty/invalid unit ID to demonstrate error handling
     emptyBannerView = AdropBannerView(
-        unitId: testUnitId,
+        unitId: AdropUnitId.invalid,
         listener: AdropBannerListener(
           onAdReceived: (unitId, metadata) {
             debugPrint("ad received $unitId $metadata");

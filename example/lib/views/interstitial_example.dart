@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/adrop_unit_id.dart';
 
 import '../utils/error_utils.dart';
 
@@ -29,8 +30,8 @@ class _InterstitialExampleState extends State<InterstitialExample> {
   /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
     return Platform.isAndroid
-        ? testUnitIdInterstitialAd
-        : testUnitIdInterstitialAd;
+        ? AdropUnitId.interstitial
+        : AdropUnitId.interstitial;
   }
 
   @override
@@ -159,7 +160,7 @@ class _InterstitialExampleState extends State<InterstitialExample> {
                         onPressed: disabledReset()
                             ? null
                             : () {
-                                reset(testUnitId);
+                                reset(AdropUnitId.invalid);
                               },
                         child: const Text('reset (empty ad)')),
                     const Text(

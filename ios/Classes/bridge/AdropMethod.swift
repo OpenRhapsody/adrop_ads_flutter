@@ -15,6 +15,7 @@ struct AdropMethod {
     static let SET_PROPERTY = "setProperty"
     static let GET_PROPERTY = "getProperty"
     static let LOG_EVENT = "logEvent"
+    static let SEND_EVENT = "sendEvent"
     static let PERFORM_CLICK = "performClick"
 
     // Consent methods

@@ -14,6 +14,7 @@ class AdropMethod {
   static const setProperty = "setProperty";
   static const getProperty = "getProperty";
   static const logEvent = "logEvent";
+  static const sendEvent = "sendEvent";
   static const pageTrack = "pageTrack";
   static const pageAttach = "pageAttach";
 

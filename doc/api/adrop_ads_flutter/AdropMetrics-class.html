@@ -162,7 +162,7 @@
     <h2>Static Methods</h2>
     <dl class="callables">
         <dt id="logEvent" class="callable">
-  <span class="name"><a href="../adrop_ads_flutter/AdropMetrics/logEvent.html">logEvent</a></span><span class="signature">(<wbr><span class="parameter" id="logEvent-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, [</span><span class="parameter" id="logEvent-param-params"><span class="type-annotation">dynamic</span> <span class="parameter-name">params</span></span>])
+  <span class="name deprecated"><a class="deprecated" href="../adrop_ads_flutter/AdropMetrics/logEvent.html">logEvent</a></span><span class="signature">(<wbr><span class="parameter" id="logEvent-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, [</span><span class="parameter" id="logEvent-param-params"><span class="type-annotation">dynamic</span> <span class="parameter-name">params</span></span>])
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
@@ -183,6 +183,19 @@
 </dt>
 <dd>
   Get all user properties saved in the SDK.
+  
+
+</dd>
+
+        <dt id="sendEvent" class="callable">
+  <span class="name"><a href="../adrop_ads_flutter/AdropMetrics/sendEvent.html">sendEvent</a></span><span class="signature">(<wbr><span class="parameter" id="sendEvent-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, [</span><span class="parameter" id="sendEvent-param-params"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">params</span></span>])
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Sends a custom event with the given <code>name</code> and event <code>params</code>.
   
 
 </dd>
@@ -227,7 +240,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.7.4
+      1.8.0
   </span>
   
 </footer>

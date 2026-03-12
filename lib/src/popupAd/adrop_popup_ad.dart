@@ -50,7 +50,7 @@ class AdropPopupAd extends AdropAd {
   }
 
   Future<void> close() async {
-    closeAd();
+    await closeAd();
   }
 
   /// Returns an Adrop ad's creativeIds.

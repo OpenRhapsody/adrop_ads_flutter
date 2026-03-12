@@ -92,6 +92,13 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             AdropMetrics.logEvent(name: name, params: encodableParams)
             result(nil)
 
+        case AdropMethod.SEND_EVENT:
+            let name = (call.arguments as? [String: Any?])?["name"] as? String ?? ""
+            let params = (call.arguments as? [String: Any?])?["params"] as? [String: Any]
+
+            AdropMetrics.sendEvent(name: name, params: params)
+            result(nil)
+
         case AdropMethod.LOAD_BANNER:
             let args = call.arguments as? [String: Any?]
             let unitId = args?["unitId"] as? String ?? ""

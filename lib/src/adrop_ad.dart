@@ -131,21 +131,21 @@ abstract class AdropAd {
 
   /// Requests to show an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> show() async {
-    return _invokeChannel.invokeMethod(
+    return await _invokeChannel.invokeMethod(
         AdropMethod.showAd, {"adType": _adType.index, "requestId": _requestId});
   }
 
   /// Requests to customize a popup ad.
   @protected
   Future<void> customize([dynamic data]) async {
-    return _invokeChannel.invokeMethod(AdropMethod.customizeAd,
+    return await _invokeChannel.invokeMethod(AdropMethod.customizeAd,
         {"adType": _adType.index, "requestId": _requestId, "data": data});
   }
 
   /// Requests to close a popup ad.
   @protected
   Future<void> closeAd() async {
-    return _invokeChannel.invokeMethod(AdropMethod.closeAd,
+    return await _invokeChannel.invokeMethod(AdropMethod.closeAd,
         {"adType": _adType.index, "requestId": _requestId});
   }
 

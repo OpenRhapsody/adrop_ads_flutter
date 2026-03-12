@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../test_unit_ids.dart';
+import '../constants/adrop_unit_id.dart';
 import '../utils/error_utils.dart';
 
 /// Popup Ad Example
@@ -31,22 +31,22 @@ class _PopupExampleState extends State<PopupExample> {
   /// Replace with your actual ad unit ID from Adrop Console
   String unitCenter() {
     return Platform.isAndroid
-        ? testUnitIdPopupAdCenter
-        : testUnitIdPopupAdCenter;
+        ? AdropUnitId.popupCenter
+        : AdropUnitId.popupCenter;
   }
 
   /// Returns the bottom popup ad unit ID for the current platform
   /// Replace with your actual ad unit ID from Adrop Console
   String unitBottom() {
     return Platform.isAndroid
-        ? testUnitIdPopupAdBottom
-        : testUnitIdPopupAdBottom;
+        ? AdropUnitId.popupBottom
+        : AdropUnitId.popupBottom;
   }
 
   @override
   void initState() {
     super.initState();
-    reset(testUnitIdPopupAdBottom);
+    reset(AdropUnitId.popupBottom);
   }
 
   Color getRandomColor() {
@@ -172,7 +172,7 @@ class _PopupExampleState extends State<PopupExample> {
                     onPressed: disabledReset()
                         ? null
                         : () {
-                            reset(testUnitId);
+                            reset(AdropUnitId.invalid);
                           },
                     child: const Text('reset (empty ad)')),
                 const Text(

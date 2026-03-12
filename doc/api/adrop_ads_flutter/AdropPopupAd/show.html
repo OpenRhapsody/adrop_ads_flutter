@@ -70,7 +70,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; show() async {
-  return _invokeChannel.invokeMethod(
+  return await _invokeChannel.invokeMethod(
       AdropMethod.showAd, {&quot;adType&quot;: _adType.index, &quot;requestId&quot;: _requestId});
 }</code></pre>
 </section>
@@ -100,7 +100,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.7.4
+      1.8.0
   </span>
   
 </footer>

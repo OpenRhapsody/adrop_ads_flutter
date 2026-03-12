@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:adrop_ads_flutter/adrop_ads_flutter.dart';
-import 'package:adrop_ads_flutter_example/test_unit_ids.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/adrop_unit_id.dart';
 
 import '../utils/error_utils.dart';
 
@@ -29,7 +30,7 @@ class _RewardedExampleState extends State<RewardedExample> {
   /// Returns the ad unit ID for the current platform
   /// Replace with your actual ad unit ID from Adrop Console
   String unit() {
-    return Platform.isAndroid ? testUnitIdRewardedAd : testUnitIdRewardedAd;
+    return Platform.isAndroid ? AdropUnitId.rewarded : AdropUnitId.rewarded;
   }
 
   @override
@@ -157,7 +158,7 @@ class _RewardedExampleState extends State<RewardedExample> {
                         onPressed: disabledReset()
                             ? null
                             : () {
-                                reset(testUnitId);
+                                reset(AdropUnitId.invalid);
                               },
                         child: const Text('reset (empty ad)')),
                     const Text(

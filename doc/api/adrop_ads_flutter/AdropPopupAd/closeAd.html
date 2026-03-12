@@ -76,7 +76,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@protected
 Future&lt;void&gt; closeAd() async {
-  return _invokeChannel.invokeMethod(AdropMethod.closeAd,
+  return await _invokeChannel.invokeMethod(AdropMethod.closeAd,
       {&quot;adType&quot;: _adType.index, &quot;requestId&quot;: _requestId});
 }</code></pre>
 </section>
@@ -106,7 +106,7 @@ Future&lt;void&gt; closeAd() async {
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.7.4
+      1.8.0
   </span>
   
 </footer>

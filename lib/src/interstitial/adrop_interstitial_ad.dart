@@ -28,6 +28,6 @@ class AdropInterstitialAd extends AdropAd {
 
   /// Closes the interstitial ad. (Android only)
   Future<void> close() async {
-    return closeAd();
+    return await closeAd();
   }
 }

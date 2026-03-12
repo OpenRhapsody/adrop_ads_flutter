@@ -14,17 +14,35 @@ class AdropMetrics {
         .invokeMethod(AdropMethod.setProperty, {"key": key, "value": value});
   }
 
+  /// Sends a custom event with the given [name] and event [params].
+  ///
+  /// The event with the same [name] can have up to 20 [params].
+  ///
+  /// The [name] of the event. Some event names are reserved.
+  ///
+  /// The map of event [params]. String, Integer, Float, Boolean param types are supported.
+  static Future<void> sendEvent(String name,
+      [Map<String, dynamic>? params]) async {
+    return await _channel
+        .invokeMethod(AdropMethod.sendEvent, {"name": name, "params": params});
+  }
+
   /// Logs a custom event with the given [name] and event [params].
   ///
   /// The event with the same [name] can have up to 20 [params].
   ///
   /// The [name] of the event. Some event names are reserved.
-  /// See [setProperty] for the list of reserved event names.
   ///
   /// The map of event [params]. String, Integer, Float, Boolean param types are supported.
+  @Deprecated('Use sendEvent instead')
   static Future<void> logEvent(String name, [dynamic params]) async {
-    return await _channel
-        .invokeMethod(AdropMethod.logEvent, {"name": name, "params": params});
+    if (params is Map<String, dynamic>) {
+      return await sendEvent(name, params);
+    } else if (params is Map) {
+      return await sendEvent(name, Map<String, dynamic>.from(params));
+    } else {
+      return await sendEvent(name);
+    }
   }
 
   /// Get all user properties saved in the SDK.

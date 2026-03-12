@@ -131,6 +131,14 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                AdropMethod.SEND_EVENT -> {
+                    val name = call.argument("name") as String? ?: ""
+                    val params = call.argument("params") as? Map<String, Any>
+
+                    FlutterAdropMetrics.sendEvent(name, params)
+                    result.success(null)
+                }
+
                 AdropMethod.LOAD_BANNER -> {
                     val unitId = call.argument("unitId") as String? ?: ""
                     val requestId = call.argument("requestId") as String? ?: ""

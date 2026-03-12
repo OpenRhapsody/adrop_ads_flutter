@@ -31,8 +31,8 @@ class AdropNativeAdView extends StatelessWidget {
             platformView,
             Listener(
               behavior: HitTestBehavior.deferToChild,
-              onPointerDown: (_) {
-                const MethodChannel(AdropChannel.invokeChannel)
+              onPointerDown: (_) async {
+                await const MethodChannel(AdropChannel.invokeChannel)
                     .invokeMethod(AdropMethod.performClick, {
                   "adType": AdType.native.name,
                   "requestId": ad?.requestId,

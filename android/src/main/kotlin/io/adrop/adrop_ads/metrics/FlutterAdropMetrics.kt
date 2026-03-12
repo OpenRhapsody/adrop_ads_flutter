@@ -1,10 +1,40 @@
 package io.adrop.adrop_ads.metrics
 
+import io.adrop.ads.metrics.AdropEventParam
 import io.adrop.ads.metrics.AdropMetrics
 import org.json.JSONArray
 import org.json.JSONObject
 
 object FlutterAdropMetrics {
+
+    fun sendEvent(name: String, params: Map<String, Any>?) {
+        if (params.isNullOrEmpty()) {
+            AdropMetrics.sendEvent(name)
+        } else {
+            AdropMetrics.sendEvent(name, mapToEventParam(params))
+        }
+    }
+
+    private fun mapToEventParam(map: Map<String, Any>): AdropEventParam {
+        val builder = AdropEventParam.Builder()
+        for ((key, value) in map) {
+            when (value) {
+                is String -> builder.putString(key, value)
+                is Int -> builder.putInt(key, value)
+                is Long -> builder.putLong(key, value)
+                is Float -> builder.putFloat(key, value)
+                is Double -> builder.putFloat(key, value.toFloat())
+                is Boolean -> builder.putBoolean(key, value)
+                is List<*> -> {
+                    val items = value.filterIsInstance<Map<String, Any>>()
+                        .map { mapToEventParam(it) }
+                    if (items.isNotEmpty()) builder.putItems(items)
+                }
+                else -> {}
+            }
+        }
+        return builder.build()
+    }
 
     fun setProperty(key: String, value: Any) {
         when(value) {
