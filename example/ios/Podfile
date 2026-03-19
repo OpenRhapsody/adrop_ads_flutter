@@ -32,7 +32,7 @@ target 'Runner' do
 
   use_modular_headers!
 
-  pod 'adrop-ads-backfill', '>= 1.8.0', '< 1.9.0'
+  pod 'adrop-ads-backfill', '>= 1.9.0', '< 1.10.0'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do

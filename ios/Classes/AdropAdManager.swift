@@ -10,12 +10,16 @@ class AdropAdManager: NSObject {
         self.messenger = messenger
     }
 
-    func load(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool) {
+    func load(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool, ssvOptions: AdropServerSideVerificationOptions? = nil) {
         let ad = getAd(adType: adType, requestId: requestId)
         ?? createAd(adType: adType, unitId: unitId, requestId: requestId, useCustomClick: useCustomClick)
         let key = keyOf(adType, requestId)
         if self.ads[key] == nil {
             self.ads[key] = ad
+        }
+
+        if let ssvOptions = ssvOptions, let rewardedAd = ad as? FlutterAdropRewardedAd {
+            rewardedAd.setServerSideVerificationOptions(ssvOptions)
         }
 
         ad?.load()

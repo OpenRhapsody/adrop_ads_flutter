@@ -70,8 +70,12 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; load() async {
-  return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
-      {&quot;adType&quot;: _adType.index, &quot;unitId&quot;: unitId, &quot;requestId&quot;: _requestId});
+  return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
+    &quot;adType&quot;: _adType.index,
+    &quot;unitId&quot;: unitId,
+    &quot;requestId&quot;: _requestId,
+    ...extraLoadArgs,
+  });
 }</code></pre>
 </section>
 
@@ -100,7 +104,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.8.0
+      1.9.0
   </span>
   
 </footer>

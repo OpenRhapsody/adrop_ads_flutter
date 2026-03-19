@@ -1,3 +1,6 @@
+## 1.9.0
+- Update native SDK dependency range (Android: `[1.9, 1.10)`, iOS: `>= 1.9.0, < 1.10.0`)
+
 ## 1.8.0
 - Added `AdropMetrics.sendEvent()` method with typed `Map<String, dynamic>` params support
 - Deprecated `AdropMetrics.logEvent()` in favor of `sendEvent()`

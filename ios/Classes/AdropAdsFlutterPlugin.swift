@@ -120,11 +120,18 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 result(ModuleError)
                 return
             }
+            let loadArgs = call.arguments as? [String: Any?]
+            let userId = loadArgs?["userId"] as? String
+            let customData = loadArgs?["customData"] as? String
+            let ssvOptions: AdropServerSideVerificationOptions? = (userId != nil || customData != nil)
+                ? AdropServerSideVerificationOptions(userId: userId, customData: customData) : nil
+
             adropAdManager?.load(
                 adType: AdType.allCases[adTypeIndex],
-                unitId: (call.arguments as? [String: Any?])?["unitId"] as? String ?? "",
-                requestId: (call.arguments as? [String: Any?])?["requestId"] as? String ?? "",
-                useCustomClick: (call.arguments as? [String: Any?])?["useCustomClick"] as? Bool ?? false
+                unitId: loadArgs?["unitId"] as? String ?? "",
+                requestId: loadArgs?["requestId"] as? String ?? "",
+                useCustomClick: loadArgs?["useCustomClick"] as? Bool ?? false,
+                ssvOptions: ssvOptions
             )
             result(nil)
         case AdropMethod.SHOW_AD:

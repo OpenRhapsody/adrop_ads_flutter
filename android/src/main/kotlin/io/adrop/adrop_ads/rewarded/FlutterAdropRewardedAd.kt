@@ -10,6 +10,7 @@ import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.rewardedAd.AdropRewardedAd
 import io.adrop.ads.rewardedAd.AdropRewardedAdListener
+import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
@@ -32,6 +33,10 @@ class FlutterAdropRewardedAd(
         } else {
             null
         }
+    }
+
+    fun setServerSideVerificationOptions(options: ServerSideVerificationOptions?) {
+        rewardedAd.serverSideVerificationOptions = options
     }
 
     override fun load() {

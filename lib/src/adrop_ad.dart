@@ -123,10 +123,17 @@ abstract class AdropAd {
     return BrowserTarget.fromOrdinal(_browserTarget);
   }
 
+  @protected
+  Map<String, dynamic> get extraLoadArgs => {};
+
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
-    return await _invokeChannel.invokeMethod(AdropMethod.loadAd,
-        {"adType": _adType.index, "unitId": unitId, "requestId": _requestId});
+    return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
+      "adType": _adType.index,
+      "unitId": unitId,
+      "requestId": _requestId,
+      ...extraLoadArgs,
+    });
   }
 
   /// Requests to show an ad from Adrop using the Ad unit ID of the Adrop ad.

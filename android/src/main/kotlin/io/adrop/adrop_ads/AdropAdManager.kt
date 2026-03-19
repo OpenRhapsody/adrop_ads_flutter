@@ -6,17 +6,21 @@ import io.adrop.adrop_ads.popupAd.FlutterAdropPopupAd
 import io.adrop.adrop_ads.interstitial.FlutterAdropInterstitialAd
 import io.adrop.adrop_ads.native.FlutterAdropNativeAd
 import io.adrop.adrop_ads.rewarded.FlutterAdropRewardedAd
+import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
 import io.flutter.plugin.common.BinaryMessenger
 
 class AdropAdManager {
 
     private val ads: MutableMap<String, AdropAd?> = mutableMapOf()
 
-    fun load(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean = false, messenger: BinaryMessenger) {
+    fun load(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean = false, messenger: BinaryMessenger, ssvOptions: ServerSideVerificationOptions? = null) {
         val ad = getAd(adType, requestId) ?: createAd(context, adType, unitId, requestId, useCustomClick, messenger)
         val key = keyOf(adType, requestId)
         ads[key]?:let {
             ads[key] = ad
+        }
+        if (ssvOptions != null) {
+            (ad as? FlutterAdropRewardedAd)?.setServerSideVerificationOptions(ssvOptions)
         }
         ad?.load()
     }

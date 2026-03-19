@@ -16,6 +16,7 @@ import io.adrop.ads.Adrop
 import io.adrop.ads.metrics.AdropEventParam
 import io.adrop.ads.metrics.AdropMetrics
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
 import io.adrop.ads.model.AdropTheme
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -165,13 +166,20 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         result.error(AdropErrorCode.ERROR_CODE_INTERNAL.name, "AdType is undefined", "Expected adType enum index larger than 0")
                         return
                     }
+                    val userId = call.argument("userId") as String?
+                    val customData = call.argument("customData") as String?
+                    val ssvOptions = if (userId != null || customData != null) {
+                        ServerSideVerificationOptions(userId, customData)
+                    } else null
+
                     adManager.load(
                         context!!,
                         AdType.values()[adTypeIndex],
                         call.argument("unitId") as String? ?: "",
                         call.argument("requestId") as String? ?: "",
                         call.argument("useCustomClick") as Boolean? ?: false,
-                        messenger
+                        messenger,
+                        ssvOptions
                     )
                     result.success(null)
                 }

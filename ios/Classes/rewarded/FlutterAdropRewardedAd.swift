@@ -22,6 +22,10 @@ class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
             self.rewardedAd = AdropRewardedAd(unitId: unitId)
         }
 
+    func setServerSideVerificationOptions(_ options: AdropServerSideVerificationOptions?) {
+        rewardedAd.serverSideVerificationOptions = options
+    }
+
     func load() {
         self.rewardedAd.delegate = self
         rewardedAd.load()
