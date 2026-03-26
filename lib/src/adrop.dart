@@ -42,4 +42,23 @@ class Adrop {
       log('Error: $e', name: 'Adrop');
     }
   }
+
+  /// Registers a WebView for the WebView API for Ads.
+  ///
+  /// To serve Google AdSense/Ad Manager ads within a WebView,
+  /// call this method after the WebView has been created.
+  ///
+  /// [webViewIdentifier] is the identifier extracted from the platform-specific WebView controller:
+  /// - Android: `AndroidWebViewController.webViewIdentifier`
+  /// - iOS: `WebKitWebViewController.webViewIdentifier`
+  ///
+  /// Requires AdropAdsBackfill to be installed for actual registration.
+  /// If not installed, this call is silently ignored.
+  static Future<void> registerWebView(int webViewIdentifier) async {
+    try {
+      return await AdropPlatform.instance.registerWebView(webViewIdentifier);
+    } catch (e) {
+      log('Error: $e', name: 'Adrop');
+    }
+  }
 }

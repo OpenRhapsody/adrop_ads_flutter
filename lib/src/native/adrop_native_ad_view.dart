@@ -13,33 +13,57 @@ import 'adrop_native_ad_provider.dart';
 ///
 /// [ad] required AdropNativeAd
 /// [child] required child widget
-class AdropNativeAdView extends StatelessWidget {
+class AdropNativeAdView extends StatefulWidget {
   final Widget child;
   final AdropNativeAd? ad;
 
   const AdropNativeAdView({super.key, required this.ad, required this.child});
 
   @override
+  State<AdropNativeAdView> createState() => _AdropNativeAdViewState();
+}
+
+class _AdropNativeAdViewState extends State<AdropNativeAdView> {
+  Offset? _downPosition;
+
+  AdropNativeAd? get ad => widget.ad;
+  Widget get child => widget.child;
+
+  @override
   Widget build(BuildContext context) {
     if (ad == null) return Container();
 
     var useCustomClick = ad?.useCustomClick ?? false;
+    var isBackfilled = ad?.isBackfilled ?? false;
+    final touchSlop = MediaQuery.of(context).devicePixelRatio * 8;
+    // Disable IgnorePointer for backfill ads so native ad view (e.g. GADNativeAdView) receives touches directly
+    var ignorePointer = useCustomClick && !isBackfilled;
     var platformView = Positioned.fill(
-        child: IgnorePointer(ignoring: useCustomClick, child: _platformView()));
+        child: IgnorePointer(ignoring: ignorePointer, child: _platformView()));
     var children = useCustomClick
         ? [
             platformView,
-            Listener(
-              behavior: HitTestBehavior.deferToChild,
-              onPointerDown: (_) async {
-                await const MethodChannel(AdropChannel.invokeChannel)
-                    .invokeMethod(AdropMethod.performClick, {
-                  "adType": AdType.native.name,
-                  "requestId": ad?.requestId,
-                });
-              },
-              child: child,
-            )
+            if (!isBackfilled)
+              Listener(
+                behavior: HitTestBehavior.deferToChild,
+                onPointerDown: (e) => _downPosition = e.position,
+                onPointerUp: (e) {
+                  final down = _downPosition;
+                  _downPosition = null;
+                  if (down == null) return;
+                  if ((e.position - down).distance < touchSlop) {
+                    const MethodChannel(AdropChannel.invokeChannel)
+                        .invokeMethod(AdropMethod.performClick, {
+                      "adType": AdType.native.name,
+                      "requestId": ad?.requestId,
+                    });
+                  }
+                },
+                onPointerCancel: (_) => _downPosition = null,
+                child: child,
+              ),
+            // Backfill: render child for display only, pass touches through to native ad view below
+            if (isBackfilled) IgnorePointer(child: child),
           ]
         : [child, platformView];
 

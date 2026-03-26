@@ -31,6 +31,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var activity: Activity? = null
     private var context: Context? = null
+    private var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding? = null
 
     private lateinit var invokeChannel: MethodChannel
     private lateinit var bannerManager: AdropBannerManager
@@ -41,6 +42,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var nativeAdViewFactory: AdropNativeAdViewFactory
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        this.flutterPluginBinding = flutterPluginBinding
         context = flutterPluginBinding.applicationContext
         messenger = flutterPluginBinding.binaryMessenger
         invokeChannel = MethodChannel(messenger, AdropChannel.INVOKE_CHANNEL)
@@ -61,6 +63,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         invokeChannel.setMethodCallHandler(null)
+        flutterPluginBinding = null
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -269,6 +272,15 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     consentManager.setDebugSettings(context, geographyValue, result)
                 }
 
+                AdropMethod.REGISTER_WEB_VIEW -> {
+                    val webViewId = call.argument("webViewId") as? Long
+                        ?: call.argument<Int>("webViewId")?.toLong()
+                    if (webViewId != null) {
+                        registerWebView(webViewId)
+                    }
+                    result.success(null)
+                }
+
                 else -> result.notImplemented()
             }
         } catch (e: AdropError) {
@@ -279,6 +291,26 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } catch (e: Error) {
             e.printStackTrace()
             result.error("ERROR", e.message, e.stackTraceToString())
+        }
+    }
+
+    private fun registerWebView(webViewId: Long) {
+        try {
+            val externalApiClass = Class.forName(
+                "io.flutter.plugins.webviewflutter.WebViewFlutterAndroidExternalApi"
+            )
+            val getWebViewMethod = externalApiClass.getMethod(
+                "getWebView",
+                io.flutter.embedding.engine.FlutterEngine::class.java,
+                Long::class.javaPrimitiveType
+            )
+            val engine = flutterPluginBinding?.flutterEngine ?: return
+            val webView = getWebViewMethod.invoke(null, engine, webViewId) as? android.webkit.WebView
+            if (webView != null) {
+                Adrop.registerWebView(webView)
+            }
+        } catch (_: Throwable) {
+            // Ignored if webview_flutter_android is not installed or API has changed
         }
     }
 

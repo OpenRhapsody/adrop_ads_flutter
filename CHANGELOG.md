@@ -1,3 +1,7 @@
+## 1.9.1
+- Added `Adrop.registerWebView()` API for WebView registration
+- Fixed native ad click handling improvement
+
 ## 1.9.0
 - Update native SDK dependency range (Android: `[1.9, 1.10)`, iOS: `>= 1.9.0, < 1.10.0`)
 

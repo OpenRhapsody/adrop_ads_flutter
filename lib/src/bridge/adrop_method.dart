@@ -19,6 +19,7 @@ class AdropMethod {
   static const pageAttach = "pageAttach";
 
   static const performClick = "performClick";
+  static const registerWebView = "registerWebView";
 
   // Consent methods
   static const requestConsentInfoUpdate = "requestConsentInfoUpdate";

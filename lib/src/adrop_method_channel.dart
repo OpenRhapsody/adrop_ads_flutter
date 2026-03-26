@@ -26,4 +26,11 @@ class AdropMethodChannel extends AdropPlatform {
   Future<void> setTheme(String theme) async {
     await _methodChannel.invokeMethod(AdropMethod.setTheme, {"theme": theme});
   }
+
+  @override
+  Future<void> registerWebView(int webViewIdentifier) async {
+    await _methodChannel.invokeMethod(AdropMethod.registerWebView, {
+      "webViewId": webViewIdentifier,
+    });
+  }
 }

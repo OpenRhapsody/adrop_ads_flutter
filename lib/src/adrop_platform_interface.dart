@@ -28,4 +28,8 @@ abstract class AdropPlatform extends PlatformInterface {
   Future<void> setTheme(String theme) async {
     throw UnimplementedError('setTheme() has not been implemented.');
   }
+
+  Future<void> registerWebView(int webViewIdentifier) async {
+    throw UnimplementedError('registerWebView() has not been implemented.');
+  }
 }

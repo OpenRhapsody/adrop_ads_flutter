@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import WebKit
 import AdropAds
 
 public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
@@ -199,8 +200,35 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             let geographyValue = (call.arguments as? [String: Any?])?["geography"] as? Int ?? 0
             consentManager.setDebugSettings(geographyValue: geographyValue, result: result)
 
+        case AdropMethod.REGISTER_WEB_VIEW:
+            let webViewId = (call.arguments as? [String: Any?])?["webViewId"] as? Int64 ?? -1
+            if webViewId >= 0 {
+                registerWebView(identifier: webViewId)
+            }
+            result(nil)
+
         default:
             result(FlutterMethodNotImplemented)
+        }
+    }
+
+    private func registerWebView(identifier: Int64) {
+        guard let registry = UIApplication.shared.delegate as? FlutterPluginRegistry else { return }
+
+        guard let externalApiClass = NSClassFromString(
+            "FWFWebViewFlutterWKWebViewExternalAPI"
+        ) as? NSObject.Type else { return }
+
+        let selector = NSSelectorFromString("webViewForIdentifier:withPluginRegistry:")
+        guard externalApiClass.responds(to: selector) else { return }
+        guard let method = class_getClassMethod(externalApiClass, selector) else { return }
+
+        typealias WebViewLookup = @convention(c) (AnyObject, Selector, Int64, AnyObject) -> WKWebView?
+        let imp = method_getImplementation(method)
+        let function = unsafeBitCast(imp, to: WebViewLookup.self)
+
+        if let webView = function(externalApiClass, selector, identifier, registry as AnyObject) {
+            Adrop.registerWebView(webView)
         }
     }
 

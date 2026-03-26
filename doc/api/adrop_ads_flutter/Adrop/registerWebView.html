@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the hideForTodayTextColor property from the AdropPopupAd class, for the Dart programming language.">
-  <title>hideForTodayTextColor property - AdropPopupAd class - adrop_ads_flutter library - Dart API</title>
+  <meta name="description" content="API docs for the registerWebView method from the Adrop class, for the Dart programming language.">
+  <title>registerWebView method - Adrop class - adrop_ads_flutter library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter.dart</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
-    <li class="self-crumb">hideForTodayTextColor property</li>
+    <li><a href="../../adrop_ads_flutter/Adrop-class.html">Adrop</a></li>
+    <li class="self-crumb">registerWebView static method</li>
   </ol>
-  <div class="self-name">hideForTodayTextColor</div>
+  <div class="self-name">registerWebView</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,33 +46,52 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="adrop_ads_flutter&#47;AdropPopupAd-class-sidebar.html"
+    data-above-sidebar="adrop_ads_flutter&#47;Adrop-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">hideForTodayTextColor</span> property 
+<h1><span class="kind-method">registerWebView</span> static method 
 </h1></div>
 
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">registerWebView</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="registerWebView-param-webViewIdentifier"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">webViewIdentifier</span></span></li>
+</ol>)
+
+      
+
+    </section>
     
-      <section class="multi-line-signature">
-        
-        <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?
-        <span class="name ">hideForTodayTextColor</span>
-        <div class="features"><span class="feature">getter/setter pair</span></div>
-
-      </section>
-      
-
-      
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Color? hideForTodayTextColor;</code></pre>
+<section class="desc markdown">
+  <p>Registers a WebView for the WebView API for Ads.</p>
+<p>To serve Google AdSense/Ad Manager ads within a WebView,
+call this method after the WebView has been created.</p>
+<p><code>webViewIdentifier</code> is the identifier extracted from the platform-specific WebView controller:</p>
+<ul>
+<li>Android: <code>AndroidWebViewController.webViewIdentifier</code></li>
+<li>iOS: <code>WebKitWebViewController.webViewIdentifier</code></li>
+</ul>
+<p>Requires AdropAdsBackfill to be installed for actual registration.
+If not installed, this call is silently ignored.</p>
 </section>
 
 
     
-</div> <!-- /.main-content -->
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; registerWebView(int webViewIdentifier) async {
+  try {
+    return await AdropPlatform.instance.registerWebView(webViewIdentifier);
+  } catch (e) {
+    log(&#39;Error: $e&#39;, name: &#39;Adrop&#39;);
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -81,14 +100,14 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
-    <li class="self-crumb">hideForTodayTextColor property</li>
+    <li><a href="../../adrop_ads_flutter/Adrop-class.html">Adrop</a></li>
+    <li class="self-crumb">registerWebView static method</li>
 </ol>
 
-  <h5>AdropPopupAd class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>Adrop class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 </main>
 <footer>

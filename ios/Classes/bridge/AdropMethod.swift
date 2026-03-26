@@ -17,6 +17,7 @@ struct AdropMethod {
     static let LOG_EVENT = "logEvent"
     static let SEND_EVENT = "sendEvent"
     static let PERFORM_CLICK = "performClick"
+    static let REGISTER_WEB_VIEW = "registerWebView"
 
     // Consent methods
     static let REQUEST_CONSENT_INFO_UPDATE = "requestConsentInfoUpdate"

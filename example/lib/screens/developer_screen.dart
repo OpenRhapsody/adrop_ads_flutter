@@ -9,6 +9,7 @@ import '../views/native_example.dart';
 import '../views/property_example.dart';
 import '../views/consent_example.dart';
 import '../views/shopping_example.dart';
+import '../views/webview_example.dart';
 
 class DeveloperScreen extends StatefulWidget {
   const DeveloperScreen({super.key});
@@ -116,6 +117,11 @@ class _DeveloperScreenState extends State<DeveloperScreen> {
         'label': 'Shopping Ad',
         'icon': Icons.shopping_bag,
         'builder': () => const ShoppingExample()
+      },
+      {
+        'label': 'WebView',
+        'icon': Icons.web,
+        'builder': () => const WebViewExample()
       },
     ];
 
