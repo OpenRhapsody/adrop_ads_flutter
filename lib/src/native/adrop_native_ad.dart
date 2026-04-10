@@ -130,6 +130,12 @@ class AdropNativeAd {
       case AdropMethod.didImpression:
         listener?.onAdImpression?.call(this);
         break;
+      case AdropMethod.didVideoStart:
+        listener?.onAdVideoStart?.call(this);
+        break;
+      case AdropMethod.didVideoEnd:
+        listener?.onAdVideoEnd?.call(this);
+        break;
     }
   }
 }

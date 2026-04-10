@@ -85,4 +85,14 @@ class AdropBannerView extends StatelessWidget {
   Future<void> dispose() async {
     return await adropAdManager.dispose(this, _requestId);
   }
+
+  /// Starts or resumes playback of the video banner ad.
+  Future<void> play() async {
+    return await adropAdManager.play(this, _requestId);
+  }
+
+  /// Pauses playback of the video banner ad.
+  Future<void> pause() async {
+    return await adropAdManager.pause(this, _requestId);
+  }
 }

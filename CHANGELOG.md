@@ -1,3 +1,7 @@
+## 1.10.0
+- Added video callbacks (`onAdVideoStart`, `onAdVideoEnd`) for Banner, Native, Popup ads
+- Update native SDK dependency range (Android: `[1.10, 1.11)`, iOS: `>= 1.10.0, < 1.11.0`)
+
 ## 1.9.1
 - Added `Adrop.registerWebView()` API for WebView registration
 - Fixed native ad click handling improvement

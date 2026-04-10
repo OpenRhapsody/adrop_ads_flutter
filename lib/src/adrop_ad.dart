@@ -26,6 +26,8 @@ class AdropEvent {
         amount = arguments != null ? arguments['amount'] : null;
 }
 
+typedef AdropAdVideoCallback = void Function(AdropAd ad);
+
 class AdropAdListener {
   final AdropAdCallback? onAdReceived;
   final AdropAdCallback? onAdClicked;
@@ -38,6 +40,8 @@ class AdropAdListener {
   final AdropAdErrorCallback? onAdFailedToShowFullScreen;
   final AdropAdRewardEventCallback? onAdEarnRewardHandler;
   final AdropAdCallback? onAdBackButtonPressed;
+  final AdropAdVideoCallback? onAdVideoStart;
+  final AdropAdVideoCallback? onAdVideoEnd;
 
   AdropAdListener({
     this.onAdReceived,
@@ -51,6 +55,8 @@ class AdropAdListener {
     this.onAdFailedToShowFullScreen,
     this.onAdEarnRewardHandler,
     this.onAdBackButtonPressed,
+    this.onAdVideoStart,
+    this.onAdVideoEnd,
   });
 }
 
@@ -211,6 +217,12 @@ abstract class AdropAd {
         break;
       case AdropMethod.didBackButtonPressed:
         listener?.onAdBackButtonPressed?.call(this);
+        break;
+      case AdropMethod.didVideoStart:
+        listener?.onAdVideoStart?.call(this);
+        break;
+      case AdropMethod.didVideoEnd:
+        listener?.onAdVideoEnd?.call(this);
         break;
     }
   }

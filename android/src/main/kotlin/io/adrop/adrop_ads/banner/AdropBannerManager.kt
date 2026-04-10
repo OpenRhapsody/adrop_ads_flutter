@@ -1,6 +1,5 @@
 package io.adrop.adrop_ads.banner
 
-
 import android.content.Context
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
@@ -38,6 +37,14 @@ class AdropBannerManager(
 
     fun load(unitId: String, requestId: String, width: Double, height: Double) {
         create(unitId, requestId, width, height)?.load()
+    }
+
+    fun play(unitId: String, requestId: String) {
+        ads[keyOf(unitId, requestId)]?.play()
+    }
+
+    fun pause(unitId: String, requestId: String) {
+        ads[keyOf(unitId, requestId)]?.pause()
     }
 
     fun getAd(unitId: String, requestId: String): AdropBanner? {
@@ -80,6 +87,14 @@ class AdropBannerManager(
 
     override fun onAdImpression(banner: AdropBanner) {
         adropChannel.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(banner))
+    }
+
+    override fun onAdVideoStart(banner: AdropBanner) {
+        adropChannel.invokeMethod(AdropMethod.DID_VIDEO_START, metadataOf(banner))
+    }
+
+    override fun onAdVideoEnd(banner: AdropBanner) {
+        adropChannel.invokeMethod(AdropMethod.DID_VIDEO_END, metadataOf(banner))
     }
 
     private fun metadataOf(banner: AdropBanner): Map<String, Any?> {

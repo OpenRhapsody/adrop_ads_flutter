@@ -6,6 +6,8 @@ object AdropMethod {
     const val SET_THEME = "setTheme"
     const val LOAD_BANNER = "loadBanner"
     const val DISPOSE_BANNER = "disposeBanner"
+    const val PLAY_BANNER = "playBanner"
+    const val PAUSE_BANNER = "pauseBanner"
     const val LOAD_AD = "loadAd"
     const val SHOW_AD = "showAd"
     const val CLOSE_AD = "closeAd"
@@ -35,4 +37,6 @@ object AdropMethod {
     const val DID_IMPRESSION = "onAdImpression"
     const val HANDLE_EARN_REWARD = "handleEarnReward"
     const val DID_BACK_BUTTON_PRESSED = "onAdBackButtonPressed"
+    const val DID_VIDEO_START = "onAdVideoStart"
+    const val DID_VIDEO_END = "onAdVideoEnd"
 }

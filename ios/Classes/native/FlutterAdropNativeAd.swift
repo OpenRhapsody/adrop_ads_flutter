@@ -48,6 +48,14 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(ad))
     }
 
+    func onAdVideoStart(_ ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_START, arguments: metadataOf(ad))
+    }
+
+    func onAdVideoEnd(_ ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, arguments: metadataOf(ad))
+    }
+
     func dictionaryToJSONString(_ dictionary: [String: Any]) -> String? {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)

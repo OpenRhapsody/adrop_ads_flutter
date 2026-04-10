@@ -63,6 +63,8 @@
 <li><span class="parameter" id="-param-onAdDidDismissFullScreen"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdCallback.html">AdropAdCallback</a>?</span> <span class="parameter-name">onAdDidDismissFullScreen</span>, </span></li>
 <li><span class="parameter" id="-param-onAdFailedToReceive"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToReceive</span>, </span></li>
 <li><span class="parameter" id="-param-onAdFailedToShowFullScreen"><span class="type-annotation"><a href="../../adrop_ads_flutter/AdropAdErrorCallback.html">AdropAdErrorCallback</a>?</span> <span class="parameter-name">onAdFailedToShowFullScreen</span>, </span></li>
+<li><span class="parameter" id="-param-onAdVideoStart"><span class="type-annotation">AdropAdVideoCallback?</span> <span class="parameter-name">onAdVideoStart</span>, </span></li>
+<li><span class="parameter" id="-param-onAdVideoEnd"><span class="type-annotation">AdropAdVideoCallback?</span> <span class="parameter-name">onAdVideoEnd</span>, </span></li>
 </ol>})
     </section>
     
@@ -81,6 +83,8 @@
   AdropAdCallback? onAdDidDismissFullScreen,
   AdropAdErrorCallback? onAdFailedToReceive,
   AdropAdErrorCallback? onAdFailedToShowFullScreen,
+  this.onAdVideoStart,
+  this.onAdVideoEnd,
 }) : super(
           onAdReceived: onAdReceived,
           onAdClicked: onAdClicked,
@@ -118,7 +122,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.9.1
+      1.10.0
   </span>
   
 </footer>

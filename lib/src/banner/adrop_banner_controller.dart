@@ -50,4 +50,14 @@ class AdropBannerController {
   Future<void> load() async {
     return _channel.invokeMethod(AdropMethod.loadBanner);
   }
+
+  /// Starts or resumes playback of the video banner ad.
+  Future<void> play() async {
+    return _channel.invokeMethod(AdropMethod.playBanner);
+  }
+
+  /// Pauses playback of the video banner ad.
+  Future<void> pause() async {
+    return _channel.invokeMethod(AdropMethod.pauseBanner);
+  }
 }

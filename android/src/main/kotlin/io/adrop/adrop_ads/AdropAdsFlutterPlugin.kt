@@ -159,6 +159,20 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                AdropMethod.PLAY_BANNER -> {
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestId = call.argument("requestId") as String? ?: ""
+                    bannerManager.play(unitId, requestId)
+                    result.success(null)
+                }
+
+                AdropMethod.PAUSE_BANNER -> {
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestId = call.argument("requestId") as String? ?: ""
+                    bannerManager.pause(unitId, requestId)
+                    result.success(null)
+                }
+
                 AdropMethod.LOAD_AD -> {
                     if (context == null) {
                         result.error(AdropErrorCode.ERROR_CODE_INITIALIZE.name, "method call received before context initialized", null)

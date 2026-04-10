@@ -115,6 +115,18 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
             bannerManager?.destroy(unitId: unitId, requestId: requestId)
             result(nil)
+        case AdropMethod.PLAY_BANNER:
+            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
+            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+
+            bannerManager?.play(unitId: unitId, requestId: requestId)
+            result(nil)
+        case AdropMethod.PAUSE_BANNER:
+            let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
+            let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
+
+            bannerManager?.pause(unitId: unitId, requestId: requestId)
+            result(nil)
         case AdropMethod.LOAD_AD:
             let adTypeIndex = (call.arguments as? [String: Any?])?["adType"] as? Int ?? 0
             if (adTypeIndex == AdType.allCases.firstIndex(of: .undefined)!) {

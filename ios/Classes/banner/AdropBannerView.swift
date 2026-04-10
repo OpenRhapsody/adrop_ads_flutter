@@ -33,6 +33,12 @@ class AdropBannerView: NSObject, FlutterPlatformView, AdropBannerDelegate {
         case AdropMethod.LOAD_BANNER:
             banner.load()
             result(nil)
+        case AdropMethod.PLAY_BANNER:
+            banner.play()
+            result(nil)
+        case AdropMethod.PAUSE_BANNER:
+            banner.pause()
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }

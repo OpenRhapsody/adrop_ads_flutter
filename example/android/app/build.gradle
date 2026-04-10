@@ -65,5 +65,5 @@ flutter {
 }
 
 dependencies {
-    implementation "io.adrop:adrop-ads-backfill:[1.9, 1.10)"
+    implementation "io.adrop:adrop-ads-backfill:[1.10, 1.11)"
 }

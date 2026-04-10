@@ -34,6 +34,8 @@ class AdropPopupAd extends AdropAd {
               onAdDidDismissFullScreen: listener?.onAdDidDismissFullScreen,
               onAdWillDismissFullScreen: listener?.onAdWillDismissFullScreen,
               onAdFailedToShowFullScreen: listener?.onAdFailedToShowFullScreen,
+              onAdVideoStart: listener?.onAdVideoStart,
+              onAdVideoEnd: listener?.onAdVideoEnd,
             ));
 
   @override

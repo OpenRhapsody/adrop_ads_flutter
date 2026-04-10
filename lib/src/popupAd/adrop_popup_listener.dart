@@ -1,4 +1,5 @@
 import '../../adrop_ads_flutter.dart';
+import '../adrop_ad.dart' show AdropAdVideoCallback;
 
 /// A listener called when load or show is called in the [AdropPopupAd].
 ///
@@ -11,7 +12,12 @@ import '../../adrop_ads_flutter.dart';
 /// [onAdDidDismissFullScreen] Gets invoked when the popup ad disappeared.
 /// [onAdFailedToReceive] Gets invoked with [AdropErrorCode] when the popup ad fails to be received.
 /// [onAdFailedToShowFullScreen] Gets invoked with [AdropErrorCode] when the popup ad fails to be shown.
+/// [onAdVideoStart] Gets invoked when the popup ad video starts playing.
+/// [onAdVideoEnd] Gets invoked when the popup ad video ends playing.
 class AdropPopupListener extends AdropInterstitialListener {
+  final AdropAdVideoCallback? onAdVideoStart;
+  final AdropAdVideoCallback? onAdVideoEnd;
+
   AdropPopupListener({
     AdropAdCallback? onAdReceived,
     AdropAdCallback? onAdClicked,
@@ -22,6 +28,8 @@ class AdropPopupListener extends AdropInterstitialListener {
     AdropAdCallback? onAdDidDismissFullScreen,
     AdropAdErrorCallback? onAdFailedToReceive,
     AdropAdErrorCallback? onAdFailedToShowFullScreen,
+    this.onAdVideoStart,
+    this.onAdVideoEnd,
   }) : super(
             onAdReceived: onAdReceived,
             onAdClicked: onAdClicked,

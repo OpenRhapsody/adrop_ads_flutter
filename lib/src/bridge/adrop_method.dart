@@ -4,6 +4,8 @@ class AdropMethod {
   static const setTheme = "setTheme";
   static const loadBanner = "loadBanner";
   static const disposeBanner = "disposeBanner";
+  static const playBanner = "playBanner";
+  static const pauseBanner = "pauseBanner";
 
   static const loadAd = "loadAd";
   static const showAd = "showAd";
@@ -40,4 +42,6 @@ class AdropMethod {
   static const willPresentFullScreen = "onAdWillPresentFullScreen";
   static const didHandleEarnReward = "handleEarnReward";
   static const didBackButtonPressed = "onAdBackButtonPressed";
+  static const didVideoStart = "onAdVideoStart";
+  static const didVideoEnd = "onAdVideoEnd";
 }

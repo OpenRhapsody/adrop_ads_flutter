@@ -96,6 +96,14 @@ class FlutterAdropPopupAd(
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, metadataOf(ad))
     }
 
+    override fun onAdVideoStart(ad: AdropPopupAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_START, metadataOf(ad))
+    }
+
+    override fun onAdVideoEnd(ad: AdropPopupAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, metadataOf(ad))
+    }
+
     private fun metadataOf(ad: AdropPopupAd): Map<String, Any?> {
         return mapOf(
             "creativeId" to ad.creativeId,

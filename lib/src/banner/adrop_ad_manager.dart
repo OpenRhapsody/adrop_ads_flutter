@@ -57,6 +57,12 @@ class AdropAdManager {
               ?.onAdFailedToReceive
               ?.call(unitId, AdropErrorCode.getByCode(args["error"]));
           break;
+        case AdropMethod.didVideoStart:
+          _loadedAds[key]?.listener?.onAdVideoStart?.call(unitId);
+          break;
+        case AdropMethod.didVideoEnd:
+          _loadedAds[key]?.listener?.onAdVideoEnd?.call(unitId);
+          break;
       }
     });
   }
@@ -74,6 +80,16 @@ class AdropAdManager {
   Future<void> dispose(AdropBannerView banner, String requestId) async {
     _loadedAds.remove("${banner.unitId}_$requestId");
     return await _invokeChannel.invokeMethod(AdropMethod.disposeBanner,
+        {'unitId': banner.unitId, 'requestId': requestId});
+  }
+
+  Future<void> play(AdropBannerView banner, String requestId) async {
+    return await _invokeChannel.invokeMethod(AdropMethod.playBanner,
+        {'unitId': banner.unitId, 'requestId': requestId});
+  }
+
+  Future<void> pause(AdropBannerView banner, String requestId) async {
+    return await _invokeChannel.invokeMethod(AdropMethod.pauseBanner,
         {'unitId': banner.unitId, 'requestId': requestId});
   }
 

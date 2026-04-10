@@ -6,6 +6,8 @@ struct AdropMethod {
     static let SET_THEME = "setTheme"
     static let LOAD_BANNER = "loadBanner"
     static let DISPOSE_BANNER = "disposeBanner"
+    static let PLAY_BANNER = "playBanner"
+    static let PAUSE_BANNER = "pauseBanner"
 
     static let LOAD_AD = "loadAd"
     static let SHOW_AD = "showAd"
@@ -37,4 +39,6 @@ struct AdropMethod {
     static let WILL_DISMISS_FULL_SCREEN = "onAdWillDismissFullScreen"
     static let WILL_PRESENT_FULL_SCREEN = "onAdWillPresentFullScreen"
     static let HANDLE_EARN_REWARD = "handleEarnReward"
+    static let DID_VIDEO_START = "onAdVideoStart"
+    static let DID_VIDEO_END = "onAdVideoEnd"
 }

@@ -42,7 +42,7 @@ class FlutterAdropNativeAd(
     override fun destroy() {
     }
 
-    override fun onAdClick(ad: AdropNativeAd) {
+    override fun onAdClicked(ad: AdropNativeAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(ad))
     }
 
@@ -59,6 +59,14 @@ class FlutterAdropNativeAd(
 
     override fun onAdImpression(ad: AdropNativeAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, metadataOf(ad))
+    }
+
+    override fun onAdVideoStart(ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_START, metadataOf(ad))
+    }
+
+    override fun onAdVideoEnd(ad: AdropNativeAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, metadataOf(ad))
     }
 
     private fun metadataOf(ad: AdropNativeAd): Map<String, Any> {

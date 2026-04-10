@@ -95,6 +95,14 @@ class FlutterAdropPopupAd: NSObject, AdropAd, AdropPopupAdDelegate {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, arguments: ["errorCode": AdropErrorCodeToString(code: errorCode)])
     }
 
+    func onAdVideoStart(_ ad: AdropPopupAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_START, arguments: metadataOf(ad))
+    }
+
+    func onAdVideoEnd(_ ad: AdropPopupAd) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, arguments: metadataOf(ad))
+    }
+
     private func metadataOf(_ ad: AdropPopupAd) -> [String: Any] {
         return [
             "unitId": ad.unitId,

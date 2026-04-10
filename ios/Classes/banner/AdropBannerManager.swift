@@ -32,6 +32,16 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
         banner.load()
     }
 
+    func play(unitId: String, requestId: String) {
+        let banner = getAd(unitId: unitId, requestId: requestId)
+        banner?.play()
+    }
+
+    func pause(unitId: String, requestId: String) {
+        let banner = getAd(unitId: unitId, requestId: requestId)
+        banner?.pause()
+    }
+
     func getAd(unitId: String, requestId: String) -> AdropBanner? {
         return ads[keyOf(unitId, requestId)] as? AdropBanner
     }
@@ -73,6 +83,14 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
 
     func onAdImpression(_ banner: AdropBanner) {
         adropChannel().invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(banner))
+    }
+
+    func onAdVideoStart(_ banner: AdropBanner) {
+        adropChannel().invokeMethod(AdropMethod.DID_VIDEO_START, arguments: metadataOf(banner))
+    }
+
+    func onAdVideoEnd(_ banner: AdropBanner) {
+        adropChannel().invokeMethod(AdropMethod.DID_VIDEO_END, arguments: metadataOf(banner))
     }
 
     private func metadataOf(_ banner: AdropBanner) -> [String: Any] {
