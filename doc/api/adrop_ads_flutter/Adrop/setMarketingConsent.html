@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the setMarketingConsent method from the Adrop class, for the Dart programming language.">
+  <title>setMarketingConsent method - Adrop class - adrop_ads_flutter library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">adrop_ads_flutter</a></li>
+    <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter.dart</a></li>
+    <li><a href="../../adrop_ads_flutter/Adrop-class.html">Adrop</a></li>
+    <li class="self-crumb">setMarketingConsent static method</li>
+  </ol>
+  <div class="self-name">setMarketingConsent</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="adrop_ads_flutter&#47;Adrop-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">setMarketingConsent</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">setMarketingConsent</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="setMarketingConsent-param-consent"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">consent</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Sets the user's marketing consent state for push notification ad targeting.</p>
+<p>The consent state and its change timestamp are stored locally and forwarded to the
+server via the next remote-config call. Calling this method with the same value as
+the current state is a no-op, so <code>consentedAt</code> always represents the actual
+decision time.</p>
+<p>Must be called after <a href="../../adrop_ads_flutter/Adrop/initialize.html">initialize</a>; calls before initialization are dropped with a
+warning by the native SDK.</p>
+<p>This API is independent of user data consent (GDPR): toggling GDPR off does not
+prevent marketing consent from being sent to the server.</p>
+<p><code>consent</code> <code>true</code> for opt-in (stored as 1), <code>false</code> for opt-out (stored as 0).</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; setMarketingConsent(bool consent) async {
+  try {
+    return await AdropPlatform.instance.setMarketingConsent(consent);
+  } catch (e) {
+    log(&#39;Error: $e&#39;, name: &#39;Adrop&#39;);
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">adrop_ads_flutter</a></li>
+    <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter</a></li>
+    <li><a href="../../adrop_ads_flutter/Adrop-class.html">Adrop</a></li>
+    <li class="self-crumb">setMarketingConsent static method</li>
+</ol>
+
+    <h5>Adrop class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    adrop_ads_flutter
+      1.11.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

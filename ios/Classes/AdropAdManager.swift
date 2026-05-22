@@ -10,9 +10,9 @@ class AdropAdManager: NSObject {
         self.messenger = messenger
     }
 
-    func load(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool, ssvOptions: AdropServerSideVerificationOptions? = nil) {
+    func load(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool, preferredAdChoicesPosition: Int = AdropAdChoicesPosition.topRight.rawValue, ssvOptions: AdropServerSideVerificationOptions? = nil) {
         let ad = getAd(adType: adType, requestId: requestId)
-        ?? createAd(adType: adType, unitId: unitId, requestId: requestId, useCustomClick: useCustomClick)
+        ?? createAd(adType: adType, unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, preferredAdChoicesPosition: preferredAdChoicesPosition)
         let key = keyOf(adType, requestId)
         if self.ads[key] == nil {
             self.ads[key] = ad
@@ -76,7 +76,7 @@ class AdropAdManager: NSObject {
         }
     }
 
-    func createAd(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool = false) -> AdropAd? {
+    func createAd(adType: AdType, unitId: String, requestId: String, useCustomClick: Bool = false, preferredAdChoicesPosition: Int = AdropAdChoicesPosition.topRight.rawValue) -> AdropAd? {
         switch adType {
         case .interstitial:
             return FlutterAdropInterstitialAd(unitId: unitId, requestId: requestId, messenger: messenger)
@@ -85,7 +85,7 @@ class AdropAdManager: NSObject {
         case .popup:
             return FlutterAdropPopupAd(unitId: unitId, requestId: requestId, messenger: messenger)
         case .native:
-            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, messenger: messenger)
+            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, preferredAdChoicesPosition: preferredAdChoicesPosition, messenger: messenger)
         case .undefined:
             return nil
         }

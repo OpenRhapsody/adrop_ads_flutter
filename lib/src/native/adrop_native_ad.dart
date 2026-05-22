@@ -4,6 +4,7 @@ import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_method.dart';
 import 'package:adrop_ads_flutter/src/model/browser_target.dart';
 import 'package:adrop_ads_flutter/src/model/creative_size.dart';
+import 'package:adrop_ads_flutter/src/native/adrop_ad_choices_position.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_event.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_listener.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_properties.dart';
@@ -15,12 +16,17 @@ import 'package:flutter/services.dart';
 /// [unitId] required Ad unit ID
 /// [listener] optional invoked when a response from load method called back.
 /// [useCustomClick] optional, if true, the ad will use custom click handling.
+/// [preferredAdChoicesPosition] optional preferred display position of the
+/// AdChoices icon on AdMob backfill native ads. Has no effect on direct ads,
+/// and backfill networks such as AdMob may ignore it per their policy. Defaults
+/// to [AdropAdChoicesPosition.topRight].
 class AdropNativeAd {
   static const MethodChannel _invokeChannel =
       MethodChannel(AdropChannel.invokeChannel);
 
   final String _unitId;
   final bool useCustomClick;
+  final AdropAdChoicesPosition preferredAdChoicesPosition;
   final AdropNativeListener? listener;
   late final String _requestId;
   late final MethodChannel? _adropEventObserverChannel;
@@ -31,6 +37,7 @@ class AdropNativeAd {
   String _campaignId = '';
   String _destinationURL = '';
   int? _browserTarget;
+  String _creativeType = 'display';
   bool _loaded;
   AdropNativeProperties _properties = AdropNativeProperties.from(null);
   CreativeSize _creativeSize = const CreativeSize(width: 0.0, height: 0.0);
@@ -38,6 +45,7 @@ class AdropNativeAd {
   AdropNativeAd({
     required String unitId,
     this.useCustomClick = false,
+    this.preferredAdChoicesPosition = AdropAdChoicesPosition.topRight,
     this.listener,
   })  : _unitId = unitId,
         _loaded = false {
@@ -84,13 +92,18 @@ class AdropNativeAd {
   /// Returns `true` if the ad is a backfill ad.
   bool get isBackfilled => _properties.isBackfilled;
 
+  /// Creative medium of the loaded ad: `'display'` or `'video'`.
+  /// Defaults to `'display'` before an ad is received.
+  String get creativeType => _creativeType;
+
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
     return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
       "adType": AdType.native.index,
       "unitId": unitId,
       "useCustomClick": useCustomClick,
-      "requestId": _requestId
+      "preferredAdChoicesPosition": preferredAdChoicesPosition.value,
+      "requestId": _requestId,
     });
   }
 
@@ -105,6 +118,7 @@ class AdropNativeAd {
     _campaignId = call.arguments['campaignId'] ?? '';
     _destinationURL = call.arguments['destinationURL'] ?? '';
     _browserTarget = call.arguments['browserTarget'];
+    _creativeType = call.arguments['creativeType'] ?? 'display';
 
     if (args['creativeSizeWidth'] != null &&
         args['creativeSizeHeight'] != null) {

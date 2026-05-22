@@ -43,6 +43,28 @@ class Adrop {
     }
   }
 
+  /// Sets the user's marketing consent state for push notification ad targeting.
+  ///
+  /// The consent state and its change timestamp are stored locally and forwarded to the
+  /// server via the next remote-config call. Calling this method with the same value as
+  /// the current state is a no-op, so `consentedAt` always represents the actual
+  /// decision time.
+  ///
+  /// Must be called after [initialize]; calls before initialization are dropped with a
+  /// warning by the native SDK.
+  ///
+  /// This API is independent of user data consent (GDPR): toggling GDPR off does not
+  /// prevent marketing consent from being sent to the server.
+  ///
+  /// [consent] `true` for opt-in (stored as 1), `false` for opt-out (stored as 0).
+  static Future<void> setMarketingConsent(bool consent) async {
+    try {
+      return await AdropPlatform.instance.setMarketingConsent(consent);
+    } catch (e) {
+      log('Error: $e', name: 'Adrop');
+    }
+  }
+
   /// Registers a WebView for the WebView API for Ads.
   ///
   /// To serve Google AdSense/Ad Manager ads within a WebView,

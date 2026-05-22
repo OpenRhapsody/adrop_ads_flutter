@@ -59,6 +59,18 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
             Adrop.setUID(uid)
             result(nil)
+        case AdropMethod.SET_MARKETING_CONSENT:
+            guard let consent = (call.arguments as? [String: Any?])?["consent"] as? Bool else {
+                result(FlutterError(
+                    code: "ERROR_CODE_INTERNAL",
+                    message: "Invalid consent",
+                    details: "Expected non-null Bool"
+                ))
+                return
+            }
+
+            Adrop.setMarketingConsent(consent)
+            result(nil)
         case AdropMethod.SET_THEME:
             let theme = (call.arguments as? [String: Any?])?["theme"] as? String ?? "auto"
             let converted: AdropTheme
@@ -144,6 +156,7 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
                 unitId: loadArgs?["unitId"] as? String ?? "",
                 requestId: loadArgs?["requestId"] as? String ?? "",
                 useCustomClick: loadArgs?["useCustomClick"] as? Bool ?? false,
+                preferredAdChoicesPosition: loadArgs?["preferredAdChoicesPosition"] as? Int ?? AdropAdChoicesPosition.topRight.rawValue,
                 ssvOptions: ssvOptions
             )
             result(nil)

@@ -32,4 +32,8 @@ abstract class AdropPlatform extends PlatformInterface {
   Future<void> registerWebView(int webViewIdentifier) async {
     throw UnimplementedError('registerWebView() has not been implemented.');
   }
+
+  Future<void> setMarketingConsent(bool consent) async {
+    throw UnimplementedError('setMarketingConsent() has not been implemented.');
+  }
 }

@@ -33,4 +33,11 @@ class AdropMethodChannel extends AdropPlatform {
       "webViewId": webViewIdentifier,
     });
   }
+
+  @override
+  Future<void> setMarketingConsent(bool consent) async {
+    await _methodChannel.invokeMethod(AdropMethod.setMarketingConsent, {
+      "consent": consent,
+    });
+  }
 }

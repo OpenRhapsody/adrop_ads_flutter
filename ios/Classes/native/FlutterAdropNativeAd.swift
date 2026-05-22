@@ -14,6 +14,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
         unitId: String,
         requestId: String,
         useCustomClick: Bool,
+        preferredAdChoicesPosition: Int,
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             self.requestId = requestId
@@ -21,6 +22,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
             self.nativeAd = AdropNativeAd(unitId: unitId)
             self.nativeAd.useCustomClick = useCustomClick
+            self.nativeAd.preferredAdChoicesPosition = AdropAdChoicesPosition(rawValue: preferredAdChoicesPosition) ?? .topRight
         }
 
     func load() {
@@ -89,7 +91,8 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "campaignId": ad.campaignId,
             "isBackfilled": ad.isBackfilled,
             "callToAction": ad.callToAction,
-            "browserTarget": ad.browserTargetValue.rawValue
+            "browserTarget": ad.browserTargetValue.rawValue,
+            "creativeType": ad.creativeType
         ]
     }
 }

@@ -6,6 +6,7 @@ import io.adrop.adrop_ads.popupAd.FlutterAdropPopupAd
 import io.adrop.adrop_ads.interstitial.FlutterAdropInterstitialAd
 import io.adrop.adrop_ads.native.FlutterAdropNativeAd
 import io.adrop.adrop_ads.rewarded.FlutterAdropRewardedAd
+import io.adrop.ads.nativeAd.AdropAdChoicesPosition
 import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -13,8 +14,8 @@ class AdropAdManager {
 
     private val ads: MutableMap<String, AdropAd?> = mutableMapOf()
 
-    fun load(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean = false, messenger: BinaryMessenger, ssvOptions: ServerSideVerificationOptions? = null) {
-        val ad = getAd(adType, requestId) ?: createAd(context, adType, unitId, requestId, useCustomClick, messenger)
+    fun load(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean = false, preferredAdChoicesPosition: Int = AdropAdChoicesPosition.TOP_RIGHT.value, messenger: BinaryMessenger, ssvOptions: ServerSideVerificationOptions? = null) {
+        val ad = getAd(adType, requestId) ?: createAd(context, adType, unitId, requestId, useCustomClick, preferredAdChoicesPosition, messenger)
         val key = keyOf(adType, requestId)
         ads[key]?:let {
             ads[key] = ad
@@ -67,12 +68,12 @@ class AdropAdManager {
         }
     }
 
-    private fun createAd(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean, messenger: BinaryMessenger): AdropAd? {
+    private fun createAd(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean, preferredAdChoicesPosition: Int, messenger: BinaryMessenger): AdropAd? {
         return when (adType) {
             AdType.Interstitial -> FlutterAdropInterstitialAd(context, unitId, requestId, messenger)
             AdType.Rewarded -> FlutterAdropRewardedAd(context, unitId, requestId, messenger)
             AdType.Popup -> FlutterAdropPopupAd(context, unitId, requestId, messenger)
-            AdType.Native -> FlutterAdropNativeAd(context, unitId, requestId, useCustomClick, messenger)
+            AdType.Native -> FlutterAdropNativeAd(context, unitId, requestId, useCustomClick, preferredAdChoicesPosition, messenger)
             AdType.Undefined -> null
         }
     }

@@ -16,6 +16,7 @@ import io.adrop.ads.Adrop
 import io.adrop.ads.metrics.AdropEventParam
 import io.adrop.ads.metrics.AdropMetrics
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.ads.nativeAd.AdropAdChoicesPosition
 import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
 import io.adrop.ads.model.AdropTheme
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -87,6 +88,21 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
 
                     Adrop.setUID(uid)
+                    result.success(null)
+                }
+
+                AdropMethod.SET_MARKETING_CONSENT -> {
+                    val consent = call.argument<Boolean>("consent")
+                    if (consent == null) {
+                        result.error(
+                            AdropErrorCode.ERROR_CODE_INTERNAL.name,
+                            "Invalid consent",
+                            "Expected non-null Boolean"
+                        )
+                        return
+                    }
+
+                    Adrop.setMarketingConsent(consent)
                     result.success(null)
                 }
 
@@ -195,6 +211,7 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         call.argument("unitId") as String? ?: "",
                         call.argument("requestId") as String? ?: "",
                         call.argument("useCustomClick") as Boolean? ?: false,
+                        call.argument("preferredAdChoicesPosition") as Int? ?: AdropAdChoicesPosition.TOP_RIGHT.value,
                         messenger,
                         ssvOptions
                     )

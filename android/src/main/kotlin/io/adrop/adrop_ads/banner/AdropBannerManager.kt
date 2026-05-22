@@ -1,5 +1,6 @@
 package io.adrop.adrop_ads.banner
 
+
 import android.content.Context
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
@@ -107,7 +108,8 @@ class AdropBannerManager(
             "destinationURL" to banner.destinationURL,
             "creativeSizeWidth" to banner.creativeSize.width,
             "creativeSizeHeight" to banner.creativeSize.height,
-            "browserTarget" to banner.browserTarget
+            "browserTarget" to banner.browserTarget,
+            "creativeType" to banner.creativeType
         )
     }
 }

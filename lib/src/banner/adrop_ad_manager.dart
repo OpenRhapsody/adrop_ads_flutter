@@ -39,6 +39,7 @@ class AdropAdManager {
         'campaignId': campaignId,
         'destinationURL': destinationURL,
         'browserTarget': args['browserTarget'],
+        'creativeType': args['creativeType'] ?? 'display',
       };
 
       switch (call.method) {

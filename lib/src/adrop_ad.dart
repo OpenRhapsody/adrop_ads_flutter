@@ -71,6 +71,7 @@ abstract class AdropAd {
   String _destinationURL = '';
   String _campaignId = '';
   int? _browserTarget;
+  String _creativeType = 'display';
   bool _loaded;
   final AdropAdListener? listener;
   late final String _requestId;
@@ -129,6 +130,13 @@ abstract class AdropAd {
     return BrowserTarget.fromOrdinal(_browserTarget);
   }
 
+  /// Creative medium of the loaded ad: `'display'` or `'video'`.
+  /// For carousel popups, updates as the carousel slides between creatives.
+  /// Defaults to `'display'` before an ad is shown.
+  String get creativeType {
+    return _creativeType;
+  }
+
   @protected
   Map<String, dynamic> get extraLoadArgs => {};
 
@@ -178,6 +186,7 @@ abstract class AdropAd {
       _campaignId = call.arguments['campaignId'] ?? '';
       _destinationURL = call.arguments['destinationURL'] ?? '';
       _browserTarget = call.arguments['browserTarget'];
+      _creativeType = call.arguments['creativeType'] ?? 'display';
     }
 
     switch (call.method) {

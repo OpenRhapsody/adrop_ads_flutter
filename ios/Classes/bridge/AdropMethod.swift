@@ -20,6 +20,7 @@ struct AdropMethod {
     static let SEND_EVENT = "sendEvent"
     static let PERFORM_CLICK = "performClick"
     static let REGISTER_WEB_VIEW = "registerWebView"
+    static let SET_MARKETING_CONSENT = "setMarketingConsent"
 
     // Consent methods
     static let REQUEST_CONSENT_INFO_UPDATE = "requestConsentInfoUpdate"

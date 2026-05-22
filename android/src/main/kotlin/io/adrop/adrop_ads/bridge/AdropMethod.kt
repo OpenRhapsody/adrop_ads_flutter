@@ -19,6 +19,7 @@ object AdropMethod {
     const val SEND_EVENT = "sendEvent"
     const val PERFORM_CLICK = "performClick"
     const val REGISTER_WEB_VIEW = "registerWebView"
+    const val SET_MARKETING_CONSENT = "setMarketingConsent"
 
     // Consent methods
     const val REQUEST_CONSENT_INFO_UPDATE = "requestConsentInfoUpdate"

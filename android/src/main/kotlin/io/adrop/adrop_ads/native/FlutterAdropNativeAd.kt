@@ -6,6 +6,7 @@ import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.ads.nativeAd.AdropAdChoicesPosition
 import io.adrop.ads.nativeAd.AdropNativeAd
 import io.adrop.ads.nativeAd.AdropNativeAdListener
 import io.flutter.plugin.common.BinaryMessenger
@@ -16,6 +17,7 @@ class FlutterAdropNativeAd(
     unitId: String,
     requestId: String,
     useCustomClick: Boolean,
+    preferredAdChoicesPosition: Int,
     messenger: BinaryMessenger
 ): AdropAd(), AdropNativeAdListener {
 
@@ -25,6 +27,14 @@ class FlutterAdropNativeAd(
     init {
         nativeAd.listener = this
         nativeAd.useCustomClick = useCustomClick
+        // The core SDK's AdropAdChoicesPosition.fromValue gets stripped by the
+        // release AAR proguard (which keeps only public methods), so map here.
+        nativeAd.preferredAdChoicesPosition = when (preferredAdChoicesPosition) {
+            AdropAdChoicesPosition.TOP_LEFT.value -> AdropAdChoicesPosition.TOP_LEFT
+            AdropAdChoicesPosition.BOTTOM_LEFT.value -> AdropAdChoicesPosition.BOTTOM_LEFT
+            AdropAdChoicesPosition.BOTTOM_RIGHT.value -> AdropAdChoicesPosition.BOTTOM_RIGHT
+            else -> AdropAdChoicesPosition.TOP_RIGHT
+        }
         val channelName = AdropChannel.adropEventListenerChannelOf(AdType.Native, requestId)
         adropEventListenerChannel = if (channelName != null) {
             MethodChannel(messenger, channelName)
@@ -93,7 +103,8 @@ class FlutterAdropNativeAd(
             "campaignId" to ad.campaignId,
             "isBackfilled" to ad.isBackfilled,
             "callToAction" to ad.callToAction,
-            "browserTarget" to ad.browserTarget
+            "browserTarget" to ad.browserTarget,
+            "creativeType" to ad.creativeType
         )
     }
 }

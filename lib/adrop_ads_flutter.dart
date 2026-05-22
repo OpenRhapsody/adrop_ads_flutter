@@ -18,6 +18,7 @@ export 'src/rewarded/adrop_rewarded_ad.dart';
 export 'src/rewarded/adrop_rewarded_listener.dart';
 export 'src/rewarded/server_side_verification_options.dart';
 
+export 'src/native/adrop_ad_choices_position.dart';
 export 'src/native/adrop_native_ad.dart';
 export 'src/native/adrop_native_ad_view.dart';
 export 'src/native/adrop_native_listener.dart';

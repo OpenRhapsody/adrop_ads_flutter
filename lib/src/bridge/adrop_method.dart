@@ -22,6 +22,7 @@ class AdropMethod {
 
   static const performClick = "performClick";
   static const registerWebView = "registerWebView";
+  static const setMarketingConsent = "setMarketingConsent";
 
   // Consent methods
   static const requestConsentInfoUpdate = "requestConsentInfoUpdate";

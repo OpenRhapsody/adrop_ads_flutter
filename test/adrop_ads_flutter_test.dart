@@ -19,6 +19,9 @@ class MockAdropAdsFlutterPlatform
 
   @override
   Future<void> registerWebView(int webViewIdentifier) async {}
+
+  @override
+  Future<void> setMarketingConsent(bool consent) async {}
 }
 
 void main() {
@@ -73,6 +76,45 @@ void main() {
       expect(calls, hasLength(1));
       expect(calls.first.method, 'registerWebView');
       expect(calls.first.arguments, {'webViewId': 0});
+    });
+  });
+
+  group('AdropMethodChannel.setMarketingConsent', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    const channel = MethodChannel('io.adrop.adrop-ads');
+    final List<MethodCall> calls = [];
+
+    setUp(() {
+      calls.clear();
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall call) async {
+        calls.add(call);
+        return null;
+      });
+    });
+
+    tearDown(() {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, null);
+    });
+
+    test('forwards true consent with correct method name', () async {
+      final methodChannel = AdropMethodChannel();
+      await methodChannel.setMarketingConsent(true);
+
+      expect(calls, hasLength(1));
+      expect(calls.first.method, 'setMarketingConsent');
+      expect(calls.first.arguments, {'consent': true});
+    });
+
+    test('forwards false consent with correct method name', () async {
+      final methodChannel = AdropMethodChannel();
+      await methodChannel.setMarketingConsent(false);
+
+      expect(calls, hasLength(1));
+      expect(calls.first.method, 'setMarketingConsent');
+      expect(calls.first.arguments, {'consent': false});
     });
   });
 }
