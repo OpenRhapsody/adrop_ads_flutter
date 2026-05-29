@@ -14,6 +14,13 @@ class AdropAdManager {
 
     private val ads: MutableMap<String, AdropAd?> = mutableMapOf()
 
+    /**
+     * Optional hook invoked by [FlutterAdropNativeAd] when a backfill ad arrives, so
+     * the plugin can re-bind the PlatformView's AdropNativeAdView to the new AdMob
+     * NativeAd. Wired by the plugin to [AdropNativeAdViewFactory.rebind].
+     */
+    var nativeRebindCallback: ((String) -> Unit)? = null
+
     fun load(context: Context, adType: AdType, unitId: String, requestId: String, useCustomClick: Boolean = false, preferredAdChoicesPosition: Int = AdropAdChoicesPosition.TOP_RIGHT.value, messenger: BinaryMessenger, ssvOptions: ServerSideVerificationOptions? = null) {
         val ad = getAd(adType, requestId) ?: createAd(context, adType, unitId, requestId, useCustomClick, preferredAdChoicesPosition, messenger)
         val key = keyOf(adType, requestId)
@@ -73,7 +80,7 @@ class AdropAdManager {
             AdType.Interstitial -> FlutterAdropInterstitialAd(context, unitId, requestId, messenger)
             AdType.Rewarded -> FlutterAdropRewardedAd(context, unitId, requestId, messenger)
             AdType.Popup -> FlutterAdropPopupAd(context, unitId, requestId, messenger)
-            AdType.Native -> FlutterAdropNativeAd(context, unitId, requestId, useCustomClick, preferredAdChoicesPosition, messenger)
+            AdType.Native -> FlutterAdropNativeAd(context, unitId, requestId, useCustomClick, preferredAdChoicesPosition, messenger, nativeRebindCallback)
             AdType.Undefined -> null
         }
     }

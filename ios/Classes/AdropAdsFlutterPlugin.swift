@@ -35,6 +35,12 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         guard let nativeViewFactory = instance.nativeViewFactory else { return }
 
         registrar.register(nativeViewFactory, withId: AdropChannel.nativeEventListenerChannel)
+
+        // Wire backfill rebind: FlutterAdropNativeAd will invoke this on onAdReceived
+        // for backfill ads, so the PlatformView re-binds to the new AdMob GADNativeAd.
+        adManager.nativeRebindCallback = { [weak nativeViewFactory] requestId in
+            nativeViewFactory?.rebind(requestId)
+        }
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

@@ -60,6 +60,9 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             AdropChannel.NATIVE_EVENT_LISTENER_CHANNEL,
             nativeAdViewFactory,
         )
+        // Wire backfill rebind: FlutterAdropNativeAd will invoke this on onAdReceived
+        // for backfill ads, so the PlatformView re-binds to the new AdMob NativeAd.
+        adManager.nativeRebindCallback = nativeAdViewFactory::rebind
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

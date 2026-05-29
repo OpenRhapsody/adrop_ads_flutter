@@ -18,10 +18,17 @@ class FlutterAdropNativeAd(
     requestId: String,
     useCustomClick: Boolean,
     preferredAdChoicesPosition: Int,
-    messenger: BinaryMessenger
+    messenger: BinaryMessenger,
+    /**
+     * Invoked on [onAdReceived] for backfill ads to re-bind the PlatformView's
+     * AdropNativeAdView to the new AdMob NativeAd. Direct ads do not need this —
+     * they reuse the same WebView host. See [AdropNativeAdViewFactory.rebind].
+     */
+    private val nativeRebindCallback: ((String) -> Unit)? = null
 ): AdropAd(), AdropNativeAdListener {
 
     val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId, "")
+    private val requestId: String = requestId
     private var adropEventListenerChannel: MethodChannel?
 
     init {
@@ -64,6 +71,12 @@ class FlutterAdropNativeAd(
     }
 
     override fun onAdReceived(ad: AdropNativeAd) {
+        // Backfill: re-bind PlatformView's AdropNativeAdView so AdMob NativeAdView
+        // gets setNativeAd called with the new AdMob NativeAd. Direct ads skip — the
+        // reused WebView host updates its creative HTML internally.
+        if (ad.isBackfilled) {
+            nativeRebindCallback?.invoke(requestId)
+        }
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(ad))
     }
 

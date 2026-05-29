@@ -41,6 +41,26 @@ class AdropNativeAdViewFactory(
 
         nativeAdView.performClick()
     }
+
+    /**
+     * Re-bind the AdropNativeAd to the existing PlatformView's AdropNativeAdView.
+     *
+     * Needed for backfill ads because PlatformView is created once (in [create]) and
+     * reused across `ad.load()` calls. The core `AdropNativeAdView.setNativeAd` is
+     * never re-invoked through the PlatformView lifecycle, so for backfill flows AdMob's
+     * `NativeAdView.setNativeAd(admobNativeAd)` is never called for the new AdMob
+     * NativeAd instance and OM SDK never starts tracking it (impression callback dead).
+     *
+     * Direct ads do not need this — they reuse the same `ad.host` (WebView) which
+     * updates its creative HTML internally on each `ad.load()`.
+     *
+     * Safe to call when PlatformView hasn't been created yet (no-op).
+     */
+    fun rebind(requestId: String) {
+        val view = viewMap[requestId]?.getView() as? AdropNativeAdView ?: return
+        val ad = (viewManager.getAd(AdType.Native, requestId) as? FlutterAdropNativeAd)?.nativeAd ?: return
+        view.setNativeAd(ad)
+    }
 }
 
 private class ErrorView(val context: Context) : PlatformView {

@@ -8,6 +8,10 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     private let messenger:FlutterBinaryMessenger
     private let adropEventListenerChannel: FlutterMethodChannel?
     private let requestId: String
+    /// Invoked on `onAdReceived` for backfill ads to re-bind the PlatformView's
+    /// AdropNativeAdView to the new AdMob GADNativeAd. Direct ads do not need this —
+    /// they reuse the same WebView host. See `AdropNativeAdViewFactory.rebind`.
+    private let nativeRebindCallback: ((String) -> Void)?
     let nativeAd: AdropNativeAd
 
     init(
@@ -15,9 +19,11 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
         requestId: String,
         useCustomClick: Bool,
         preferredAdChoicesPosition: Int,
-        messenger: FlutterBinaryMessenger) {
+        messenger: FlutterBinaryMessenger,
+        nativeRebindCallback: ((String) -> Void)? = nil) {
             self.messenger = messenger
             self.requestId = requestId
+            self.nativeRebindCallback = nativeRebindCallback
             let methodChannelName = AdropChannel.adropEventListenerChannel(adType: .native, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
             self.nativeAd = AdropNativeAd(unitId: unitId)
@@ -39,6 +45,12 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     }
 
     func onAdReceived(_ ad: AdropNativeAd) {
+        // Backfill: re-bind PlatformView's AdropNativeAdView so AdMob GADNativeAdView
+        // gets its nativeAd rebound. Direct ads skip — the reused WebView host updates
+        // its creative HTML internally.
+        if ad.isBackfilled {
+            nativeRebindCallback?(requestId)
+        }
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(ad))
     }
 

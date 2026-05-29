@@ -1,3 +1,13 @@
+## 1.11.1
+- Fixed missing impression tracking on backfill (AdMob) native ads by re-binding the platform view to the new native ad instance when a backfill ad is received
+- Updated backfill SDK dependency range (Android: `[1.11, 1.12)`, iOS: `>= 1.11.0, < 1.12.0`)
+
+## 1.11.0
+- Added `Adrop.setMarketingConsent()` to set the user's marketing consent for push notification ad targeting
+- Added `AdropAdChoicesPosition` enum and `preferredAdChoicesPosition` parameter to `AdropNativeAd` to hint the AdChoices icon position on AdMob backfill native ads
+- Added `creativeType` getter (`'display'` / `'video'`) to all ad types
+- Update native SDK dependency range (Android: `[1.11, 1.12)`, iOS: `>= 1.11.0, < 1.12.0`)
+
 ## 1.10.0
 - Added video callbacks (`onAdVideoStart`, `onAdVideoEnd`) for Banner, Native, Popup ads
 - Update native SDK dependency range (Android: `[1.10, 1.11)`, iOS: `>= 1.10.0, < 1.11.0`)

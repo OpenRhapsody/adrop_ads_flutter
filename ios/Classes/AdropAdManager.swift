@@ -6,6 +6,13 @@ class AdropAdManager: NSObject {
     private let messenger: FlutterBinaryMessenger
     private var ads: [String: AdropAd?] = [:]
 
+    /**
+     * Optional hook invoked by [FlutterAdropNativeAd] when a backfill ad arrives, so
+     * the plugin can re-bind the PlatformView's AdropNativeAdView to the new AdMob
+     * GADNativeAd. Wired by the plugin to `AdropNativeAdViewFactory.rebind`.
+     */
+    var nativeRebindCallback: ((String) -> Void)?
+
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
     }
@@ -85,7 +92,7 @@ class AdropAdManager: NSObject {
         case .popup:
             return FlutterAdropPopupAd(unitId: unitId, requestId: requestId, messenger: messenger)
         case .native:
-            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, preferredAdChoicesPosition: preferredAdChoicesPosition, messenger: messenger)
+            return FlutterAdropNativeAd(unitId: unitId, requestId: requestId, useCustomClick: useCustomClick, preferredAdChoicesPosition: preferredAdChoicesPosition, messenger: messenger, nativeRebindCallback: nativeRebindCallback)
         case .undefined:
             return nil
         }
