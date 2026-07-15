@@ -80,6 +80,7 @@ class AdropAdManager {
 
   Future<void> dispose(AdropBannerView banner, String requestId) async {
     _loadedAds.remove("${banner.unitId}_$requestId");
+    _creativeSizes.remove("${banner.unitId}_$requestId");
     return await _invokeChannel.invokeMethod(AdropMethod.disposeBanner,
         {'unitId': banner.unitId, 'requestId': requestId});
   }

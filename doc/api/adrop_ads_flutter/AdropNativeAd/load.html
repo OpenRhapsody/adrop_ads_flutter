@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">load</span>(<wbr>)
 
       
@@ -70,6 +70,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; load() async {
+  assert(!_disposed,
+      &#39;AdropNativeAd.load() called after dispose(). A disposed ad cannot be reused; create a new AdropNativeAd instance.&#39;);
+  if (_disposed) return;
   return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
     &quot;adType&quot;: AdType.native.index,
     &quot;unitId&quot;: unitId,
@@ -105,7 +108,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.11.0
+      1.11.2
   </span>
   
 </footer>

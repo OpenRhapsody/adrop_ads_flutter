@@ -57,6 +57,7 @@ class FlutterAdropNativeAd(
     }
 
     override fun destroy() {
+        nativeAd.destroy()
     }
 
     override fun onAdClicked(ad: AdropNativeAd) {

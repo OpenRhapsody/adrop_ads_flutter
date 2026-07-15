@@ -6,7 +6,11 @@ import AdropAds
 class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
     private var adManager: AdropAdManager
-    private var viewMap = [String:FlutterPlatformView]()
+    // Weak values: the Flutter engine strong-retains each platform view for the
+    // widget's mount lifetime, so entries auto-clear on unmount without an
+    // explicit dispose hook (FlutterPlatformView has none). Mirrors RN's
+    // AdropAdsNativeAdManager._nativeAdViews. Prevents unbounded viewMap growth.
+    private var viewMap = NSMapTable<NSString, AdropFlutterPlatformView>.strongToWeakObjects()
     
     init(messenger: FlutterBinaryMessenger, adManager: AdropAdManager) {
         self.messenger = messenger
@@ -37,7 +41,7 @@ class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
             adView.setNativeAd(ad.nativeAd)
 
             let platformView = AdropFlutterPlatformView(view: containerView)
-            viewMap[call.requestId] = platformView
+            viewMap.setObject(platformView, forKey: call.requestId as NSString)
             return platformView
         } else {
             return ErrorView()
@@ -49,7 +53,7 @@ class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
     }
     
     func performClick(_ requestId: String) {
-        guard let platformView = viewMap[requestId] as? AdropFlutterPlatformView else {
+        guard let platformView = viewMap.object(forKey: requestId as NSString) else {
             return
         }
 
@@ -76,7 +80,7 @@ class AdropNativeAdViewFactory: NSObject, FlutterPlatformViewFactory {
      * Safe to call when PlatformView hasn't been created yet (no-op).
      */
     func rebind(_ requestId: String) {
-        guard let platformView = viewMap[requestId] as? AdropFlutterPlatformView else { return }
+        guard let platformView = viewMap.object(forKey: requestId as NSString) else { return }
         let containerView = platformView.view()
         guard let adView = containerView.subviews.first(where: { $0 is AdropNativeAdView }) as? AdropNativeAdView else { return }
         guard let ad = (adManager.getAd(adType: .native, requestId: requestId) as? FlutterAdropNativeAd)?.nativeAd else { return }

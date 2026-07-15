@@ -1,3 +1,9 @@
+## 1.11.2
+- Added `AdropNativeAd.dispose()` to release native ad resources (the underlying WebView and, for backfill ads, the AdMob native ad). Call it when the ad is no longer displayed; a disposed instance cannot be reused. Not disposing leaks the native WebView and can lead to OOM in feed-style screens
+- Fixed native ad view leaks: the core native view is now destroyed on widget unmount (Android), and the platform-view registry no longer grows unbounded (Android/iOS)
+- Fixed banner leaks: `dispose()` now destroys the underlying native banner, and stale event-handler references are released
+- Behavior change: `dispose()` on interstitial/rewarded/popup ads now detaches the event handler, so a disposed ad no longer delivers callbacks and must not be reused — create a new instance instead
+
 ## 1.11.1
 - Fixed missing impression tracking on backfill (AdMob) native ads by re-binding the platform view to the new native ad instance when a backfill ad is received
 - Updated backfill SDK dependency range (Android: `[1.11, 1.12)`, iOS: `>= 1.11.0, < 1.12.0`)

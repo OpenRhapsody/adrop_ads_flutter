@@ -89,15 +89,16 @@ abstract class AdropAd {
         _loaded = false {
     _requestId = nanoid();
 
-    if (listener != null) {
-      final adropEventObserverChannelName = _getChannel();
-      if (adropEventObserverChannelName == null) {
-        debugPrint('adrop event observer is null');
-      } else {
-        _adropEventObserverChannel =
-            MethodChannel(adropEventObserverChannelName);
-        _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
-      }
+    final adropEventObserverChannelName =
+        listener != null ? _getChannel() : null;
+    if (listener != null && adropEventObserverChannelName == null) {
+      debugPrint('adrop event observer is null');
+    }
+    if (adropEventObserverChannelName == null) {
+      _adropEventObserverChannel = null;
+    } else {
+      _adropEventObserverChannel = MethodChannel(adropEventObserverChannelName);
+      _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
     }
   }
 
@@ -170,8 +171,13 @@ abstract class AdropAd {
         {"adType": _adType.index, "requestId": _requestId});
   }
 
-  /// Dispose the Adrop ad to free resources.
+  /// Disposes the Adrop ad to free resources.
+  ///
+  /// This detaches the event handler, so the ad stops delivering listener
+  /// callbacks and should not be reused afterwards — create a new instance to
+  /// request another ad.
   Future<void> dispose() async {
+    _adropEventObserverChannel?.setMethodCallHandler(null);
     return await _invokeChannel.invokeMethod(AdropMethod.disposeAd,
         {"adType": _adType.index, "requestId": _requestId});
   }

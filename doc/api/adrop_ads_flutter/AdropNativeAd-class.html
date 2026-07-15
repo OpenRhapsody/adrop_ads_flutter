@@ -71,7 +71,7 @@ to <a href="../adrop_ads_flutter/AdropAdChoicesPosition.html">AdropAdChoicesPosi
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="AdropNativeAd.new" class="callable">
-          <span class="name"><a href="../adrop_ads_flutter/AdropNativeAd/AdropNativeAd.html">AdropNativeAd.new</a></span><span class="signature">({<span class="parameter" id="-param-unitId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="-param-useCustomClick"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useCustomClick</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-preferredAdChoicesPosition"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdChoicesPosition.html">AdropAdChoicesPosition</a></span> <span class="parameter-name">preferredAdChoicesPosition</span> = <span class="default-value">AdropAdChoicesPosition.topRight</span>, </span><span class="parameter" id="-param-listener"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropNativeListener-class.html">AdropNativeListener</a>?</span> <span class="parameter-name">listener</span></span>})</span>
+          <span class="name"><a href="../adrop_ads_flutter/AdropNativeAd/AdropNativeAd.html">AdropNativeAd</a></span><span class="signature">({<span class="parameter" id="param-unitId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">unitId</span>, </span><span class="parameter" id="param-useCustomClick"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useCustomClick</span> = <span class="default-value">false</span>, </span><span class="parameter" id="param-preferredAdChoicesPosition"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdChoicesPosition.html">AdropAdChoicesPosition</a></span> <span class="parameter-name">preferredAdChoicesPosition</span> = <span class="default-value">AdropAdChoicesPosition.topRight</span>, </span><span class="parameter" id="param-listener"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropNativeListener-class.html">AdropNativeListener</a>?</span> <span class="parameter-name">listener</span></span>})</span>
         </dt>
         <dd>
           
@@ -298,9 +298,23 @@ Defaults to <code>'display'</code> before an ad is received.
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
+        <dt id="dispose" class="callable">
+  <span class="name"><a href="../adrop_ads_flutter/AdropNativeAd/dispose.html">dispose</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Disposes the native ad to free native resources (the underlying WebView
+and, for backfill ads, the AdMob native ad).
+  
+
+</dd>
+
         <dt id="load" class="callable">
   <span class="name"><a href="../adrop_ads_flutter/AdropNativeAd/load.html">load</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
 
@@ -387,7 +401,7 @@ Defaults to <code>'display'</code> before an ad is received.
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.11.0
+      1.11.2
   </span>
   
 </footer>

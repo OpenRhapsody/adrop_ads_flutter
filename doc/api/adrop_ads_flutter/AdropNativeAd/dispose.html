@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the closeAd method from the AdropPopupAd class, for the Dart programming language.">
-  <title>closeAd method - AdropPopupAd class - adrop_ads_flutter library - Dart API</title>
+  <meta name="description" content="API docs for the dispose method from the AdropNativeAd class, for the Dart programming language.">
+  <title>dispose method - AdropNativeAd class - adrop_ads_flutter library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter.dart</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
-    <li class="self-crumb">closeAd method</li>
+    <li><a href="../../adrop_ads_flutter/AdropNativeAd-class.html">AdropNativeAd</a></li>
+    <li class="self-crumb">dispose method</li>
   </ol>
-  <div class="self-name">closeAd</div>
+  <div class="self-name">dispose</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,38 +46,43 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="adrop_ads_flutter&#47;AdropPopupAd-class-sidebar.html"
+    data-above-sidebar="adrop_ads_flutter&#47;AdropNativeAd-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">closeAd</span> method 
+<h1><span class="kind-method">dispose</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://pub.dev/documentation/meta/1.18.0/meta/protected-constant.html">protected</a></li>
-    </ol>
-  </div>
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
-<span class="name ">closeAd</span>(<wbr>)
+<span class="name ">dispose</span>(<wbr>)
 
-      <div class="features"><span class="feature">inherited</span></div>
+      
 
     </section>
     
 <section class="desc markdown">
-  <p>Requests to close a popup ad.</p>
+  <p>Disposes the native ad to free native resources (the underlying WebView
+and, for backfill ads, the AdMob native ad).</p>
+<p>Call this once the ad is no longer displayed — for example when the widget
+hosting <a href="../../adrop_ads_flutter/AdropNativeAdView-class.html">AdropNativeAdView</a> is removed from the tree. The instance cannot
+be reused after dispose; create a new <a href="../../adrop_ads_flutter/AdropNativeAd-class.html">AdropNativeAd</a> to request another
+ad. Failing to dispose leaks the native WebView (~5–15 MB per instance),
+which can lead to OOM crashes in feed-style screens.</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@protected
-Future&lt;void&gt; closeAd() async {
-  return await _invokeChannel.invokeMethod(AdropMethod.closeAd,
-      {&quot;adType&quot;: _adType.index, &quot;requestId&quot;: _requestId});
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; dispose() async {
+  if (_disposed) return;
+  _disposed = true;
+  _adropEventObserverChannel?.setMethodCallHandler(null);
+  return await _invokeChannel.invokeMethod(AdropMethod.disposeAd, {
+    &quot;adType&quot;: AdType.native.index,
+    &quot;requestId&quot;: _requestId,
+  });
 }</code></pre>
 </section>
 
@@ -93,11 +98,11 @@ Future&lt;void&gt; closeAd() async {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">adrop_ads_flutter</a></li>
     <li><a href="../../adrop_ads_flutter/">adrop_ads_flutter</a></li>
-    <li><a href="../../adrop_ads_flutter/AdropPopupAd-class.html">AdropPopupAd</a></li>
-    <li class="self-crumb">closeAd method</li>
+    <li><a href="../../adrop_ads_flutter/AdropNativeAd-class.html">AdropNativeAd</a></li>
+    <li class="self-crumb">dispose method</li>
 </ol>
 
-    <h5>AdropPopupAd class</h5>
+    <h5>AdropNativeAd class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

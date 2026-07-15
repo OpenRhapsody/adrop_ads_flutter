@@ -55,6 +55,7 @@ class AdropBannerManager(
     fun destroy(unitId: String, requestId: String) {
         val key = keyOf(unitId, requestId)
         ads[key]?.let {
+            it.destroy()
             requestIdMap.remove(it)
             ads.remove(key)
         }
@@ -65,24 +66,15 @@ class AdropBannerManager(
     }
 
     override fun onAdClicked(banner: AdropBanner) {
-        val unitId = banner.getUnitId()
-        ads[unitId] = banner
-
         adropChannel.invokeMethod(AdropMethod.DID_CLICK_AD, metadataOf(banner))
     }
 
     override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
-        val unitId = banner.getUnitId()
-        ads[unitId] = banner
-
-        val args = mapOf("unitId" to unitId, "error" to error.name, "requestId" to requestIdMap[banner])
+        val args = mapOf("unitId" to banner.getUnitId(), "error" to error.name, "requestId" to requestIdMap[banner])
         adropChannel.invokeMethod(AdropMethod.DID_FAIL_TO_RECEIVE_AD, args)
     }
 
     override fun onAdReceived(banner: AdropBanner) {
-        val unitId = banner.getUnitId()
-        ads[unitId] = banner
-
         adropChannel.invokeMethod(AdropMethod.DID_RECEIVE_AD, metadataOf(banner))
     }
 

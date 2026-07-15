@@ -6,7 +6,6 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     let messenger: FlutterBinaryMessenger
     var ads: [String: AdropBanner?] = [:]
     var requestIdMap: [AdropBanner: String] = [:]
-    var received: [String: Bool] = [:]
 
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger

@@ -30,6 +30,7 @@ class AdropNativeAd {
   final AdropNativeListener? listener;
   late final String _requestId;
   late final MethodChannel? _adropEventObserverChannel;
+  bool _disposed = false;
   CreativeSize get creativeSize => _creativeSize;
 
   String _creativeId = '';
@@ -57,6 +58,8 @@ class AdropNativeAd {
             '',
       );
       _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
+    } else {
+      _adropEventObserverChannel = null;
     }
   }
 
@@ -98,6 +101,9 @@ class AdropNativeAd {
 
   /// Requests an ad from Adrop using the Ad unit ID of the Adrop ad.
   Future<void> load() async {
+    assert(!_disposed,
+        'AdropNativeAd.load() called after dispose(). A disposed ad cannot be reused; create a new AdropNativeAd instance.');
+    if (_disposed) return;
     return await _invokeChannel.invokeMethod(AdropMethod.loadAd, {
       "adType": AdType.native.index,
       "unitId": unitId,
@@ -107,8 +113,26 @@ class AdropNativeAd {
     });
   }
 
+  /// Disposes the native ad to free native resources (the underlying WebView
+  /// and, for backfill ads, the AdMob native ad).
+  ///
+  /// Call this once the ad is no longer displayed — for example when the widget
+  /// hosting [AdropNativeAdView] is removed from the tree. The instance cannot
+  /// be reused after dispose; create a new [AdropNativeAd] to request another
+  /// ad. Failing to dispose leaks the native WebView (~5–15 MB per instance),
+  /// which can lead to OOM crashes in feed-style screens.
+  Future<void> dispose() async {
+    if (_disposed) return;
+    _disposed = true;
+    _adropEventObserverChannel?.setMethodCallHandler(null);
+    return await _invokeChannel.invokeMethod(AdropMethod.disposeAd, {
+      "adType": AdType.native.index,
+      "requestId": _requestId,
+    });
+  }
+
   Future<void> _handleEvent(MethodCall call) async {
-    if (listener == null) return;
+    if (_disposed || listener == null) return;
 
     var args = call.arguments;
     final event = AdropNativeEvent.from(args);

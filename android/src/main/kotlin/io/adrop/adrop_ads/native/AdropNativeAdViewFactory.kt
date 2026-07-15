@@ -24,12 +24,29 @@ class AdropNativeAdViewFactory(
         if (ad == null) {
             return ErrorView(context)
         } else {
+            val requestId = callData.requestId
             val nativeAdView = AdropNativeAdView(context, null)
             nativeAdView.isEntireClick = true
             nativeAdView.setNativeAd(ad.nativeAd)
 
-            val platformView = FlutterPlatformView(nativeAdView)
-            viewMap[callData.requestId] = platformView as FlutterPlatformView
+            lateinit var platformView: FlutterPlatformView
+            platformView = FlutterPlatformView(nativeAdView) {
+                // Widget unmount: destroy the core view (VisibilityTracker
+                // release + backfill handler cleanup). The ad instance itself is
+                // NOT destroyed here — the widget does not own it, and it may be
+                // re-displayed elsewhere.
+                nativeAdView.destroy()
+                // Only clear the map entry if it still points at THIS view. On a
+                // same-frame remount, create() for the new view can run before
+                // this old view's dispose(); an unconditional remove would drop
+                // the live entry and break performClick/rebind (backfill
+                // impression tracking). Reference equality — Map.remove(k, v) is
+                // API 24+, below minSdk 23 floor.
+                if (viewMap[requestId] === platformView) {
+                    viewMap.remove(requestId)
+                }
+            }
+            viewMap[requestId] = platformView
 
             return platformView
         }

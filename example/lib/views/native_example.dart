@@ -70,8 +70,19 @@ class _NativeExampleState extends State<NativeExample> {
     reset(unit());
   }
 
+  @override
+  void dispose() {
+    // Release the native ad (and its WebView) when leaving the screen.
+    nativeAd?.dispose();
+    super.dispose();
+  }
+
   /// Initialize or reset the native ad instance
   void reset(String unitId) {
+    // Dispose the previous ad before replacing it — each AdropNativeAd owns a
+    // native WebView, so a discarded instance must be disposed to avoid leaking.
+    nativeAd?.dispose();
+
     // Create AdropNativeAd with unit ID, custom click option, and listener
     nativeAd = AdropNativeAd(
         unitId: unitId,

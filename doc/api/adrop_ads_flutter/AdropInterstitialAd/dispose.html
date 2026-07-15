@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">dispose</span>(<wbr>)
 
       <div class="features"><span class="feature">inherited</span></div>
@@ -62,7 +62,10 @@
     </section>
     
 <section class="desc markdown">
-  <p>Dispose the Adrop ad to free resources.</p>
+  <p>Disposes the Adrop ad to free resources.</p>
+<p>This detaches the event handler, so the ad stops delivering listener
+callbacks and should not be reused afterwards — create a new instance to
+request another ad.</p>
 </section>
 
 
@@ -70,6 +73,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; dispose() async {
+  _adropEventObserverChannel?.setMethodCallHandler(null);
   return await _invokeChannel.invokeMethod(AdropMethod.disposeAd,
       {&quot;adType&quot;: _adType.index, &quot;requestId&quot;: _requestId});
 }</code></pre>
@@ -100,7 +104,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.11.0
+      1.11.2
   </span>
   
 </footer>
