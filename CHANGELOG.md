@@ -1,3 +1,9 @@
+## 1.12.0
+- Update native SDK dependency range (Android: `[1.12, 1.13)`, iOS: `>= 1.12.0, < 1.13.0`)
+- Fixed callback order on iOS interstitial/rewarded direct ads: `onAdImpression` is now fired after the ad is actually presented on screen (previously fired right after `show()`, which could arrive before `onAdShown`), with a duplicate-impression guard and detection of presentation failures
+- Fixed banner backfill (AdMob) `AdView` leaks on Android: the backfill view is now fully released when the banner is disposed, when a refresh swaps the creative, and when a direct ad replaces a backfill ad
+- Fixed banner teardown on iOS: a playing `<video>` element and its media session are now stopped when the banner is released, and the banner no longer resurrects (re-injecting the creative / re-counting impressions) after teardown
+
 ## 1.11.2
 - Added `AdropNativeAd.dispose()` to release native ad resources (the underlying WebView and, for backfill ads, the AdMob native ad). Call it when the ad is no longer displayed; a disposed instance cannot be reused. Not disposing leaks the native WebView and can lead to OOM in feed-style screens
 - Fixed native ad view leaks: the core native view is now destroyed on widget unmount (Android), and the platform-view registry no longer grows unbounded (Android/iOS)
