@@ -67,6 +67,12 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         invokeChannel.setMethodCallHandler(null)
+        // Engine teardown: sweep batch-loaded instances so their WebViews don't
+        // outlive the engine. (Dart hot restart does NOT reach here — it restarts
+        // the isolate without detaching plugins, so preloaded instances from the
+        // previous run leak until app restart. Dev-only, accepted.)
+        bannerManager.destroyAllPreloaded()
+        adManager.destroyAllPreloadedNative()
         flutterPluginBinding = null
     }
 
@@ -169,6 +175,23 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     val height = call.argument("height") as Double? ?: 0.0
                     bannerManager.load(unitId, requestId, width, height)
                     result.success(null)
+                }
+
+                AdropMethod.LOADS_BANNER -> {
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestIds = call.argument("requestIds") as List<String>? ?: emptyList()
+                    bannerManager.loads(unitId, requestIds, result)
+                }
+
+                AdropMethod.LOADS_NATIVE -> {
+                    if (context == null) {
+                        result.error(AdropErrorCode.ERROR_CODE_INITIALIZE.name, "method call received before context initialized", null)
+                        return
+                    }
+                    val unitId = call.argument("unitId") as String? ?: ""
+                    val requestIds = call.argument("requestIds") as List<String>? ?: emptyList()
+                    val useCustomClick = call.argument("useCustomClick") as Boolean? ?: false
+                    adManager.loadsNative(context!!, unitId, requestIds, useCustomClick, messenger, result)
                 }
 
                 AdropMethod.DISPOSE_BANNER -> {

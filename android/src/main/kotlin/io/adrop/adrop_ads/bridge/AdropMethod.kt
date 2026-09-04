@@ -5,6 +5,8 @@ object AdropMethod {
     const val SET_UID = "setUid"
     const val SET_THEME = "setTheme"
     const val LOAD_BANNER = "loadBanner"
+    const val LOADS_BANNER = "loadsBanner"
+    const val LOADS_NATIVE = "loadsNative"
     const val DISPOSE_BANNER = "disposeBanner"
     const val PLAY_BANNER = "playBanner"
     const val PAUSE_BANNER = "pauseBanner"

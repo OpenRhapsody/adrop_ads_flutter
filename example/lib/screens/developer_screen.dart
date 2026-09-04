@@ -10,6 +10,7 @@ import '../views/property_example.dart';
 import '../views/consent_example.dart';
 import '../views/shopping_example.dart';
 import '../views/webview_example.dart';
+import '../views/loads_example.dart';
 
 class DeveloperScreen extends StatefulWidget {
   const DeveloperScreen({super.key});
@@ -122,6 +123,11 @@ class _DeveloperScreenState extends State<DeveloperScreen> {
         'label': 'WebView',
         'icon': Icons.web,
         'builder': () => const WebViewExample()
+      },
+      {
+        'label': 'Batch loads()',
+        'icon': Icons.view_list,
+        'builder': () => const LoadsExample()
       },
     ];
 

@@ -31,6 +31,29 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             self.nativeAd.preferredAdChoicesPosition = AdropAdChoicesPosition(rawValue: preferredAdChoicesPosition) ?? .topRight
         }
 
+    /// Adopts an already-loaded core ad delivered by `AdropNativeAd.loads`.
+    /// Unlike the singular path (delegate attached lazily in `load()`), the
+    /// delegate is attached immediately — this is the batch contract's
+    /// per-instance listener handover (batch-loads-api.md §2). Never call
+    /// `load()` on an adopted instance: it would issue a second network
+    /// request and enter the backfill path.
+    init(
+        adopting nativeAd: AdropNativeAd,
+        requestId: String,
+        useCustomClick: Bool,
+        messenger: FlutterBinaryMessenger,
+        nativeRebindCallback: ((String) -> Void)? = nil) {
+            self.messenger = messenger
+            self.requestId = requestId
+            self.nativeRebindCallback = nativeRebindCallback
+            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: .native, id: requestId)
+            self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
+            self.nativeAd = nativeAd
+            super.init()
+            self.nativeAd.useCustomClick = useCustomClick
+            self.nativeAd.delegate = self
+        }
+
     func load() {
         self.nativeAd.delegate = self
         nativeAd.load()
@@ -68,6 +91,12 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
 
     func onAdVideoEnd(_ ad: AdropNativeAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, arguments: metadataOf(ad))
+    }
+
+    /// Snapshot of the wrapped ad's metadata for the batch loads() response —
+    /// same shape as event payloads (single builder, `metadataOf`).
+    func batchMetadata() -> [String: Any] {
+        return metadataOf(nativeAd)
     }
 
     func dictionaryToJSONString(_ dictionary: [String: Any]) -> String? {

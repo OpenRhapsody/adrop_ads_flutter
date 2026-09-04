@@ -5,6 +5,8 @@ struct AdropMethod {
     static let SET_UID = "setUid"
     static let SET_THEME = "setTheme"
     static let LOAD_BANNER = "loadBanner"
+    static let LOADS_BANNER = "loadsBanner"
+    static let LOADS_NATIVE = "loadsNative"
     static let DISPOSE_BANNER = "disposeBanner"
     static let PLAY_BANNER = "playBanner"
     static let PAUSE_BANNER = "pauseBanner"

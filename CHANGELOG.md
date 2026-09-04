@@ -1,3 +1,8 @@
+## 1.12.1
+- Added `AdropBannerView.loads()` and `AdropNativeAd.loads()` to load up to 5 ads with a single network request for feed/list screens. Returned banners are ready-to-mount widgets and returned native ads are already loaded (`isLoaded` is `true`) — do NOT call `load()` on them. Batch ads are always direct ads (no backfill). Every returned instance owns a native WebView, so call `dispose()` on each one when done, including instances never mounted. On failure a `PlatformException` is thrown whose `code` is an `AdropErrorCode` name (e.g. `ERROR_CODE_AD_NO_FILL`)
+- Added `AdropBannerView.requestId` getter and a `requestId` entry in banner listener callback metadata, so a listener shared across batch-loaded banners can tell which slot fired
+- Batch-loaded banners are re-attachable: unmounting (e.g. a `ListView` recycling an off-screen item) only detaches the native view, and remounting re-binds it. Both returned banners and `AdropNativeAdView` in a list should be keyed by `requestId` — platform views freeze their creation params, so an unkeyed widget reused at the same position after a new `loads()` would keep showing the old ad
+
 ## 1.12.0
 - Update native SDK dependency range (Android: `[1.12, 1.13)`, iOS: `>= 1.12.0, < 1.13.0`)
 - Fixed callback order on iOS interstitial/rewarded direct ads: `onAdImpression` is now fired after the ad is actually presented on screen (previously fired right after `show()`, which could arrive before `onAdShown`), with a duplicate-impression guard and detection of presentation failures

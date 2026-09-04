@@ -37,6 +37,10 @@ class AdropAdManager {
         'creativeId': creativeId,
         'txId': txId,
         'campaignId': campaignId,
+        // Slot identifier — with loads() the same unitId fills multiple
+        // banners sharing one listener, so callbacks need it to tell slots
+        // apart. Harmless on the singular path.
+        'requestId': requestId,
         'destinationURL': destinationURL,
         'browserTarget': args['browserTarget'],
         'creativeType': args['creativeType'] ?? 'display',
@@ -66,6 +70,31 @@ class AdropAdManager {
           break;
       }
     });
+  }
+
+  /// Invokes the native batch load. Returns the raw response map:
+  /// `{ 'requestIds': List<String>, 'ads': List<Map> }`.
+  Future<dynamic> invokeLoadsBanners(
+      String unitId, List<String> requestIds) async {
+    return await _invokeChannel.invokeMethod(AdropMethod.loadsBanner, {
+      'unitId': unitId,
+      'requestIds': requestIds,
+    });
+  }
+
+  /// Registers a banner returned by the batch path so the existing event
+  /// dispatch (keyed `{unitId}_{requestId}`) and [dispose] work unchanged,
+  /// and seeds [getCreativeSize] from the batch response (the singular
+  /// onAdReceived event never fires on this path).
+  void registerPreloadedBanner(
+      AdropBannerView banner, String requestId, Map? metadata) {
+    final key = "${banner.unitId}_$requestId";
+    _loadedAds[key] = banner;
+    final width = metadata?['creativeSizeWidth'];
+    final height = metadata?['creativeSizeHeight'];
+    if (width != null && height != null) {
+      _creativeSizes[key] = CreativeSize(width: width, height: height);
+    }
   }
 
   Future<void> load(AdropBannerView banner, String requestId) async {

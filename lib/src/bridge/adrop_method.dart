@@ -3,6 +3,8 @@ class AdropMethod {
   static const setUID = "setUid";
   static const setTheme = "setTheme";
   static const loadBanner = "loadBanner";
+  static const loadsBanner = "loadsBanner";
+  static const loadsNative = "loadsNative";
   static const disposeBanner = "disposeBanner";
   static const playBanner = "playBanner";
   static const pauseBanner = "pauseBanner";

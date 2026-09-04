@@ -9,6 +9,7 @@ import 'package:adrop_ads_flutter/src/native/adrop_native_event.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_listener.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_native_properties.dart';
 import 'package:adrop_ads_flutter/src/utils/id.dart';
+import 'package:adrop_ads_flutter/src/utils/loads_batch.dart';
 import 'package:flutter/services.dart';
 
 /// AdropNativeAd class responsible for requesting native ads.
@@ -61,6 +62,87 @@ class AdropNativeAd {
     } else {
       _adropEventObserverChannel = null;
     }
+  }
+
+  /// Wraps an ad already loaded natively by [loads]. Unlike the default
+  /// constructor (hydrated later by the `didReceiveAd` event, which never
+  /// fires on the batch path), all metadata is seeded from the batch response
+  /// so [properties], [creativeSize], [isLoaded] etc. are valid immediately.
+  AdropNativeAd._preloaded({
+    required String unitId,
+    required String requestId,
+    required Map metadata,
+    this.useCustomClick = false,
+    this.listener,
+  })  : _unitId = unitId,
+        preferredAdChoicesPosition = AdropAdChoicesPosition.topRight,
+        _loaded = true {
+    _requestId = requestId;
+    _creativeId = metadata['creativeId'] ?? '';
+    _txId = metadata['txId'] ?? '';
+    _campaignId = metadata['campaignId'] ?? '';
+    _destinationURL = metadata['destinationURL'] ?? '';
+    _browserTarget = metadata['browserTarget'];
+    _creativeType = metadata['creativeType'] ?? 'display';
+    _properties = AdropNativeProperties.from(metadata);
+    final width = metadata['creativeSizeWidth'];
+    final height = metadata['creativeSizeHeight'];
+    if (width != null && height != null) {
+      _creativeSize = CreativeSize(width: width, height: height);
+    }
+
+    if (listener != null) {
+      _adropEventObserverChannel = MethodChannel(
+        AdropChannel.adropEventListenerChannelOf(AdType.native, requestId) ??
+            '',
+      );
+      _adropEventObserverChannel?.setMethodCallHandler(_handleEvent);
+    } else {
+      _adropEventObserverChannel = null;
+    }
+  }
+
+  /// Loads up to 5 native ads with a single network request. The returned
+  /// instances are already loaded ([isLoaded] is `true`) — do NOT call [load]
+  /// on them (a second load would issue another network request). Bind each
+  /// to an [AdropNativeAdView] as usual; re-mounting a recycled list item
+  /// re-binds the same instance.
+  ///
+  /// Batch-loaded ads are always direct ads ([isBackfilled] is `false`) —
+  /// the batch path intentionally skips the backfill fallback.
+  ///
+  /// Every returned instance owns a native WebView (~5-15 MB): call [dispose]
+  /// on each one when done, including instances never bound to a view.
+  ///
+  /// Throws a [PlatformException] whose `code` is an [AdropErrorCode] name
+  /// (e.g. `ERROR_CODE_AD_NO_FILL` when nothing filled).
+  static Future<List<AdropNativeAd>> loads({
+    required String unitId,
+    bool useCustomClick = false,
+    AdropNativeListener? listener,
+  }) async {
+    final requestIds = List.generate(maxLoadsBatch, (_) => nanoid());
+    final response =
+        await _invokeChannel.invokeMethod(AdropMethod.loadsNative, {
+      'unitId': unitId,
+      'requestIds': requestIds,
+      'useCustomClick': useCustomClick,
+    });
+    final map = response is Map ? response : const {};
+    final filledIds = (map['requestIds'] as List?)?.cast<String>() ?? const [];
+    final metas = map['ads'] as List? ?? const [];
+
+    final ads = <AdropNativeAd>[];
+    for (var i = 0; i < filledIds.length && i < metas.length; i++) {
+      ads.add(AdropNativeAd._preloaded(
+        unitId: unitId,
+        requestId: filledIds[i],
+        metadata: metas[i] as Map,
+        useCustomClick: useCustomClick,
+        listener: listener,
+      ));
+    }
+    return ads;
   }
 
   /// Returns `true` if an Adrop ad is loaded.

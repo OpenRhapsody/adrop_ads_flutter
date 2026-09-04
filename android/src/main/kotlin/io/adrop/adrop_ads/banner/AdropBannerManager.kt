@@ -2,6 +2,8 @@ package io.adrop.adrop_ads.banner
 
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.banner.AdropBanner
@@ -21,6 +23,22 @@ class AdropBannerManager(
     private val ads: MutableMap<String, AdropBanner?> = mutableMapOf()
     private val requestIdMap: MutableMap<AdropBanner, String> = mutableMapOf()
 
+    /**
+     * Keys of banners delivered by the batch [loads] path. Swept on engine
+     * detach so their WebViews don't outlive the engine.
+     */
+    private val preloadedKeys = mutableSetOf<String>()
+
+    /**
+     * Set once the engine detached ([destroyAllPreloaded]). A batch whose network
+     * round trip completes *after* the sweep would otherwise register banners
+     * nobody sweeps again — and the core's VisibilityTracker listener chain
+     * (task → listener → banner → host key) keeps them reachable until process
+     * death, so they must be destroyed on arrival instead.
+     */
+    @Volatile
+    private var detached = false
+
     private fun create(unitId: String, requestId: String, width: Double, height: Double): AdropBanner? {
         if (context == null) return null
 
@@ -38,6 +56,90 @@ class AdropBannerManager(
 
     fun load(unitId: String, requestId: String, width: Double, height: Double) {
         create(unitId, requestId, width, height)?.load()
+    }
+
+    /**
+     * Batch load: one network call, up to 5 pre-loaded banners bound
+     * positionally to the Dart-minted [requestIds]. The per-call listener only
+     * handles the terminal batch callbacks; after registration each banner's
+     * listener is swapped to this manager so per-instance events route exactly
+     * like the singular path (sanctioned by docs/decisions/batch-loads-api.md §2).
+     */
+    fun loads(unitId: String, requestIds: List<String>, result: MethodChannel.Result) {
+        val context = context ?: run {
+            result.error(
+                AdropErrorCode.ERROR_CODE_INITIALIZE.name,
+                "loads called before plugin context initialized",
+                null
+            )
+            return
+        }
+
+        val batchListener = object : AdropBannerListener {
+            override fun onAdsReceived(banners: List<AdropBanner>) {
+                if (detached) {
+                    // Engine already swept — see [detached]. Post like the
+                    // cap-drift guard below (destroy inside onAdsReceived races
+                    // the queued WebView load).
+                    banners.forEach { Handler(Looper.getMainLooper()).post { it.destroy() } }
+                    result.error(
+                        AdropErrorCode.ERROR_CODE_INTERNAL.name,
+                        "engine detached before loads completed",
+                        null
+                    )
+                    return
+                }
+                val filled = mutableListOf<String>()
+                val metas = mutableListOf<Map<String, Any?>>()
+                banners.forEachIndexed { index, banner ->
+                    if (index >= requestIds.size) {
+                        // Cap-drift guard: native returned more rows than minted ids.
+                        // Post — destroying inside onAdsReceived races the queued
+                        // WebView load (AdropBannerListener KDoc).
+                        // Main looper, NOT View.post: an unattached View queues the
+                        // runnable in its mRunQueue, drained only by
+                        // dispatchAttachedToWindow — and this banner is never
+                        // mounted, so View.post would never run it (leaked WebView).
+                        Handler(Looper.getMainLooper()).post { banner.destroy() }
+                        return@forEachIndexed
+                    }
+                    val requestId = requestIds[index]
+                    val key = keyOf(unitId, requestId)
+                    banner.listener = this@AdropBannerManager
+                    ads[key] = banner
+                    requestIdMap[banner] = requestId
+                    preloadedKeys.add(key)
+                    filled.add(requestId)
+                    metas.add(metadataOf(banner))
+                }
+                result.success(mapOf("requestIds" to filled, "ads" to metas))
+            }
+
+            override fun onAdsFailedToReceive(errorCode: AdropErrorCode) {
+                result.error(errorCode.name, "AdropBanner.loads failed", null)
+            }
+
+            // Singular callbacks can only fire between auto-attach and the swap
+            // above — nothing is mounted yet, so they are intentionally dropped.
+            override fun onAdReceived(banner: AdropBanner) {}
+            override fun onAdClicked(banner: AdropBanner) {}
+            override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {}
+        }
+
+        AdropBanner.loads(context, unitId, null, batchListener)
+    }
+
+    /** Destroys every batch-loaded banner still registered. See [preloadedKeys]. */
+    fun destroyAllPreloaded() {
+        detached = true
+        preloadedKeys.toList().forEach { key ->
+            ads[key]?.let {
+                it.destroy()
+                requestIdMap.remove(it)
+            }
+            ads.remove(key)
+        }
+        preloadedKeys.clear()
     }
 
     fun play(unitId: String, requestId: String) {
@@ -59,6 +161,7 @@ class AdropBannerManager(
             requestIdMap.remove(it)
             ads.remove(key)
         }
+        preloadedKeys.remove(key)
     }
 
     private fun keyOf(unitId: String, requestId: String): String {

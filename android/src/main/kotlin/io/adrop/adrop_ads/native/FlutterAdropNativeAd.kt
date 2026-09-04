@@ -24,10 +24,18 @@ class FlutterAdropNativeAd(
      * AdropNativeAdView to the new AdMob NativeAd. Direct ads do not need this —
      * they reuse the same WebView host. See [AdropNativeAdViewFactory.rebind].
      */
-    private val nativeRebindCallback: ((String) -> Unit)? = null
+    private val nativeRebindCallback: ((String) -> Unit)? = null,
+    /**
+     * Core ad to wrap. Defaults to a fresh instance (singular `load()` path);
+     * the batch `loads()` path passes an already-loaded instance to adopt —
+     * the init block below then swaps its listener to this wrapper, which is
+     * the batch contract's per-instance listener handover
+     * (docs/decisions/batch-loads-api.md §2). Never call [load] on an adopted
+     * instance — it would issue a second network request.
+     */
+    val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId, "")
 ): AdropAd(), AdropNativeAdListener {
 
-    val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId, "")
     private val requestId: String = requestId
     private var adropEventListenerChannel: MethodChannel?
 
@@ -92,6 +100,12 @@ class FlutterAdropNativeAd(
     override fun onAdVideoEnd(ad: AdropNativeAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_VIDEO_END, metadataOf(ad))
     }
+
+    /**
+     * Snapshot of the wrapped ad's metadata for the batch loads() response —
+     * same shape as event payloads (single builder, [metadataOf]).
+     */
+    fun batchMetadata(): Map<String, Any> = metadataOf(nativeAd)
 
     private fun metadataOf(ad: AdropNativeAd): Map<String, Any> {
         var creative = ad.creative

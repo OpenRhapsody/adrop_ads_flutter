@@ -21,6 +21,14 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         let messenger = registrar.messenger()
         instance.messenger = messenger
 
+        // REQUIRED for detachFromEngine(for:) below — Flutter only delivers that
+        // callback to instances published to the engine (FlutterPlugin.h:
+        // "You will only receive this method if you registered your plugin
+        // instance with the FlutterEngine via -[FlutterPluginRegistry publish:]").
+        // Without it the batch-loads sweep never runs. Published before the
+        // guard below so an early return cannot skip it.
+        registrar.publish(instance)
+
         let adManager = AdropAdManager(messenger: messenger)
         instance.adropAdManager = adManager
 
@@ -41,6 +49,15 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
         adManager.nativeRebindCallback = { [weak nativeViewFactory] requestId in
             nativeViewFactory?.rebind(requestId)
         }
+    }
+
+    public func detachFromEngine(for registrar: FlutterPluginRegistrar) {
+        // Engine teardown: sweep batch-loaded instances so their WebViews don't
+        // outlive the engine. (Dart hot restart does NOT reach here — it restarts
+        // the isolate without detaching plugins, so preloaded instances from the
+        // previous run leak until app restart. Dev-only, accepted.)
+        bannerManager?.destroyAllPreloaded()
+        adropAdManager?.destroyAllPreloadedNative()
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -127,6 +144,25 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
 
             bannerManager?.load(unitId: unitId, requestId: requestId, width: width, height: height)
             result(nil)
+        case AdropMethod.LOADS_BANNER:
+            guard let bannerManager = bannerManager else {
+                result(ModuleError)
+                return
+            }
+            let args = call.arguments as? [String: Any?]
+            let unitId = args?["unitId"] as? String ?? ""
+            let requestIds = args?["requestIds"] as? [String] ?? []
+            bannerManager.loads(unitId: unitId, requestIds: requestIds, result: result)
+        case AdropMethod.LOADS_NATIVE:
+            guard let adropAdManager = adropAdManager else {
+                result(ModuleError)
+                return
+            }
+            let args = call.arguments as? [String: Any?]
+            let unitId = args?["unitId"] as? String ?? ""
+            let requestIds = args?["requestIds"] as? [String] ?? []
+            let useCustomClick = args?["useCustomClick"] as? Bool ?? false
+            adropAdManager.loadsNative(unitId: unitId, requestIds: requestIds, useCustomClick: useCustomClick, result: result)
         case AdropMethod.DISPOSE_BANNER:
             let unitId = (call.arguments as? [String: Any?])?["unitId"] as? String ?? ""
             let requestId = (call.arguments as? [String: Any?])?["requestId"] as? String ?? ""
