@@ -1,12 +1,15 @@
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 
 import 'adrop_native_ad.dart';
+import 'package:adrop_ads_flutter/src/model/adrop_ad_value.dart';
 
 typedef AdropNativeAdCallback = void Function(AdropNativeAd ad);
 typedef AdropNativeAdErrorCallback = void Function(
     AdropNativeAd ad, AdropErrorCode errorCode);
 
 typedef AdropNativeVideoCallback = void Function(AdropNativeAd ad);
+typedef AdropNativePaidEventCallback = void Function(
+    AdropNativeAd ad, AdropAdValue value);
 
 /// Listener called when there is a change in the [AdropNativeAd].
 ///
@@ -22,6 +25,7 @@ class AdropNativeListener {
   final AdropNativeAdErrorCallback? onAdFailedToReceive;
   final AdropNativeVideoCallback? onAdVideoStart;
   final AdropNativeVideoCallback? onAdVideoEnd;
+  final AdropNativePaidEventCallback? onPaidEvent;
 
   AdropNativeListener({
     this.onAdReceived,
@@ -30,5 +34,6 @@ class AdropNativeListener {
     this.onAdFailedToReceive,
     this.onAdVideoStart,
     this.onAdVideoEnd,
+    this.onPaidEvent,
   });
 }

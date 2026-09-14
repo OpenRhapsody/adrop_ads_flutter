@@ -80,9 +80,21 @@ android/app/src/main/assets/adrop_service.json
 
 ### 5. Install iOS dependencies
 
+The plugin ships both a Swift package and a podspec, so either dependency manager works.
+
+**Swift Package Manager** (on by default since Flutter 3.44): nothing to install. The native `AdropAds` SDK is resolved when you build.
+
+**CocoaPods** (when SwiftPM is turned off):
+
 ```bash
 cd ios && pod install && cd ..
 ```
+
+> AdMob backfill is optional and is added by the app, not by the plugin:
+> - Swift Package Manager: add `https://github.com/OpenRhapsody/adrop-ads-backfill-pod` to the Runner target in Xcode
+> - CocoaPods: add `pod 'adrop-ads-backfill'` to `ios/Podfile`
+>
+> Pick one dependency manager for backfill — adding it through CocoaPods while the plugin resolves through SwiftPM links the native SDK twice.
 
 ### 6. Build and run
 

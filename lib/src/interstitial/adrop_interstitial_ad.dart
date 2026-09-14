@@ -23,6 +23,7 @@ class AdropInterstitialAd extends AdropAd {
             onAdWillDismissFullScreen: listener?.onAdWillDismissFullScreen,
             onAdFailedToShowFullScreen: listener?.onAdFailedToShowFullScreen,
             onAdBackButtonPressed: listener?.onAdBackButtonPressed,
+            onPaidEvent: listener?.onPaidEvent,
           ),
         );
 

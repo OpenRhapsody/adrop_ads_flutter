@@ -30,6 +30,7 @@ class AdropInterstitialListener {
   final AdropAdErrorCallback? onAdFailedToReceive;
   final AdropAdErrorCallback? onAdFailedToShowFullScreen;
   final AdropAdCallback? onAdBackButtonPressed;
+  final AdropPaidEventCallback? onPaidEvent;
 
   const AdropInterstitialListener(
       {this.onAdReceived,
@@ -41,5 +42,6 @@ class AdropInterstitialListener {
       this.onAdDidDismissFullScreen,
       this.onAdFailedToReceive,
       this.onAdFailedToShowFullScreen,
-      this.onAdBackButtonPressed});
+      this.onAdBackButtonPressed,
+      this.onPaidEvent});
 }

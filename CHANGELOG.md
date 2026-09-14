@@ -1,7 +1,9 @@
-## 1.12.1
-- Added `AdropBannerView.loads()` and `AdropNativeAd.loads()` to load up to 5 ads with a single network request for feed/list screens. Returned banners are ready-to-mount widgets and returned native ads are already loaded (`isLoaded` is `true`) — do NOT call `load()` on them. Batch ads are always direct ads (no backfill). Every returned instance owns a native WebView, so call `dispose()` on each one when done, including instances never mounted. On failure a `PlatformException` is thrown whose `code` is an `AdropErrorCode` name (e.g. `ERROR_CODE_AD_NO_FILL`)
-- Added `AdropBannerView.requestId` getter and a `requestId` entry in banner listener callback metadata, so a listener shared across batch-loaded banners can tell which slot fired
-- Batch-loaded banners are re-attachable: unmounting (e.g. a `ListView` recycling an off-screen item) only detaches the native view, and remounting re-binds it. Both returned banners and `AdropNativeAdView` in a list should be keyed by `requestId` — platform views freeze their creation params, so an unkeyed widget reused at the same position after a new `loads()` would keep showing the old ad
+## 1.13.0
+- Added Swift Package Manager support on iOS. The plugin now ships a Swift package alongside the podspec, so it builds under Flutter's SwiftPM integration (on by default since Flutter 3.44) with nothing to install, and continues to work with CocoaPods when SwiftPM is turned off
+- AdMob backfill stays app-installed and must use the same dependency manager as the plugin — add `https://github.com/OpenRhapsody/adrop-ads-backfill-pod` in Xcode for SwiftPM, or `pod 'adrop-ads-backfill'` for CocoaPods. Mixing the two links the native SDK twice
+- Added `onPaidEvent`, an impression-level ad revenue callback for AdMob backfill ads, on banner, native, interstitial and rewarded (including banner/native refresh). Adrop direct ads do not fire it
+- The callback delivers the ad and an `AdropAdValue` (`network`, `adSourceName`, `valueMicros`, `currencyCode`, `precision`). The value is the ad provider's own gross estimate, not a settlement figure
+- Update native SDK dependency range (Android: `[1.13, 1.14)`, iOS: `>= 1.13.0, < 1.14.0`)
 
 ## 1.12.0
 - Update native SDK dependency range (Android: `[1.12, 1.13)`, iOS: `>= 1.12.0, < 1.13.0`)

@@ -16,7 +16,7 @@ class GuideScreen extends StatelessWidget {
             const Text('개발자 가이드', style: AdropTypography.screenTitle),
             const SizedBox(height: 16),
 
-            // SDK 초기화
+            // SDK initialization
             const Text('SDK 초기화', style: AdropTypography.sectionTitle),
             const SizedBox(height: 12),
             _descriptionCard(
@@ -29,14 +29,14 @@ class GuideScreen extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // 광고 포맷
+            // Ad formats
             const Text('광고 포맷', style: AdropTypography.sectionTitle),
             const SizedBox(height: 12),
             ..._buildFormatCards(),
 
             const Divider(height: 32),
 
-            // 속성 설정
+            // Property setup
             const Text('속성 설정', style: AdropTypography.sectionTitle),
             const SizedBox(height: 12),
             _descriptionCard(
@@ -52,7 +52,7 @@ class GuideScreen extends StatelessWidget {
 
             const Divider(height: 32),
 
-            // 동의 관리
+            // Consent management
             const Text('동의 관리', style: AdropTypography.sectionTitle),
             const SizedBox(height: 12),
             _descriptionCard(

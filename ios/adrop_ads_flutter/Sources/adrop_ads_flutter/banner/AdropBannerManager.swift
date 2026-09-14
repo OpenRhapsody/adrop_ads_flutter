@@ -27,6 +27,12 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
         if let banner = ads[key] { return banner! }
         let banner = AdropBanner(unitId: unitId)
         banner.delegate = self
+        banner.onPaidEvent = { [weak self] banner, value in
+            guard let self = self else { return }
+            var arguments = self.metadataOf(banner)
+            arguments["value"] = value.toMap()
+            self.adropChannel().invokeMethod(AdropMethod.DID_PAID_EVENT, arguments: arguments)
+        }
         ads[key] = banner
         requestIdMap[banner] = requestId
 

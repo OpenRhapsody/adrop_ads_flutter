@@ -32,6 +32,7 @@ class AdropRewardedListener extends AdropInterstitialListener {
     AdropAdCallback? onAdDidDismissFullScreen,
     AdropAdErrorCallback? onAdFailedToReceive,
     AdropAdErrorCallback? onAdFailedToShowFullScreen,
+    AdropPaidEventCallback? onPaidEvent,
   }) : super(
             onAdReceived: onAdReceived,
             onAdClicked: onAdClicked,
@@ -41,5 +42,6 @@ class AdropRewardedListener extends AdropInterstitialListener {
             onAdWillDismissFullScreen: onAdWillDismissFullScreen,
             onAdDidDismissFullScreen: onAdDidDismissFullScreen,
             onAdFailedToReceive: onAdFailedToReceive,
-            onAdFailedToShowFullScreen: onAdFailedToShowFullScreen);
+            onAdFailedToShowFullScreen: onAdFailedToShowFullScreen,
+            onPaidEvent: onPaidEvent);
 }

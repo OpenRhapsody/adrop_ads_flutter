@@ -7,6 +7,9 @@ import io.adrop.adrop_ads.AdropAd
 import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
+import io.adrop.adrop_ads.bridge.toMap
+import io.adrop.ads.model.AdropAdValue
+import io.adrop.ads.model.AdropPaidEventListener
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.interstitial.AdropInterstitialAd
 import io.adrop.ads.interstitial.AdropInterstitialAdCloseListener
@@ -27,6 +30,7 @@ class FlutterAdropInterstitialAd(
 
     init {
         interstitialAd.interstitialAdListener = this
+        interstitialAd.paidEventListener = AdropPaidEventListener(::onPaidEvent)
         interstitialAd.closeListener = this
         val channelName = AdropChannel.adropEventListenerChannelOf(AdType.Interstitial, requestId)
         adropEventListenerChannel = if (channelName != null) {
@@ -91,6 +95,14 @@ class FlutterAdropInterstitialAd(
 
     fun close() {
         interstitialAd.close()
+    }
+
+    @Suppress("unused")
+    fun onPaidEvent(ad: AdropInterstitialAd, value: AdropAdValue) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PAID_EVENT, mapOf(
+            *metadataOf(ad).toList().toTypedArray(),
+            "value" to value.toMap()
+        ))
     }
 
     private fun metadataOf(ad: AdropInterstitialAd): Map<String, Any?> {

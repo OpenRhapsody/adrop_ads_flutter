@@ -8,6 +8,9 @@ import io.adrop.adrop_ads.AdType
 import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.model.AdropErrorCode
+import io.adrop.adrop_ads.bridge.toMap
+import io.adrop.ads.model.AdropAdValue
+import io.adrop.ads.model.AdropPaidEventListener
 import io.adrop.ads.rewardedAd.AdropRewardedAd
 import io.adrop.ads.rewardedAd.AdropRewardedAdListener
 import io.adrop.ads.rewardedAd.ServerSideVerificationOptions
@@ -27,6 +30,7 @@ class FlutterAdropRewardedAd(
 
     init {
         rewardedAd.rewardedAdListener = this
+        rewardedAd.paidEventListener = AdropPaidEventListener(::onPaidEvent)
         val channelName = AdropChannel.adropEventListenerChannelOf(AdType.Rewarded, requestId)
         adropEventListenerChannel = if (channelName != null) {
             MethodChannel(messenger, channelName)
@@ -89,6 +93,14 @@ class FlutterAdropRewardedAd(
         showActivity?.window?.statusBarColor = originalStatusBarColor
         showActivity = null
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, mapOf("errorCode" to errorCode.name))
+    }
+
+    @Suppress("unused")
+    fun onPaidEvent(ad: AdropRewardedAd, value: AdropAdValue) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PAID_EVENT, mapOf(
+            *metadataOf(ad).toList().toTypedArray(),
+            "value" to value.toMap()
+        ))
     }
 
     private fun metadataOf(ad: AdropRewardedAd): Map<String, Any?> {

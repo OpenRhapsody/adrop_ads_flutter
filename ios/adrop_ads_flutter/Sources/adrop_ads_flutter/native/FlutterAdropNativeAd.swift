@@ -56,6 +56,9 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
 
     func load() {
         self.nativeAd.delegate = self
+        self.nativeAd.onPaidEvent = { [weak self] ad, value in
+            self?.onNativePaidEvent(ad, value)
+        }
         nativeAd.load()
     }
 
@@ -135,5 +138,10 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "browserTarget": ad.browserTargetValue.rawValue,
             "creativeType": ad.creativeType
         ]
+    }
+    private func onNativePaidEvent(_ ad: AdropNativeAd, _ value: AdropAdValue) {
+        var arguments = metadataOf(ad)
+        arguments["value"] = value.toMap()
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PAID_EVENT, arguments: arguments)
     }
 }

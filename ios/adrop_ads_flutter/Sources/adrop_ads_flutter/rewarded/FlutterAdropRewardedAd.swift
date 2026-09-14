@@ -3,12 +3,12 @@ import Flutter
 import AdropAds
 
 
-class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate {
+class FlutterAdropRewardedAd: NSObject, AdropAd, AdropRewardedAdDelegate {
 
     private let messenger:FlutterBinaryMessenger
     private let adropEventListenerChannel: FlutterMethodChannel?
     private let requestId: String
-    private let interstitialAd: AdropInterstitialAd
+    private let rewardedAd: AdropRewardedAd
 
     init(
         unitId: String,
@@ -16,15 +16,22 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
         messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             self.requestId = requestId
-            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.interstitial, id: requestId)
+            let methodChannelName = AdropChannel.adropEventListenerChannel(adType: AdType.rewarded, id: requestId)
             self.adropEventListenerChannel = methodChannelName != nil ? FlutterMethodChannel(name: methodChannelName!, binaryMessenger: messenger) : nil
 
-            self.interstitialAd = AdropInterstitialAd(unitId: unitId)
+            self.rewardedAd = AdropRewardedAd(unitId: unitId)
         }
 
+    func setServerSideVerificationOptions(_ options: AdropServerSideVerificationOptions?) {
+        rewardedAd.serverSideVerificationOptions = options
+    }
+
     func load() {
-        self.interstitialAd.delegate = self
-        interstitialAd.load()
+        self.rewardedAd.delegate = self
+        self.rewardedAd.onPaidEvent = { [weak self] ad, value in
+            self?.onRewardedPaidEvent(ad, value)
+        }
+        rewardedAd.load()
     }
 
     func show() {
@@ -36,47 +43,51 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
             return
         }
 
-        interstitialAd.show(fromRootViewController: viewController)
+        rewardedAd.show(fromRootViewController: viewController) { [weak self] type, amount in
+            guard let strongSelf = self else { return }
+            strongSelf.adropEventListenerChannel?.invokeMethod(AdropMethod.HANDLE_EARN_REWARD,
+                                                               arguments: ["type": type, "amount": amount])
+        }
     }
 
-    func onAdReceived(_ ad: AdropInterstitialAd) {
+    func onAdReceived(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_RECEIVE_AD, arguments: metadataOf(ad))
     }
 
-    func onAdFailedToReceive(_ ad: AdropInterstitialAd, _ errorCode: AdropErrorCode) {
+    func onAdFailedToReceive(_ ad: AdropRewardedAd, _ errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAILED_TO_RECEIVE, arguments: ["errorCode":AdropErrorCodeToString(code: errorCode)])
     }
 
 
-    func onAdImpression(_ ad: AdropInterstitialAd) {
+    func onAdImpression(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_IMPRESSION, arguments: metadataOf(ad))
     }
 
-    func onAdClicked(_ ad: AdropInterstitialAd) {
+    func onAdClicked(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_CLICK_AD, arguments: metadataOf(ad))
     }
 
-    func onAdWillPresentFullScreen(_ ad: AdropInterstitialAd) {
+    func onAdWillPresentFullScreen(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
-    func onAdDidPresentFullScreen(_ ad: AdropInterstitialAd) {
+    func onAdDidPresentFullScreen(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PRESENT_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
-    func onAdWillDismissFullScreen(_ ad: AdropInterstitialAd) {
+    func onAdWillDismissFullScreen(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.WILL_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
-    func onAdDidDismissFullScreen(_ ad: AdropInterstitialAd) {
+    func onAdDidDismissFullScreen(_ ad: AdropRewardedAd) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_DISMISS_FULL_SCREEN, arguments: metadataOf(ad))
     }
 
-    func onAdFailedToShowFullScreen(_ ad: AdropInterstitialAd, _ errorCode: AdropErrorCode) {
+    func onAdFailedToShowFullScreen(_ ad: AdropRewardedAd, _ errorCode: AdropErrorCode) {
         adropEventListenerChannel?.invokeMethod(AdropMethod.DID_FAIL_TO_SHOW_FULL_SCREEN, arguments: ["errorCode": AdropErrorCodeToString(code: errorCode)])
     }
 
-    private func metadataOf(_ ad: AdropInterstitialAd) -> [String: Any] {
+    private func metadataOf(_ ad: AdropRewardedAd) -> [String: Any] {
         return [
             "unitId": ad.unitId,
             "creativeId": ad.creativeId,
@@ -84,5 +95,10 @@ class FlutterAdropInterstitialAd: NSObject, AdropAd, AdropInterstitialAdDelegate
             "campaignId": ad.campaignId,
             "browserTarget": ad.browserTargetValue.rawValue
         ]
+    }
+    private func onRewardedPaidEvent(_ ad: AdropRewardedAd, _ value: AdropAdValue) {
+        var arguments = metadataOf(ad)
+        arguments["value"] = value.toMap()
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PAID_EVENT, arguments: arguments)
     }
 }
