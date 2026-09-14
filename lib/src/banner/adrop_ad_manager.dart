@@ -3,6 +3,7 @@ import '../adrop_error_code.dart';
 import '../banner/adrop_banner_view.dart';
 import '../bridge/adrop_channel.dart';
 import '../bridge/adrop_method.dart';
+import '../model/adrop_ad_value.dart';
 import '../model/creative_size.dart';
 
 final AdropAdManager adropAdManager =
@@ -67,6 +68,15 @@ class AdropAdManager {
           break;
         case AdropMethod.didVideoEnd:
           _loadedAds[key]?.listener?.onAdVideoEnd?.call(unitId);
+          break;
+        case AdropMethod.didPaidEvent:
+          final valueMap = args['value'];
+          if (valueMap is Map) {
+            _loadedAds[key]
+                ?.listener
+                ?.onPaidEvent
+                ?.call(unitId, AdropAdValue.fromMap(valueMap));
+          }
           break;
       }
     });

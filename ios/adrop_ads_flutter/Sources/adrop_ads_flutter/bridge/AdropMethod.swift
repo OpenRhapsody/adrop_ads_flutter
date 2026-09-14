@@ -44,4 +44,5 @@ struct AdropMethod {
     static let HANDLE_EARN_REWARD = "handleEarnReward"
     static let DID_VIDEO_START = "onAdVideoStart"
     static let DID_VIDEO_END = "onAdVideoEnd"
+    static let DID_PAID_EVENT = "onPaidEvent"
 }

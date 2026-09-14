@@ -147,33 +147,22 @@
 </ol>
 </blockquote>
 <h3 id="5-install-ios-dependencies">5. Install iOS dependencies</h3>
+<p>The plugin ships both a Swift package and a podspec, so either dependency manager works.</p>
+<p><strong>Swift Package Manager</strong> (on by default since Flutter 3.44): nothing to install. The native <code>AdropAds</code> SDK is resolved when you build.</p>
+<p><strong>CocoaPods</strong> (when SwiftPM is turned off):</p>
 <pre class="language-bash"><code class="language-bash">cd ios &amp;&amp; pod install &amp;&amp; cd ..
 </code></pre>
+<blockquote>
+<p>AdMob backfill is optional and is added by the app, not by the plugin:</p>
+<ul>
+<li>Swift Package Manager: add <code>https://github.com/OpenRhapsody/adrop-ads-backfill-pod</code> to the Runner target in Xcode</li>
+<li>CocoaPods: add <code>pod 'adrop-ads-backfill'</code> to <code>ios/Podfile</code></li>
+</ul>
+<p>Pick one dependency manager for backfill — adding it through CocoaPods while the plugin resolves through SwiftPM links the native SDK twice.</p>
+</blockquote>
 <h3 id="6-build-and-run">6. Build and run</h3>
 <pre class="language-bash"><code class="language-bash">flutter run
 </code></pre>
-<h2 id="batch-loads--feedlist-ads">Batch loads() — feed/list ads</h2>
-<p>Load up to 5 banners or native ads with a single network request:</p>
-<pre class="language-dart"><code class="language-dart">// Banners: returned widgets are pre-loaded and re-attachable.
-final banners = await AdropBannerView.loads(
-  unitId: 'YOUR_UNIT_ID',
-  listener: AdropBannerListener(
-    // One listener for the batch; metadata['requestId'] identifies the slot.
-    onAdClicked: (unitId, metadata) =&gt; print('clicked ${metadata?['requestId']}'),
-  ),
-);
-// Mount banners[i] anywhere (ListView cells are fine — scroll-back re-attaches).
-// You own cleanup: call dispose() on every returned widget when done.
-
-// Native ads: instances arrive already loaded — do NOT call load() on them.
-final ads = await AdropNativeAd.loads(unitId: 'YOUR_UNIT_ID');
-// Bind each to AdropNativeAdView as usual; dispose() each when done.
-// In a list, key the view by the ad: AdropNativeAdView(key: ValueKey(ad.requestId), ...)
-// — platform views freeze their params at creation, so an unkeyed widget reused
-// at the same position after a new loads() would keep showing the old ad.
-</code></pre>
-<p>Failures throw a <code>PlatformException</code> whose <code>code</code> is an <code>AdropErrorCode</code> name
-(e.g. <code>ERROR_CODE_AD_NO_FILL</code>). Batch ads are always direct ads (no backfill).</p>
 </section>
 
 
@@ -214,7 +203,7 @@ final ads = await AdropNativeAd.loads(unitId: 'YOUR_UNIT_ID');
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.12.1
+      1.13.0
   </span>
   
 </footer>

@@ -47,4 +47,5 @@ class AdropMethod {
   static const didBackButtonPressed = "onAdBackButtonPressed";
   static const didVideoStart = "onAdVideoStart";
   static const didVideoEnd = "onAdVideoEnd";
+  static const didPaidEvent = "onPaidEvent";
 }

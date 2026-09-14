@@ -5,9 +5,12 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import io.adrop.adrop_ads.bridge.AdropChannel
+import io.adrop.adrop_ads.bridge.toMap
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.banner.AdropBanner
 import io.adrop.ads.banner.AdropBannerListener
+import io.adrop.ads.model.AdropAdValue
+import io.adrop.ads.model.AdropPaidEventListener
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.model.CreativeSize
 import io.flutter.plugin.common.BinaryMessenger
@@ -46,6 +49,7 @@ class AdropBannerManager(
         return ads[key] ?: let {
             val banner = ads[key] ?: AdropBanner(context, unitId)
             banner.listener = this
+            banner.paidEventListener = AdropPaidEventListener(::onBannerPaidEvent)
             ads[key] = banner
             requestIdMap[banner] = requestId
             if (width > 0 && height > 0) banner.adSize = CreativeSize(width, height)
@@ -191,6 +195,13 @@ class AdropBannerManager(
 
     override fun onAdVideoEnd(banner: AdropBanner) {
         adropChannel.invokeMethod(AdropMethod.DID_VIDEO_END, metadataOf(banner))
+    }
+
+    private fun onBannerPaidEvent(banner: AdropBanner, value: AdropAdValue) {
+        adropChannel.invokeMethod(AdropMethod.DID_PAID_EVENT, mapOf(
+            *metadataOf(banner).toList().toTypedArray(),
+            "value" to value.toMap()
+        ))
     }
 
     private fun metadataOf(banner: AdropBanner): Map<String, Any?> {

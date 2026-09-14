@@ -7,6 +7,9 @@ import io.adrop.adrop_ads.bridge.AdropChannel
 import io.adrop.adrop_ads.bridge.AdropMethod
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.nativeAd.AdropAdChoicesPosition
+import io.adrop.adrop_ads.bridge.toMap
+import io.adrop.ads.model.AdropAdValue
+import io.adrop.ads.model.AdropPaidEventListener
 import io.adrop.ads.nativeAd.AdropNativeAd
 import io.adrop.ads.nativeAd.AdropNativeAdListener
 import io.flutter.plugin.common.BinaryMessenger
@@ -41,6 +44,7 @@ class FlutterAdropNativeAd(
 
     init {
         nativeAd.listener = this
+        nativeAd.paidEventListener = AdropPaidEventListener(::onNativePaidEvent)
         nativeAd.useCustomClick = useCustomClick
         // The core SDK's AdropAdChoicesPosition.fromValue gets stripped by the
         // release AAR proguard (which keeps only public methods), so map here.
@@ -134,5 +138,13 @@ class FlutterAdropNativeAd(
             "browserTarget" to ad.browserTarget,
             "creativeType" to ad.creativeType
         )
+    }
+
+    @Suppress("unused")
+    fun onNativePaidEvent(ad: AdropNativeAd, value: AdropAdValue) {
+        adropEventListenerChannel?.invokeMethod(AdropMethod.DID_PAID_EVENT, mapOf(
+            *metadataOf(ad).toList().toTypedArray(),
+            "value" to value.toMap()
+        ))
     }
 }

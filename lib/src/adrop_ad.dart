@@ -27,6 +27,7 @@ class AdropEvent {
 }
 
 typedef AdropAdVideoCallback = void Function(AdropAd ad);
+typedef AdropPaidEventCallback = void Function(AdropAd ad, AdropAdValue value);
 
 class AdropAdListener {
   final AdropAdCallback? onAdReceived;
@@ -42,6 +43,7 @@ class AdropAdListener {
   final AdropAdCallback? onAdBackButtonPressed;
   final AdropAdVideoCallback? onAdVideoStart;
   final AdropAdVideoCallback? onAdVideoEnd;
+  final AdropPaidEventCallback? onPaidEvent;
 
   AdropAdListener({
     this.onAdReceived,
@@ -57,6 +59,7 @@ class AdropAdListener {
     this.onAdBackButtonPressed,
     this.onAdVideoStart,
     this.onAdVideoEnd,
+    this.onPaidEvent,
   });
 }
 
@@ -238,6 +241,12 @@ abstract class AdropAd {
         break;
       case AdropMethod.didVideoEnd:
         listener?.onAdVideoEnd?.call(this);
+        break;
+      case AdropMethod.didPaidEvent:
+        final valueMap = call.arguments['value'];
+        if (valueMap is Map) {
+          listener?.onPaidEvent?.call(this, AdropAdValue.fromMap(valueMap));
+        }
         break;
     }
   }

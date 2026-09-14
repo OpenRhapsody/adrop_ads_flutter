@@ -4,16 +4,18 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'adrop_ads_flutter'
-  s.version          = '1.12.1'
+  s.version          = '1.13.0'
   s.summary          = 'Adrop ads'
   s.description      = 'AdropAds flutter plugin that shows ads using native platform views'
   s.homepage         = 'https://openrhapsody.com'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Open Rhapsody' => 'dev@openrhapsody.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  # Sources live in the SPM layout (adrop_ads_flutter/Sources/adrop_ads_flutter); CocoaPods compiles the same files.
+  s.source_files = 'adrop_ads_flutter/Sources/adrop_ads_flutter/**/*.swift'
   s.dependency 'Flutter'
-  s.dependency 'adrop-ads', '>= 1.12.0', '< 1.13.0'
+  # Always bump together with the adrop-ads-pod version range in the SPM manifest (adrop_ads_flutter/Package.swift).
+  s.dependency 'adrop-ads', '>= 1.13.0', '< 1.14.0'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

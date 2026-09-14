@@ -24,6 +24,7 @@ class AdropRewardedAd extends AdropAd {
             onAdWillDismissFullScreen: listener?.onAdWillDismissFullScreen,
             onAdFailedToShowFullScreen: listener?.onAdFailedToShowFullScreen,
             onAdEarnRewardHandler: listener?.onAdEarnRewardHandler,
+            onPaidEvent: listener?.onPaidEvent,
           ),
         );
 

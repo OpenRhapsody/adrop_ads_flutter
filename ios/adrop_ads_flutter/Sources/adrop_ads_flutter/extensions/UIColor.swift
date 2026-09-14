@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 extension UIColor {
     convenience init(fromFlutterColor value: UInt32) {

@@ -80,9 +80,21 @@ android/app/src/main/assets/adrop_service.json
 
 ### 5. iOS 의존성 설치
 
+플러그인은 Swift package와 podspec을 모두 제공하므로 어느 의존성 관리자든 사용할 수 있습니다.
+
+**Swift Package Manager** (Flutter 3.44부터 기본 활성화): 별도로 설치할 것이 없습니다. 네이티브 `AdropAds` SDK는 빌드 시 자동으로 받아옵니다.
+
+**CocoaPods** (SwiftPM을 끈 경우):
+
 ```bash
 cd ios && pod install && cd ..
 ```
+
+> AdMob backfill 은 선택 사항이며, 플러그인이 아니라 앱에서 직접 추가합니다:
+> - Swift Package Manager: Xcode 에서 Runner 타겟에 `https://github.com/OpenRhapsody/adrop-ads-backfill-pod` 를 추가합니다
+> - CocoaPods: `ios/Podfile` 에 `pod 'adrop-ads-backfill'` 을 추가합니다
+>
+> backfill 은 의존성 관리자 하나만 선택하세요 — 플러그인이 SwiftPM 으로 해석되는 상태에서 CocoaPods 로 추가하면 네이티브 SDK 가 이중으로 링크됩니다.
 
 ### 6. 빌드 및 실행
 

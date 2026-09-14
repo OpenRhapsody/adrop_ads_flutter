@@ -51,6 +51,16 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
+  # Only this example app is pinned to CocoaPods (the plugin itself supports SPM).
+  # In this monorepo the plugin is referenced via `path: ../`, so the pub package directory is named
+  # `flutter`; SwiftPM then resolves the package identity as 'flutter', which clashes with the manifest's
+  # package name 'adrop_ads_flutter' ("unable to override package ... identity ... doesn't match").
+  # Apps that install from pub.dev get a `adrop_ads_flutter-<version>` directory and are unaffected.
+  # To verify the SPM path, copy the plugin into a directory named `adrop_ads_flutter-<version>` and
+  # reference it from a separate app (see flutter/docs/ios_spm_support_impl.md).
+  config:
+    enable-swift-package-manager: false
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

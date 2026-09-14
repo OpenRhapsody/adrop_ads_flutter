@@ -2,6 +2,7 @@ import 'package:adrop_ads_flutter/src/adrop_ad.dart';
 import 'package:adrop_ads_flutter/src/adrop_error_code.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_channel.dart';
 import 'package:adrop_ads_flutter/src/bridge/adrop_method.dart';
+import 'package:adrop_ads_flutter/src/model/adrop_ad_value.dart';
 import 'package:adrop_ads_flutter/src/model/browser_target.dart';
 import 'package:adrop_ads_flutter/src/model/creative_size.dart';
 import 'package:adrop_ads_flutter/src/native/adrop_ad_choices_position.dart';
@@ -255,6 +256,12 @@ class AdropNativeAd {
         break;
       case AdropMethod.didVideoEnd:
         listener?.onAdVideoEnd?.call(this);
+        break;
+      case AdropMethod.didPaidEvent:
+        final valueMap = args['value'];
+        if (valueMap is Map) {
+          listener?.onPaidEvent?.call(this, AdropAdValue.fromMap(valueMap));
+        }
         break;
     }
   }
