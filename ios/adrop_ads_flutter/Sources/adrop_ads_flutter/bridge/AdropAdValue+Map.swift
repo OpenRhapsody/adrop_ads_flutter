@@ -19,6 +19,9 @@ extension AdropAdValue {
         if let adSourceName = adSourceName {
             map["adSourceName"] = adSourceName
         }
+        if let externalUid = externalUid {
+            map["externalUid"] = externalUid
+        }
         return map
     }
 }

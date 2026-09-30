@@ -60,6 +60,61 @@ main() {
       }
     });
 
+    test('carries the original pre-hash uid the publisher set', () {
+      // Core hashes the uid before it sends it anywhere, so the hash is useless for a
+      // publisher joining their own analytics. This is the value they handed us.
+      final value = AdropAdValue.fromMap({
+        'network': 'admob',
+        'valueMicros': 1,
+        'currencyCode': 'KRW',
+        'precision': 'precise',
+        'externalUid': 'user-123',
+      });
+
+      expect(value.externalUid, 'user-123');
+    });
+
+    test('toString does not leak the raw uid', () {
+      // Same contract as the native `toString()`/`description` overrides: the value object
+      // must stay safe to log, because a raw user id in a log or crash report is a leak.
+      // Nothing else breaks if someone adds externalUid to this string, so pin it here.
+      final value = AdropAdValue.fromMap({
+        'network': 'admob',
+        'valueMicros': 1,
+        'currencyCode': 'KRW',
+        'precision': 'precise',
+        'externalUid': 'user-secret-123',
+      });
+
+      final rendered = value.toString();
+
+      expect(rendered, isNot(contains('user-secret-123')));
+      // Masking, not blanking — the revenue fields still have to be there.
+      expect(rendered, contains('KRW'));
+      expect(rendered, contains('admob'));
+    });
+
+    test('externalUid is null when setUID was never called', () {
+      // Android sends the key with a null value, iOS omits it entirely (same split as
+      // adSourceName). Both have to land on null here.
+      final withoutKey = AdropAdValue.fromMap({
+        'network': 'admob',
+        'valueMicros': 1,
+        'currencyCode': 'KRW',
+        'precision': 'precise',
+      });
+      final withNull = AdropAdValue.fromMap({
+        'network': 'admob',
+        'valueMicros': 1,
+        'currencyCode': 'KRW',
+        'precision': 'precise',
+        'externalUid': null,
+      });
+
+      expect(withoutKey.externalUid, isNull);
+      expect(withNull.externalUid, isNull);
+    });
+
     test('tolerates a missing adSourceName and missing fields', () {
       final value = AdropAdValue.fromMap({'precision': 'estimated'});
 

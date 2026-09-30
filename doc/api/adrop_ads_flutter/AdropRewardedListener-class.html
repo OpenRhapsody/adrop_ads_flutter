@@ -57,7 +57,22 @@
   <p>A listener called when load or show is called in the <a href="../adrop_ads_flutter/AdropRewardedAd-class.html">AdropRewardedAd</a>.</p>
 <p><a href="../adrop_ads_flutter/AdropInterstitialListener/onAdReceived.html">onAdReceived</a> Gets invoked when the rewarded ad is received.
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdClicked.html">onAdClicked</a> Gets invoked when the rewarded ad is clicked.
-<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdImpression.html">onAdImpression</a> Gets invoked when the rewarded ad is shown.
+<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdImpression.html">onAdImpression</a> Gets invoked once the rewarded ad has been displayed
+in the foreground for 500ms continuously. Not invoked if the ad is closed
+before that. If the app is backgrounded the count is cancelled and restarts
+from zero on return, so it may arrive later instead of never. Use
+<a href="../adrop_ads_flutter/AdropInterstitialListener/onAdDidPresentFullScreen.html">onAdDidPresentFullScreen</a> to know that the ad appeared.</p>
+<p>"Still displaying" below means after <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdDidPresentFullScreen.html">onAdDidPresentFullScreen</a> has
+fired. If the ad instance is disposed while it is still displaying (e.g.
+the widget holding it is unmounted), the ad stays on screen until the
+user closes it and the impression is still reported to the server, but
+this callback will not fire since the underlying ad instance is already
+gone.</p>
+<p>On Android specifically, disposing <em>before</em> <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdDidPresentFullScreen.html">onAdDidPresentFullScreen</a>
+fires (between calling show and the ad actually appearing) is
+different: the ad does not display and closes — rarely, a blank
+screen may remain until the user dismisses it with back. On iOS, the
+ad displays normally even if disposed in that same window.
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdWillPresentFullScreen.html">onAdWillPresentFullScreen</a> Gets invoked when the rewarded ad is about to appear. (iOS only)
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdDidPresentFullScreen.html">onAdDidPresentFullScreen</a> Gets invoked when the rewarded ad appeared.
 <a href="../adrop_ads_flutter/AdropInterstitialListener/onAdWillDismissFullScreen.html">onAdWillDismissFullScreen</a> Gets invoked when the rewarded ad is about to disappear. (iOS only)
@@ -362,7 +377,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.13.0
+      1.14.0
   </span>
   
 </footer>

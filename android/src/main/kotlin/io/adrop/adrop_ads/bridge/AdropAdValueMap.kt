@@ -16,7 +16,8 @@ fun AdropAdValue.toMap(): Map<String, Any?> = mapOf(
     "adSourceName" to adSourceName,
     "valueMicros" to valueMicros,
     "currencyCode" to currencyCode,
-    "precision" to precision.channelName
+    "precision" to precision.channelName,
+    "externalUid" to externalUid
 )
 
 /** Stable wire name; never `name.lowercase()`, which would emit `publisher_provided`. */

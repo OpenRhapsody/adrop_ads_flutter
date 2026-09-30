@@ -21,12 +21,22 @@ class AdropAdValue {
   /// How accurate [valueMicros] is.
   final AdropAdValuePrecision precision;
 
+  /// The original, pre-hash UID passed to `Adrop.setUID`, or null when it was never set.
+  ///
+  /// Use it to attribute this impression's revenue to a user in your own analytics or MMP.
+  /// It is the value you supplied: Adrop keeps a SHA-256 hash of it as its internal user id,
+  /// and already sends the raw value to Adrop's own servers in its remote-config sync
+  /// (`RemoteConfigInput.externalUid` — not the ad request). Reading it here sends it nowhere
+  /// new, and the ad provider never receives it.
+  final String? externalUid;
+
   const AdropAdValue({
     required this.network,
     this.adSourceName,
     required this.valueMicros,
     required this.currencyCode,
     required this.precision,
+    this.externalUid,
   });
 
   /// [valueMicros] in whole currency units. Use [valueMicros] for arithmetic.
@@ -39,6 +49,7 @@ class AdropAdValue {
       valueMicros: map['valueMicros'] ?? 0,
       currencyCode: map['currencyCode'] ?? '',
       precision: AdropAdValuePrecision.fromName(map['precision']),
+      externalUid: map['externalUid'],
     );
   }
 

@@ -10,7 +10,24 @@ typedef AdropAdRewardEventCallback = void Function(
 ///
 /// [onAdReceived] Gets invoked when the rewarded ad is received.
 /// [onAdClicked] Gets invoked when the rewarded ad is clicked.
-/// [onAdImpression] Gets invoked when the rewarded ad is shown.
+/// [onAdImpression] Gets invoked once the rewarded ad has been displayed
+/// in the foreground for 500ms continuously. Not invoked if the ad is closed
+/// before that. If the app is backgrounded the count is cancelled and restarts
+/// from zero on return, so it may arrive later instead of never. Use
+/// [onAdDidPresentFullScreen] to know that the ad appeared.
+///
+/// "Still displaying" below means after [onAdDidPresentFullScreen] has
+/// fired. If the ad instance is disposed while it is still displaying (e.g.
+/// the widget holding it is unmounted), the ad stays on screen until the
+/// user closes it and the impression is still reported to the server, but
+/// this callback will not fire since the underlying ad instance is already
+/// gone.
+///
+/// On Android specifically, disposing *before* [onAdDidPresentFullScreen]
+/// fires (between calling show and the ad actually appearing) is
+/// different: the ad does not display and closes — rarely, a blank
+/// screen may remain until the user dismisses it with back. On iOS, the
+/// ad displays normally even if disposed in that same window.
 /// [onAdWillPresentFullScreen] Gets invoked when the rewarded ad is about to appear. (iOS only)
 /// [onAdDidPresentFullScreen] Gets invoked when the rewarded ad appeared.
 /// [onAdWillDismissFullScreen] Gets invoked when the rewarded ad is about to disappear. (iOS only)

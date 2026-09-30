@@ -74,7 +74,7 @@ class _InterstitialExampleState extends State<InterstitialExample> {
           onPaidEvent: (ad, value) {
             debugPrint(
                 "interstitialAd onPaidEvent $unitId, ${value.valueMicros} ${value.currencyCode} "
-                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName}");
+                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName} externalUid: ${value.externalUid}");
           },
           // Callback: Called when the ad is clicked
           onAdClicked: (ad) {

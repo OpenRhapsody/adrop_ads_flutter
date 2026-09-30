@@ -1,3 +1,9 @@
+## 1.14.0
+- Added `externalUid` to `AdropAdValue` in `onPaidEvent` — the original value passed to `Adrop.setUID()`, or `null` if not set
+- AdMob backfill banners may fire `onAdReceived` again when AdMob refreshes the creative
+- Splash (native): the error code when no ad is available is now `ERROR_CODE_AD_INACTIVE` instead of `ERROR_CODE_AD_NO_FILL`
+- Update native SDK dependency range (Android: `[1.14, 1.15)`, iOS: `>= 1.14.0, < 1.15.0`)
+
 ## 1.13.0
 - Added Swift Package Manager support on iOS. The plugin now ships a Swift package alongside the podspec, so it builds under Flutter's SwiftPM integration (on by default since Flutter 3.44) with nothing to install, and continues to work with CocoaPods when SwiftPM is turned off
 - AdMob backfill stays app-installed and must use the same dependency manager as the plugin — add `https://github.com/OpenRhapsody/adrop-ads-backfill-pod` in Xcode for SwiftPM, or `pod 'adrop-ads-backfill'` for CocoaPods. Mixing the two links the native SDK twice

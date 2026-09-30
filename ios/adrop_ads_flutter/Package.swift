@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         // Distribution repo for the same native SDK (AdropAds.xcframework) as CocoaPods' `adrop-ads`.
         // Always bump this version range together with `s.dependency 'adrop-ads', ...` in adrop_ads_flutter.podspec.
-        .package(url: "https://github.com/OpenRhapsody/adrop-ads-pod.git", "1.13.0" ..< "1.14.0")
+        .package(url: "https://github.com/OpenRhapsody/adrop-ads-pod.git", "1.14.0" ..< "1.15.0")
     ],
     targets: [
         .target(

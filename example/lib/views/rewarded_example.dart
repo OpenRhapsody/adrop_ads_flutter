@@ -72,7 +72,7 @@ class _RewardedExampleState extends State<RewardedExample> {
           onPaidEvent: (ad, value) {
             debugPrint(
                 "rewardedAd onPaidEvent $unitId, ${value.valueMicros} ${value.currencyCode} "
-                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName}");
+                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName} externalUid: ${value.externalUid}");
           },
           // Callback: Called when the ad is clicked
           onAdClicked: (ad) {

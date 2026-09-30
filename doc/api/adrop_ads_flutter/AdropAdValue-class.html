@@ -68,7 +68,7 @@ not a settlement figure.</p>
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="AdropAdValue.new" class="callable">
-          <span class="name"><a href="../adrop_ads_flutter/AdropAdValue/AdropAdValue.html">AdropAdValue</a></span><span class="signature">({<span class="parameter" id="param-network"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">network</span>, </span><span class="parameter" id="param-adSourceName"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">adSourceName</span>, </span><span class="parameter" id="param-valueMicros"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">valueMicros</span>, </span><span class="parameter" id="param-currencyCode"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">currencyCode</span>, </span><span class="parameter" id="param-precision"><span>required</span> <span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdValuePrecision.html">AdropAdValuePrecision</a></span> <span class="parameter-name">precision</span></span>})</span>
+          <span class="name"><a href="../adrop_ads_flutter/AdropAdValue/AdropAdValue.html">AdropAdValue</a></span><span class="signature">({<span class="parameter" id="param-network"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">network</span>, </span><span class="parameter" id="param-adSourceName"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">adSourceName</span>, </span><span class="parameter" id="param-valueMicros"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">valueMicros</span>, </span><span class="parameter" id="param-currencyCode"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">currencyCode</span>, </span><span class="parameter" id="param-precision"><span>required</span> <span class="type-annotation"><a href="../adrop_ads_flutter/AdropAdValuePrecision.html">AdropAdValuePrecision</a></span> <span class="parameter-name">precision</span>, </span><span class="parameter" id="param-externalUid"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">externalUid</span></span>})</span>
         </dt>
         <dd>
           
@@ -109,6 +109,18 @@ not a settlement figure.</p>
 </dt>
 <dd>
   ISO 4217 currency code, passed through from the provider.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="externalUid" class="property">
+  <span class="name"><a href="../adrop_ads_flutter/AdropAdValue/externalUid.html">externalUid</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
+  
+
+</dt>
+<dd>
+  The original, pre-hash UID passed to <code>Adrop.setUID</code>, or null when it was never set.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -270,7 +282,7 @@ not a settlement figure.</p>
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.13.0
+      1.14.0
   </span>
   
 </footer>

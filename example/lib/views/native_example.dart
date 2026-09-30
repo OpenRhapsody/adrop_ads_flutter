@@ -124,7 +124,7 @@ class _NativeExampleState extends State<NativeExample> {
           onPaidEvent: (ad, value) {
             debugPrint(
                 "nativeAd onPaidEvent $unitId, ${value.valueMicros} ${value.currencyCode} "
-                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName}");
+                "precision: ${value.precision} network: ${value.network} source: ${value.adSourceName} externalUid: ${value.externalUid}");
           },
           onAdImpression: (ad) {
             debugPrint(
