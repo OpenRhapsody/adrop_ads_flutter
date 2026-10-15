@@ -3,9 +3,11 @@ package io.adrop.adrop_ads.consent
 import android.app.Activity
 import android.content.Context
 import android.provider.Settings
+import io.adrop.adrop_ads.bridge.toMap
 import io.adrop.ads.Adrop
 import io.adrop.ads.consent.AdropConsentDebugGeography
 import io.adrop.ads.consent.AdropConsentListener
+import io.adrop.ads.consent.AdropConsentManager
 import io.adrop.ads.consent.AdropConsentResult
 import io.adrop.ads.model.AdropErrorCode
 import io.flutter.plugin.common.MethodChannel.Result
@@ -14,6 +16,32 @@ import java.security.MessageDigest
 class FlutterAdropConsentManager {
 
     fun requestConsentInfoUpdate(activity: Activity?, result: Result) {
+        withManagerAndActivity(activity, result) { consentManager, foreground ->
+            consentManager.requestConsentInfoUpdate(foreground, replyWith(result))
+        }
+    }
+
+    fun showPrivacyOptionsForm(activity: Activity?, result: Result) {
+        withManagerAndActivity(activity, result) { consentManager, foreground ->
+            consentManager.showPrivacyOptionsForm(foreground, replyWith(result))
+        }
+    }
+
+    fun getPrivacyOptionsRequirementStatus(context: Context?, result: Result) {
+        val consentManager = Adrop.consentManager
+        if (consentManager == null || context == null) {
+            result.success(0) // UNKNOWN
+            return
+        }
+        result.success(consentManager.getPrivacyOptionsRequirementStatus(context).value)
+    }
+
+    /** 양식을 띄우는 두 메서드의 공통 사전 검사 — 백필 미포함·Activity 없음은 Dart 쪽에 같은 에러로 돌려준다. */
+    private inline fun withManagerAndActivity(
+        activity: Activity?,
+        result: Result,
+        block: (AdropConsentManager, Activity) -> Unit
+    ) {
         val consentManager = Adrop.consentManager
         if (consentManager == null) {
             result.error(
@@ -31,17 +59,13 @@ class FlutterAdropConsentManager {
             )
             return
         }
-        consentManager.requestConsentInfoUpdate(activity, object : AdropConsentListener {
-            override fun onConsentInfoUpdated(consentResult: AdropConsentResult) {
-                val resultMap = hashMapOf<String, Any?>(
-                    "status" to consentResult.status.value,
-                    "canRequestAds" to consentResult.canRequestAds,
-                    "canShowPersonalizedAds" to consentResult.canShowPersonalizedAds,
-                    "error" to consentResult.error?.message
-                )
-                result.success(resultMap)
-            }
-        })
+        block(consentManager, activity)
+    }
+
+    private fun replyWith(result: Result) = object : AdropConsentListener {
+        override fun onConsentInfoUpdated(consentResult: AdropConsentResult) {
+            result.success(consentResult.toMap())
+        }
     }
 
     fun getConsentStatus(context: Context?, result: Result) {

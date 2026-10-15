@@ -267,6 +267,12 @@ public class AdropAdsFlutterPlugin: NSObject, FlutterPlugin {
             let geographyValue = (call.arguments as? [String: Any?])?["geography"] as? Int ?? 0
             consentManager.setDebugSettings(geographyValue: geographyValue, result: result)
 
+        case AdropMethod.GET_PRIVACY_OPTIONS_REQUIREMENT_STATUS:
+            consentManager.getPrivacyOptionsRequirementStatus(result: result)
+
+        case AdropMethod.SHOW_PRIVACY_OPTIONS_FORM:
+            consentManager.showPrivacyOptionsForm(result: result)
+
         case AdropMethod.REGISTER_WEB_VIEW:
             let webViewId = (call.arguments as? [String: Any?])?["webViewId"] as? Int64 ?? -1
             if webViewId >= 0 {

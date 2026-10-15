@@ -29,6 +29,8 @@ object AdropMethod {
     const val CAN_REQUEST_ADS = "canRequestAds"
     const val RESET_CONSENT = "resetConsent"
     const val SET_CONSENT_DEBUG_SETTINGS = "setConsentDebugSettings"
+    const val GET_PRIVACY_OPTIONS_REQUIREMENT_STATUS = "getPrivacyOptionsRequirementStatus"
+    const val SHOW_PRIVACY_OPTIONS_FORM = "showPrivacyOptionsForm"
 
     const val DID_RECEIVE_AD = "onAdReceived"
     const val DID_CLICK_AD = "onAdClicked"

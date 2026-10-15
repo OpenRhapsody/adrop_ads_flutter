@@ -1,3 +1,13 @@
+## 1.15.0
+- Added privacy options to `AdropConsentManager` so users can change their consent later, e.g. from a "Privacy settings" entry in your settings screen
+  - `getPrivacyOptionsRequirementStatus()` returns `AdropPrivacyOptionsRequirementStatus` (`unknown` / `required` / `notRequired`). When it is `required`, the entry point must be shown
+  - `showPrivacyOptionsForm(listener)` shows the form and delivers the updated `AdropConsentResult` after the form closes. The change is applied to the SDK before the listener is called
+  - Call `requestConsentInfoUpdate()` on every app launch, even when consent was already obtained. The requirement status stays `unknown` until it completes in the current session
+- `reset()` is for testing only and must not be called in production code. It no longer marks the user as consented; the previous choice is kept until consent is determined again
+- Android: `requestConsentInfoUpdate` now always calls the listener, even if the activity is finishing when the consent form closes (e.g. on rotation). Previously the listener could be skipped and the `Future` never completed
+- Changes made in the privacy options form cover GDPR (TCF) consent. US state privacy opt-outs are not yet reflected
+- Update native SDK dependency range (Android: `[1.15, 1.16)`, iOS: `>= 1.15.0, < 1.16.0`). Update the backfill SDK to 1.15 as well
+
 ## 1.14.0
 - Added `externalUid` to `AdropAdValue` in `onPaidEvent` — the original value passed to `Adrop.setUID()`, or `null` if not set
 - AdMob backfill banners may fire `onAdReceived` again when AdMob refreshes the creative

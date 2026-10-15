@@ -64,6 +64,9 @@
     
 <section class="desc markdown">
   <p>Request consent info update and show consent form if required</p>
+<p>Call this on every app launch, even when consent was already obtained —
+<a href="../../adrop_ads_flutter/AdropConsentManager/getPrivacyOptionsRequirementStatus.html">getPrivacyOptionsRequirementStatus</a> reflects this session only after it
+completes.</p>
 <p><code>listener</code> Callback that receives the consent result</p>
 </section>
 
@@ -71,31 +74,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; requestConsentInfoUpdate(AdropConsentListener listener) async {
-  try {
-    final result = await _methodChannel.invokeMethod&lt;Map&lt;dynamic, dynamic&gt;&gt;(
-        AdropMethod.requestConsentInfoUpdate);
-
-    if (result != null) {
-      listener(AdropConsentResult.fromMap(result));
-    } else {
-      listener(AdropConsentResult(
-        status: AdropConsentStatus.unknown,
-        canRequestAds: false,
-        canShowPersonalizedAds: false,
-        error: &#39;No result returned&#39;,
-      ));
-    }
-  } catch (e) {
-    log(&#39;Error requesting consent info update: $e&#39;,
-        name: &#39;AdropConsentManager&#39;);
-    listener(AdropConsentResult(
-      status: AdropConsentStatus.unknown,
-      canRequestAds: false,
-      canShowPersonalizedAds: false,
-      error: e.toString(),
-    ));
-  }
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; requestConsentInfoUpdate(AdropConsentListener listener) {
+  return _invokeForResult(AdropMethod.requestConsentInfoUpdate, listener);
 }</code></pre>
 </section>
 
@@ -124,7 +104,7 @@
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.14.0
+      1.15.0
   </span>
   
 </footer>

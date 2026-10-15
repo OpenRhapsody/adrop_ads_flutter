@@ -4,6 +4,7 @@ import 'package:adrop_ads_flutter/src/consent/adrop_consent_debug_geography.dart
 import 'package:adrop_ads_flutter/src/consent/adrop_consent_manager.dart';
 import 'package:adrop_ads_flutter/src/consent/adrop_consent_result.dart';
 import 'package:adrop_ads_flutter/src/consent/adrop_consent_status.dart';
+import 'package:adrop_ads_flutter/src/consent/adrop_privacy_options_requirement_status.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -19,9 +20,13 @@ main() {
   String? mockError;
   bool shouldThrowError = false;
   AdropConsentDebugGeography? lastDebugGeography;
+  AdropPrivacyOptionsRequirementStatus mockPrivacyOptionsStatus =
+      AdropPrivacyOptionsRequirementStatus.unknown;
+  String? lastMethod;
 
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(invokeChannel, (call) async {
+    lastMethod = call.method;
     if (shouldThrowError) {
       throw PlatformException(code: 'ERROR', message: 'Test error');
     }
@@ -52,6 +57,17 @@ main() {
             call.arguments['geography'] as int);
         return null;
 
+      case AdropMethod.getPrivacyOptionsRequirementStatus:
+        return mockPrivacyOptionsStatus.value;
+
+      case AdropMethod.showPrivacyOptionsForm:
+        return {
+          'status': mockConsentStatus.value,
+          'canRequestAds': mockCanRequestAds,
+          'canShowPersonalizedAds': mockCanShowPersonalizedAds,
+          'error': mockError,
+        };
+
       default:
         return null;
     }
@@ -65,6 +81,8 @@ main() {
     mockError = null;
     shouldThrowError = false;
     lastDebugGeography = null;
+    mockPrivacyOptionsStatus = AdropPrivacyOptionsRequirementStatus.unknown;
+    lastMethod = null;
   });
 
   group('AdropConsentStatus', () {
@@ -329,6 +347,90 @@ main() {
       shouldThrowError = true;
       // Should not throw
       await consentManager.setDebugSettings(AdropConsentDebugGeography.eea);
+    });
+  });
+
+  group('AdropPrivacyOptionsRequirementStatus', () {
+    test('fromValue maps native values', () {
+      expect(AdropPrivacyOptionsRequirementStatus.fromValue(0),
+          AdropPrivacyOptionsRequirementStatus.unknown);
+      expect(AdropPrivacyOptionsRequirementStatus.fromValue(1),
+          AdropPrivacyOptionsRequirementStatus.required);
+      expect(AdropPrivacyOptionsRequirementStatus.fromValue(2),
+          AdropPrivacyOptionsRequirementStatus.notRequired);
+    });
+
+    test('fromValue returns unknown for invalid value', () {
+      expect(AdropPrivacyOptionsRequirementStatus.fromValue(99),
+          AdropPrivacyOptionsRequirementStatus.unknown);
+      expect(AdropPrivacyOptionsRequirementStatus.fromValue(-1),
+          AdropPrivacyOptionsRequirementStatus.unknown);
+    });
+  });
+
+  group('AdropConsentManager.getPrivacyOptionsRequirementStatus', () {
+    test('returns required status', () async {
+      mockPrivacyOptionsStatus = AdropPrivacyOptionsRequirementStatus.required;
+      final status = await consentManager.getPrivacyOptionsRequirementStatus();
+      expect(lastMethod, 'getPrivacyOptionsRequirementStatus');
+      expect(status, AdropPrivacyOptionsRequirementStatus.required);
+    });
+
+    test('returns notRequired status', () async {
+      mockPrivacyOptionsStatus =
+          AdropPrivacyOptionsRequirementStatus.notRequired;
+      final status = await consentManager.getPrivacyOptionsRequirementStatus();
+      expect(status, AdropPrivacyOptionsRequirementStatus.notRequired);
+    });
+
+    test('returns unknown on error so the entry point stays hidden', () async {
+      shouldThrowError = true;
+      final status = await consentManager.getPrivacyOptionsRequirementStatus();
+      expect(status, AdropPrivacyOptionsRequirementStatus.unknown);
+    });
+  });
+
+  group('AdropConsentManager.showPrivacyOptionsForm', () {
+    test('passes the result after the form closes', () async {
+      mockConsentStatus = AdropConsentStatus.obtained;
+      mockCanRequestAds = true;
+      mockCanShowPersonalizedAds = false;
+
+      final results = <AdropConsentResult>[];
+      await consentManager.showPrivacyOptionsForm(results.add);
+
+      // Literal on purpose: pins the Dart side to the native channel key.
+      expect(lastMethod, 'showPrivacyOptionsForm');
+      expect(results.length, 1);
+      expect(results.single.status, AdropConsentStatus.obtained);
+      expect(results.single.canRequestAds, true);
+      expect(results.single.canShowPersonalizedAds, false);
+      expect(results.single.error, null);
+    });
+
+    test('passes the native error with the current state', () async {
+      mockConsentStatus = AdropConsentStatus.obtained;
+      mockCanRequestAds = true;
+      mockError = 'Privacy options form is not required';
+
+      final results = <AdropConsentResult>[];
+      await consentManager.showPrivacyOptionsForm(results.add);
+
+      expect(results.length, 1);
+      expect(results.single.status, AdropConsentStatus.obtained);
+      expect(results.single.error, 'Privacy options form is not required');
+    });
+
+    test('calls the listener once with an error when the channel fails',
+        () async {
+      shouldThrowError = true;
+
+      final results = <AdropConsentResult>[];
+      await consentManager.showPrivacyOptionsForm(results.add);
+
+      expect(results.length, 1);
+      expect(results.single.status, AdropConsentStatus.unknown);
+      expect(results.single.error, isNotNull);
     });
   });
 

@@ -28,3 +28,4 @@ export 'src/consent/adrop_consent_manager.dart';
 export 'src/consent/adrop_consent_status.dart';
 export 'src/consent/adrop_consent_result.dart';
 export 'src/consent/adrop_consent_debug_geography.dart';
+export 'src/consent/adrop_privacy_options_requirement_status.dart';

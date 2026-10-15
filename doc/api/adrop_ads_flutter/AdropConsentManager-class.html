@@ -139,6 +139,19 @@ check consent status, and manage debug settings for testing.</p>
 
 </dd>
 
+        <dt id="getPrivacyOptionsRequirementStatus" class="callable">
+  <span class="name"><a href="../adrop_ads_flutter/AdropConsentManager/getPrivacyOptionsRequirementStatus.html">getPrivacyOptionsRequirementStatus</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../adrop_ads_flutter/AdropPrivacyOptionsRequirementStatus.html">AdropPrivacyOptionsRequirementStatus</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Whether a privacy options (privacy settings) entry point must be shown
+  
+
+</dd>
+
         <dt id="noSuchMethod" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
@@ -173,7 +186,9 @@ check consent status, and manage debug settings for testing.</p>
 
 </dt>
 <dd>
-  Reset consent information (for testing/debugging)
+  Reset consent information — <strong>for testing only, do not call in
+production code.</strong> To let users change their consent, use
+<a href="../adrop_ads_flutter/AdropConsentManager/showPrivacyOptionsForm.html">showPrivacyOptionsForm</a>.
   
 
 </dd>
@@ -187,6 +202,19 @@ check consent status, and manage debug settings for testing.</p>
 </dt>
 <dd>
   Set debug settings for testing consent flows
+  
+
+</dd>
+
+        <dt id="showPrivacyOptionsForm" class="callable">
+  <span class="name"><a href="../adrop_ads_flutter/AdropConsentManager/showPrivacyOptionsForm.html">showPrivacyOptionsForm</a></span><span class="signature">(<wbr><span class="parameter" id="showPrivacyOptionsForm-param-listener"><span class="type-annotation"><a href="../adrop_ads_flutter/AdropConsentListener.html">AdropConsentListener</a></span> <span class="parameter-name">listener</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Show the privacy options form so the user can change their consent
   
 
 </dd>
@@ -254,7 +282,7 @@ check consent status, and manage debug settings for testing.</p>
 <footer>
   <span class="no-break">
     adrop_ads_flutter
-      1.14.0
+      1.15.0
   </span>
   
 </footer>

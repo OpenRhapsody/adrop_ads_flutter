@@ -24,14 +24,34 @@ class FlutterAdropConsentManager {
         }
 
         consentManager.requestConsentInfoUpdate(from: viewController) { consentResult in
-            let resultMap: [String: Any?] = [
-                "status": consentResult.status.rawValue,
-                "canRequestAds": consentResult.canRequestAds,
-                "canShowPersonalizedAds": consentResult.canShowPersonalizedAds,
-                "error": consentResult.error?.localizedDescription
-            ]
-            result(resultMap)
+            result(consentResult.toMap())
         }
+    }
+
+    func showPrivacyOptionsForm(result: @escaping FlutterResult) {
+        guard let consentManager = Adrop.consentManager else {
+            result(FlutterError(
+                code: "ERROR_CODE_INTERNAL",
+                message: "ConsentManager is not available",
+                details: "AdropAdsBackfill module is not installed"
+            ))
+            return
+        }
+
+        // 표시 화면을 고르지 않고 nil 을 넘긴다 — UMP 가 메인 윈도우의 최상단 화면에서 띄운다.
+        // 이 양식은 설정 화면에서 불리고, 설정 화면은 모달인 경우가 많아 rootViewController 에서
+        // present 하면 UIKit 이 거부한다.
+        consentManager.showPrivacyOptionsForm(from: nil) { consentResult in
+            result(consentResult.toMap())
+        }
+    }
+
+    func getPrivacyOptionsRequirementStatus(result: @escaping FlutterResult) {
+        guard let consentManager = Adrop.consentManager else {
+            result(0) // UNKNOWN
+            return
+        }
+        result(consentManager.getPrivacyOptionsRequirementStatus().rawValue)
     }
 
     func getConsentStatus(result: @escaping FlutterResult) {

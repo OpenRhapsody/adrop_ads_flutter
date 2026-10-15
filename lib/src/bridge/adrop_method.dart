@@ -32,6 +32,9 @@ class AdropMethod {
   static const canRequestAds = "canRequestAds";
   static const resetConsent = "resetConsent";
   static const setConsentDebugSettings = "setConsentDebugSettings";
+  static const getPrivacyOptionsRequirementStatus =
+      "getPrivacyOptionsRequirementStatus";
+  static const showPrivacyOptionsForm = "showPrivacyOptionsForm";
 
   static const didReceiveAd = "onAdReceived";
   static const didClickAd = "onAdClicked";

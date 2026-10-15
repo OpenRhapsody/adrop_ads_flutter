@@ -329,6 +329,14 @@ class AdropAdsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     consentManager.setDebugSettings(context, geographyValue, result)
                 }
 
+                AdropMethod.GET_PRIVACY_OPTIONS_REQUIREMENT_STATUS -> {
+                    consentManager.getPrivacyOptionsRequirementStatus(context, result)
+                }
+
+                AdropMethod.SHOW_PRIVACY_OPTIONS_FORM -> {
+                    consentManager.showPrivacyOptionsForm(activity, result)
+                }
+
                 AdropMethod.REGISTER_WEB_VIEW -> {
                     val webViewId = call.argument("webViewId") as? Long
                         ?: call.argument<Int>("webViewId")?.toLong()

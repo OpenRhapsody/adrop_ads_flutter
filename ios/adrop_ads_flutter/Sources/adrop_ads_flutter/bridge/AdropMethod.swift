@@ -30,6 +30,8 @@ struct AdropMethod {
     static let CAN_REQUEST_ADS = "canRequestAds"
     static let RESET_CONSENT = "resetConsent"
     static let SET_CONSENT_DEBUG_SETTINGS = "setConsentDebugSettings"
+    static let GET_PRIVACY_OPTIONS_REQUIREMENT_STATUS = "getPrivacyOptionsRequirementStatus"
+    static let SHOW_PRIVACY_OPTIONS_FORM = "showPrivacyOptionsForm"
 
     static let DID_RECEIVE_AD = "onAdReceived"
     static let DID_CLICK_AD = "onAdClicked"

@@ -16,8 +16,17 @@ class _ConsentExampleState extends State<ConsentExample> {
   String _statusText = 'Not checked';
   String _resultText = '';
   bool _isLoading = false;
+  bool _privacyOptionsRequired = false;
   AdropConsentDebugGeography _selectedGeography =
       AdropConsentDebugGeography.disabled;
+
+  @override
+  void initState() {
+    super.initState();
+    // Re-check whenever the settings screen is shown — the status reflects
+    // this session's requestConsentInfoUpdate.
+    _refreshPrivacyOptions();
+  }
 
   /// Request consent info update and show consent form if required
   Future<void> _requestConsentInfoUpdate() async {
@@ -26,24 +35,46 @@ class _ConsentExampleState extends State<ConsentExample> {
       _resultText = 'Requesting...';
     });
 
-    Adrop.consentManager.requestConsentInfoUpdate((result) {
-      setState(() {
-        _isLoading = false;
-        _resultText = '''
+    Adrop.consentManager.requestConsentInfoUpdate(_showResult);
+  }
+
+  /// Show the privacy options form ("Privacy Settings" entry point)
+  Future<void> _showPrivacyOptionsForm() async {
+    Adrop.consentManager.showPrivacyOptionsForm(_showResult);
+  }
+
+  void _showResult(AdropConsentResult result) {
+    if (!mounted) return;
+    setState(() {
+      _isLoading = false;
+      _resultText = '''
 Status: ${result.status.name}
 Can Request Ads: ${result.canRequestAds}
 Can Show Personalized Ads: ${result.canShowPersonalizedAds}
 Error: ${result.error ?? 'None'}
 ''';
-      });
+    });
+    _refreshPrivacyOptions();
+  }
+
+  /// Show the "Privacy Settings" entry point only when it is required
+  Future<void> _refreshPrivacyOptions() async {
+    final status =
+        await Adrop.consentManager.getPrivacyOptionsRequirementStatus();
+    if (!mounted) return;
+    setState(() {
+      _privacyOptionsRequired =
+          status == AdropPrivacyOptionsRequirementStatus.required;
     });
   }
 
   /// Get current consent status
   Future<void> _getConsentStatus() async {
     final status = await Adrop.consentManager.getConsentStatus();
+    final privacyOptions =
+        await Adrop.consentManager.getPrivacyOptionsRequirementStatus();
     setState(() {
-      _statusText = status.name;
+      _statusText = '${status.name}\nPrivacy options: ${privacyOptions.name}';
     });
   }
 
@@ -55,13 +86,14 @@ Error: ${result.error ?? 'None'}
     });
   }
 
-  /// Reset consent (for testing)
+  /// Reset consent (testing only — never call in production code)
   Future<void> _resetConsent() async {
     await Adrop.consentManager.reset();
     setState(() {
       _statusText = 'Reset completed';
       _resultText = '';
     });
+    _refreshPrivacyOptions();
   }
 
   /// Apply debug settings
@@ -133,12 +165,17 @@ Error: ${result.error ?? 'None'}
                     onPressed: _checkCanRequestAds,
                     child: const Text('Can Request Ads?'),
                   ),
+                  if (_privacyOptionsRequired)
+                    ElevatedButton(
+                      onPressed: _showPrivacyOptionsForm,
+                      child: const Text('Privacy Settings'),
+                    ),
                   ElevatedButton(
                     onPressed: _resetConsent,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red[100],
                     ),
-                    child: const Text('Reset'),
+                    child: const Text('Reset (Testing Only)'),
                   ),
                 ],
               ),
