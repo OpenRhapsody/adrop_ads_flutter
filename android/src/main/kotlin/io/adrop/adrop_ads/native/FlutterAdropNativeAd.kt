@@ -14,6 +14,7 @@ import io.adrop.ads.nativeAd.AdropNativeAd
 import io.adrop.ads.nativeAd.AdropNativeAdListener
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
+import org.json.JSONObject
 
 class FlutterAdropNativeAd(
     context: Context,
@@ -32,8 +33,7 @@ class FlutterAdropNativeAd(
      * Core ad to wrap. Defaults to a fresh instance (singular `load()` path);
      * the batch `loads()` path passes an already-loaded instance to adopt —
      * the init block below then swaps its listener to this wrapper, which is
-     * the batch contract's per-instance listener handover
-     * (docs/decisions/batch-loads-api.md §2). Never call [load] on an adopted
+     * the batch contract's per-instance listener handover. Never call [load] on an adopted
      * instance — it would issue a second network request.
      */
     val nativeAd: AdropNativeAd = AdropNativeAd(context, unitId, "")
@@ -126,6 +126,7 @@ class FlutterAdropNativeAd(
             "displayLogo" to ad.profile.displayLogo,
             "displayName" to ad.profile.displayName,
             "extra" to ad.extra.toString(),
+            "extraAssets" to extraAssetsJson(ad),
             "asset" to ad.asset,
             "destinationURL" to ad.destinationURL,
             "creative" to creative,
@@ -138,6 +139,22 @@ class FlutterAdropNativeAd(
             "browserTarget" to ad.browserTarget,
             "creativeType" to ad.creativeType
         )
+    }
+
+    /** Passes a JSON string shaped like `extra`: `{ "<id>": { id, asset, creative, cover?, type?, isVideo } }` (server order preserved). */
+    private fun extraAssetsJson(ad: AdropNativeAd): String {
+        val json = JSONObject()
+        ad.extraAssets.forEach { (id, asset) ->
+            json.put(id, JSONObject().apply {
+                put("id", asset.id)
+                put("asset", asset.asset)
+                put("creative", asset.creative)
+                asset.cover?.let { put("cover", it) }
+                asset.type?.let { put("type", it) }
+                put("isVideo", asset.isVideo)
+            })
+        }
+        return json.toString()
     }
 
     @Suppress("unused")

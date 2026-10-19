@@ -34,7 +34,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
     /// Adopts an already-loaded core ad delivered by `AdropNativeAd.loads`.
     /// Unlike the singular path (delegate attached lazily in `load()`), the
     /// delegate is attached immediately — this is the batch contract's
-    /// per-instance listener handover (batch-loads-api.md §2). Never call
+    /// per-instance listener handover. Never call
     /// `load()` on an adopted instance: it would issue a second network
     /// request and enter the backfill path.
     init(
@@ -112,6 +112,27 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
         }
     }
 
+    /// Passes a JSON string shaped like `extra`: `{ "<id>": { id, asset, creative, cover?, type?, isVideo } }`.
+    private func extraAssetsDictionary(_ assets: [String: AdropNativeAsset]) -> [String: Any] {
+        var result: [String: Any] = [:]
+        for (id, asset) in assets {
+            var item: [String: Any] = [
+                "id": asset.id,
+                "asset": asset.asset,
+                "creative": asset.creative,
+                "isVideo": asset.isVideo
+            ]
+            if let cover = asset.cover {
+                item["cover"] = cover
+            }
+            if let type = asset.type {
+                item["type"] = type
+            }
+            result[id] = item
+        }
+        return result
+    }
+
     private func metadataOf(_ ad: AdropNativeAd) -> [String: Any] {
         var creative = ad.creative
         let adPlayerCallback = "window.adPlayerVisibilityCallback"
@@ -126,6 +147,7 @@ class FlutterAdropNativeAd: NSObject, AdropAd, AdropNativeAdDelegate {
             "displayLogo": ad.profile.displayLogo,
             "displayName": ad.profile.displayName,
             "extra": dictionaryToJSONString(ad.extra) ?? "",
+            "extraAssets": dictionaryToJSONString(extraAssetsDictionary(ad.extraAssets)) ?? "",
             "asset": ad.asset,
             "destinationURL": ad.destinationURL ?? "",
             "creative": creative,

@@ -1,3 +1,12 @@
+## 1.16.0
+- Added `AdropNativeProperties.extraAssets` — every media slot defined on a native unit, keyed by slot ID (`Map<String, AdropNativeAsset>`: `id`, `asset`, `creative`, `cover`, `type`, `isVideo`). Only multi-media (slot) creatives carry entries; single-media creatives, legacy responses and backfill ads return an empty map (read the primary media from the existing fields). Data only — per-slot rendering and tracking are up to the publisher
+- Android: `AdropNativeProperties.callToAction` now returns the localized label for CTA keys (e.g. `view_details` → "View Details"), matching iOS. Empty values stay empty
+- Popup ads are now shown in landscape on Android phones as well (previously `show()` failed with `ERROR_CODE_LANDSCAPE_UNSUPPORTED`, which is no longer returned). While shown, the popup follows the app's rotation and re-lays out in place instead of locking the screen to portrait
+- Android: calling `show()` for a popup unit that is already on screen, even from another instance, now fails with `ERROR_CODE_AD_SHOWN`
+- iOS: the bottom popup is now at most 420pt wide on landscape phones and full-screen iPad. Portrait phones and narrow iPad windows keep the window width
+- Android: the native SDK now isolates exceptions in its callbacks and internal async paths so they cannot crash the app
+- Update native SDK dependency range (Android: `[1.16, 1.17)`, iOS: `>= 1.16.0, < 1.17.0`). Update the backfill SDK to 1.16 as well
+
 ## 1.15.0
 - Added privacy options to `AdropConsentManager` so users can change their consent later, e.g. from a "Privacy settings" entry in your settings screen
   - `getPrivacyOptionsRequirementStatus()` returns `AdropPrivacyOptionsRequirementStatus` (`unknown` / `required` / `notRequired`). When it is `required`, the entry point must be shown

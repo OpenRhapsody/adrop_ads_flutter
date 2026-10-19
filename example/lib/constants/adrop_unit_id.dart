@@ -16,16 +16,16 @@ class AdropUnitId {
 
   // Popup Bottom
   static const String popupBottomVideo16x9 =
-      'PUBLIC_TEST_UNIT_ID_POPUP_VIDEO_16_9';
+      'PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM_VIDEO_16_9';
   static const String popupBottomVideo9x16 =
-      'PUBLIC_TEST_UNIT_ID_POPUP_VIDEO_9_16';
+      'PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM_VIDEO_9_16';
   static const String popupBottom = 'PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM';
 
   // Popup Center
   static const String popupCenterVideo16x9 =
-      'PUBLIC_TEST_UNIT_ID_POPUP_VIDEO_16_9';
+      'PUBLIC_TEST_UNIT_ID_POPUP_CENTER_VIDEO_16_9';
   static const String popupCenterVideo9x16 =
-      'PUBLIC_TEST_UNIT_ID_POPUP_VIDEO_9_16';
+      'PUBLIC_TEST_UNIT_ID_POPUP_CENTER_VIDEO_9_16';
   static const String popupCenter = 'PUBLIC_TEST_UNIT_ID_POPUP_CENTER';
 
   // Rewarded

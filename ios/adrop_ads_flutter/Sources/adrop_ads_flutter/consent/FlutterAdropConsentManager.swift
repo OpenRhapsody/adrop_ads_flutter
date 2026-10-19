@@ -38,9 +38,9 @@ class FlutterAdropConsentManager {
             return
         }
 
-        // 표시 화면을 고르지 않고 nil 을 넘긴다 — UMP 가 메인 윈도우의 최상단 화면에서 띄운다.
-        // 이 양식은 설정 화면에서 불리고, 설정 화면은 모달인 경우가 많아 rootViewController 에서
-        // present 하면 UIKit 이 거부한다.
+        // Pass nil instead of picking a presenting screen — UMP presents from the topmost screen of the main window.
+        // This form is opened from a settings screen, which is often modal, so presenting from
+        // rootViewController is rejected by UIKit.
         consentManager.showPrivacyOptionsForm(from: nil) { consentResult in
             result(consentResult.toMap())
         }

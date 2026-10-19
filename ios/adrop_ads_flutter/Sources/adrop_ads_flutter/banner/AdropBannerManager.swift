@@ -50,7 +50,7 @@ class AdropBannerManager: NSObject, AdropBannerDelegate {
     /// Batch load: one network call, up to 5 pre-loaded banners bound
     /// positionally to the Dart-minted requestIds. After registration each
     /// banner's delegate is swapped to this manager so per-instance events
-    /// route exactly like the singular path (batch-loads-api.md §2).
+    /// route exactly like the singular path.
     func loads(unitId: String, requestIds: [String], result: @escaping FlutterResult) {
         let batchKey = UUID().uuidString
         let delegate = BannerLoadsDelegate(

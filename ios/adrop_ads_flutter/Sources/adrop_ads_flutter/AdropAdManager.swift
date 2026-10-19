@@ -178,7 +178,7 @@ class AdropAdManager: NSObject {
 /// closures; the manager keeps a strong reference until the terminal callback
 /// (the core holds delegates weakly). Separate class from the banner batch
 /// delegate — the two @objc protocols share selector names and cannot be
-/// adopted by one NSObject (ios-sdk.md §2).
+/// adopted by one NSObject.
 private class NativeAdLoadsDelegate: NSObject, AdropNativeAdDelegate {
     private let onBatchReceived: ([AdropNativeAd]) -> Void
     private let onBatchFailed: (AdropErrorCode) -> Void

@@ -9,11 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// Both compile the same sources, so a mismatch breaks only one set of publishers — if the SPM
 /// path pulls in an older core, files referencing newer APIs (`AdropAdValue` and friends) fail to
-/// compile **in the publisher's build**. Our CI does not catch that.
-///
-/// It actually happened while preparing 1.13.0: only the podspec was bumped and the two drifted
-/// apart for a whole release. A "bump them together" comment did not prevent it, so it is a test
-/// instead.
+/// compile **in the publisher's build**.
 void main() {
   test('podspec and Package.swift declare the same adrop-ads version range',
       () {

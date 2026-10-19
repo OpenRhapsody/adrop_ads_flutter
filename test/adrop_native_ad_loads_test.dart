@@ -21,6 +21,8 @@ void main() {
       'displayLogo': 'https://example.com/logo.png',
       'displayName': 'Advertiser',
       'extra': '{"key":"value"}',
+      'extraAssets': '{"m1":{"id":"m1","asset":"https://example.com/asset.png",'
+          '"creative":"<html>m1</html>","type":"display","isVideo":false}}',
       'asset': 'https://example.com/asset.png',
       'destinationURL': 'https://example.com/$requestId',
       'creative': 'https://example.com/creative.html',
@@ -76,6 +78,11 @@ void main() {
       expect(ad.properties.headline, 'Headline ${ad.requestId}');
       expect(ad.properties.body, 'Body ${ad.requestId}');
       expect(ad.properties.extra['key'], 'value');
+      expect(ad.properties.extraAssets.keys.toList(), ['m1']);
+      expect(ad.properties.extraAssets['m1']?.asset,
+          'https://example.com/asset.png');
+      expect(ad.properties.extraAssets['m1']?.type, 'display');
+      expect(ad.properties.extraAssets['m1']?.isVideo, isFalse);
       expect(ad.isBackfilled, isFalse);
       expect(ad.creativeSize.width, 320.0);
       expect(ad.creativeSize.height, 240.0);

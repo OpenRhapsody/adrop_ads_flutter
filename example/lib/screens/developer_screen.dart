@@ -6,6 +6,7 @@ import '../views/banner_example.dart';
 import '../views/interstitial_example.dart';
 import '../views/rewarded_example.dart';
 import '../views/native_example.dart';
+import '../views/popup_example.dart';
 import '../views/property_example.dart';
 import '../views/consent_example.dart';
 import '../views/shopping_example.dart';
@@ -103,6 +104,11 @@ class _DeveloperScreenState extends State<DeveloperScreen> {
         'label': 'Native',
         'icon': Icons.dashboard_customize,
         'builder': () => const NativeExample()
+      },
+      {
+        'label': 'Popup',
+        'icon': Icons.picture_in_picture,
+        'builder': () => const PopupExample()
       },
       {
         'label': 'Property',

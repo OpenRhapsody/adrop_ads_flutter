@@ -36,7 +36,7 @@ class FlutterAdropConsentManager {
         result.success(consentManager.getPrivacyOptionsRequirementStatus(context).value)
     }
 
-    /** 양식을 띄우는 두 메서드의 공통 사전 검사 — 백필 미포함·Activity 없음은 Dart 쪽에 같은 에러로 돌려준다. */
+    /** Shared precondition checks for the two form-presenting methods — a missing backfill module or Activity is reported to Dart as the same error. */
     private inline fun withManagerAndActivity(
         activity: Activity?,
         result: Result,

@@ -67,7 +67,7 @@ class AdropBannerManager(
      * positionally to the Dart-minted [requestIds]. The per-call listener only
      * handles the terminal batch callbacks; after registration each banner's
      * listener is swapped to this manager so per-instance events route exactly
-     * like the singular path (sanctioned by docs/decisions/batch-loads-api.md §2).
+     * like the singular path.
      */
     fun loads(unitId: String, requestIds: List<String>, result: MethodChannel.Result) {
         val context = context ?: run {
